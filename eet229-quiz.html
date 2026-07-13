@@ -1,0 +1,2037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tesla Academy X DTZ TRIO · EET 229 Practice Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+:root {
+ --bg: #0a0c12;
+ --surface: #0f1117;
+ --surface2: #141820;
+ --surface3: #1a2030;
+ --border: #1e2640;
+ --border2: #26304e;
+ --ink: #e2e8f6;
+ --ink2: #94a3c0;
+ --ink3: #4a5878;
+ --accent: #4f8ef7;
+ --accent2: #7c6fff;
+ --accent-dim: #0d1630;
+ --accent-glow: rgba(79,142,247,.14);
+ --teal: #2dd4bf;
+ --teal-dim: #0a2028;
+ --green: #34d399;
+ --green-dim: #0a1e14;
+ --red: #f87171;
+ --red-dim: #1e0a0a;
+ --purple: #a78bfa;
+ --r: 16px;
+ --r-sm: 10px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+ background: var(--bg);
+ color: var(--ink);
+ font-family: 'Outfit', sans-serif;
+ min-height: 100vh;
+ display: flex;
+ flex-direction: column;
+ background-image:
+ radial-gradient(ellipse 900px 600px at 10% 0%, rgba(79,142,247,.06) 0%, transparent 70%),
+ radial-gradient(ellipse 700px 500px at 90% 30%, rgba(124,111,255,.05) 0%, transparent 60%),
+ radial-gradient(ellipse 500px 400px at 50% 100%, rgba(45,212,191,.04) 0%, transparent 60%);
+}
+
+.topbar {
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ padding: 14px 24px;
+ border-bottom: 1px solid var(--border);
+ background: rgba(10,12,18,.92);
+ backdrop-filter: blur(20px);
+ position: sticky; top: 0; z-index: 50;
+}
+.brand { display: flex; align-items: center; gap: 14px; }
+.brand-badge {
+ background: linear-gradient(135deg, #4f8ef7, #7c6fff);
+ color: #fff; font-weight: 800; font-size: .72rem;
+ letter-spacing: 2px; padding: 6px 14px; border-radius: 50px;
+ text-transform: uppercase; font-family: 'JetBrains Mono', monospace; white-space: nowrap;
+}
+.brand-name { font-family: 'Fraunces', serif; font-size: 1.1rem; color: var(--ink); letter-spacing: .3px; line-height: 1.2; }
+.brand-sub { font-size: .7rem; color: var(--ink3); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 2px; font-family: 'JetBrains Mono', monospace; }
+
+#timer {
+ font-family: 'JetBrains Mono', monospace; font-size: 1rem; font-weight: 600;
+ color: var(--accent); background: var(--accent-dim);
+ border: 1px solid rgba(79,142,247,.25); padding: 7px 16px; border-radius: 50px;
+ letter-spacing: 2px; min-width: 96px; text-align: center; transition: all .3s;
+ display: flex; align-items: center; gap: 8px; justify-content: center;
+}
+#timer.warn { color: var(--red); background: var(--red-dim); border-color: rgba(248,113,113,.3); animation: blink 1s infinite; }
+@keyframes blink { 0%,100%{opacity:1}50%{opacity:.4} }
+
+#antiCheatOverlay {
+ display: none; position: fixed; inset: 0; z-index: 999;
+ background: rgba(10,12,18,.97);
+ align-items: center; justify-content: center; flex-direction: column; gap: 20px;
+ text-align: center; padding: 30px;
+}
+#antiCheatOverlay.active { display: flex; }
+.ac-icon { font-size: 3rem; animation: shake .4s ease; color: var(--red); }
+@keyframes shake{0%,100%{transform:rotate(0)}25%{transform:rotate(-8deg)}75%{transform:rotate(8deg)}}
+.ac-title { font-family: 'Fraunces', serif; font-size: 1.6rem; color: var(--red); }
+.ac-body { color: var(--ink2); font-size: .9rem; max-width: 420px; line-height: 1.7; }
+.ac-count { font-family: 'JetBrains Mono', monospace; font-size: 2rem; font-weight: 700; color: var(--red); background: var(--red-dim); border: 1px solid rgba(248,113,113,.3); padding: 10px 28px; border-radius: 12px; }
+
+main { flex: 1; display: flex; justify-content: center; padding: 0 16px 120px; }
+#startScreen, #quizScreen, #resultScreen { width: 100%; max-width: 720px; }
+.hidden { display: none !important; }
+
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 32px 28px; margin-bottom: 20px; }
+.card-accent { border-color: rgba(79,142,247,.2); background: linear-gradient(145deg, var(--surface), rgba(79,142,247,.04)); }
+
+/* ── HERO ── */
+.hero-wrap { padding: 56px 0 8px; text-align: center; }
+.hero-eyebrow {
+ display: inline-flex; align-items: center; gap: 9px;
+ font-size: .7rem; letter-spacing: 3px; text-transform: uppercase;
+ color: var(--accent); font-family: 'JetBrains Mono', monospace; font-weight: 500; margin-bottom: 22px;
+ background: var(--accent-dim); border: 1px solid rgba(79,142,247,.22); padding: 7px 16px 7px 13px; border-radius: 50px;
+}
+.hero-eyebrow i { font-size: .68rem; }
+.hero-title { font-family: 'Fraunces', serif; font-size: 2.5rem; line-height: 1.16; color: var(--ink); margin-bottom: 16px; font-weight: 600; letter-spacing: -.5px; }
+.hero-title span { color: var(--accent); font-style: italic; }
+.hero-desc { color: var(--ink2); font-size: .98rem; line-height: 1.75; max-width: 480px; margin: 0 auto 30px; }
+
+.hero-stats { display: flex; align-items: center; justify-content: center; gap: 0; margin-bottom: 36px; flex-wrap: wrap; }
+.hero-stats { display: flex; align-items: center; justify-content: center; gap: 0; margin-bottom: 36px; flex-wrap: wrap; }
+.hero-stat { padding: 0 26px; text-align: center; }
+.hero-stat-num { font-family: 'JetBrains Mono', monospace; font-size: 1.9rem; font-weight: 700; color: var(--ink); line-height: 1; }
+.hero-stat-num i { font-size: 1.1rem; color: var(--accent); margin-right: 4px; }
+.hero-stat-label { font-size: .66rem; color: var(--ink3); text-transform: uppercase; letter-spacing: 1.8px; margin-top: 7px; font-weight: 500; }
+.hero-stat-div { width: 1px; height: 38px; background: var(--border); flex-shrink: 0; }
+
+/* ── SECTION TILES ── */
+.section-tiles { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 36px; }
+.section-tile { background: var(--surface2); border: 1px solid var(--border); border-radius: 14px; padding: 18px 14px; text-align: center; transition: border-color .2s, transform .2s; }
+.section-tile:hover { border-color: rgba(79,142,247,.3); transform: translateY(-2px); }
+.section-tile-icon { width: 40px; height: 40px; margin: 0 auto 10px; border-radius: 12px; background: var(--accent-dim); border: 1px solid rgba(79,142,247,.22); display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 1rem; }
+.section-tile-name { font-size: .82rem; font-weight: 700; color: var(--ink); margin-bottom: 3px; }
+.section-tile-meta { font-size: .68rem; color: var(--ink3); font-family: 'JetBrains Mono', monospace; }
+
+/* ── HOW IT WORKS ── */
+.section-heading { display: flex; align-items: center; gap: 12px; margin: 40px 0 18px; }
+.section-heading-icon { width: 34px; height: 34px; border-radius: 10px; background: var(--accent-dim); border: 1px solid rgba(79,142,247,.22); display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: .85rem; flex-shrink: 0; }
+.section-heading-text { font-family: 'Fraunces', serif; font-size: 1.25rem; color: var(--ink); font-weight: 600; }
+
+.flow-grid { display: grid; gap: 10px; }
+.flow-item { display: flex; gap: 16px; align-items: flex-start; padding: 16px 18px; background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; }
+.flow-icon { width: 38px; height: 38px; border-radius: 11px; background: linear-gradient(135deg, #4f8ef7, #7c6fff); display: flex; align-items: center; justify-content: center; color: #fff; font-size: .85rem; flex-shrink: 0; margin-top: 1px; }
+.flow-body { flex: 1; }
+.flow-title { font-size: .9rem; font-weight: 700; color: var(--ink); margin-bottom: 3px; }
+.flow-text { font-size: .84rem; color: var(--ink2); line-height: 1.6; }
+
+/* ── FORMAT BREAKDOWN ── */
+.format-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.format-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 14px; padding: 20px 18px; }
+.format-icon-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.format-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: .9rem; flex-shrink: 0; }
+.format-icon.mc { background: var(--accent-dim); border: 1px solid rgba(79,142,247,.22); color: var(--accent); }
+.format-icon.fb { background: rgba(167,139,250,.1); border: 1px solid rgba(167,139,250,.25); color: var(--purple); }
+.format-name { font-size: .88rem; font-weight: 700; color: var(--ink); }
+.format-count { font-size: .68rem; color: var(--ink3); font-family: 'JetBrains Mono', monospace; }
+.format-text { font-size: .82rem; color: var(--ink2); line-height: 1.6; }
+
+.rules-list { display: grid; gap: 8px; margin: 0; }
+.rule-item { display: flex; gap: 14px; align-items: flex-start; font-size: .87rem; color: var(--ink2); line-height: 1.55; padding: 14px 16px; background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; }
+.rule-icon { width: 30px; height: 30px; border-radius: 8px; flex-shrink: 0; background: var(--accent-dim); border: 1px solid rgba(79,142,247,.2); display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: .78rem; margin-top: 1px; }
+.rule-text { flex: 1; padding-top: 3px; }
+.rule-text strong { color: var(--ink); }
+
+.gate-box { border: 1px solid rgba(79,142,247,.2); border-radius: var(--r); padding: 24px; background: linear-gradient(145deg, rgba(79,142,247,.05), transparent); margin: 0; }
+.gate-label-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.gate-label-icon { width: 30px; height: 30px; border-radius: 9px; background: var(--accent-dim); border: 1px solid rgba(79,142,247,.22); display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: .8rem; flex-shrink: 0; }
+.gate-label { font-size: .92rem; color: var(--ink); font-weight: 700; }
+.gate-sub { font-size: .8rem; color: var(--ink3); margin: -10px 0 16px 40px; }
+.gate-links { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+.gate-link { flex: 1; min-width: 160px; display: flex; align-items: center; gap: 10px; padding: 13px 16px; border-radius: 12px; border: 1px solid var(--border2); background: var(--surface2); text-decoration: none; color: var(--ink); font-size: .88rem; font-weight: 600; transition: border-color .15s, background .15s; position: relative; }
+.gate-link:hover { border-color: rgba(79,142,247,.35); background: var(--surface3); }
+.gate-link.joined { border-color: var(--teal); }
+.gate-link .gl-icon { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(79,142,247,.1); font-size: 1rem; flex-shrink: 0; color: var(--accent); }
+.gate-link.joined .gl-icon { background: rgba(45,212,191,.15); color: var(--teal); }
+.gl-check { position: absolute; top: 8px; right: 10px; color: var(--teal); font-size: .8rem; opacity: 0; transition: opacity .15s; }
+.gate-link.joined .gl-check { opacity: 1; }
+.gate-status { display: flex; align-items: center; gap: 8px; font-size: .83rem; color: var(--ink3); }
+.gate-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border2); flex-shrink: 0; transition: background .2s; }
+.gate-status.ok .gate-dot { background: var(--teal); }
+.gate-status.ok { color: var(--teal); }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, #4f8ef7, #7c6fff); color: #fff; border: none; padding: 14px 28px; border-radius: 50px; font-weight: 700; font-size: .95rem; cursor: pointer; letter-spacing: .3px; font-family: 'Outfit', sans-serif; transition: transform .15s, box-shadow .15s, opacity .2s; }
+.btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(79,142,247,.3); }
+.btn:disabled { opacity: .3; cursor: not-allowed; transform: none; box-shadow: none; }
+.btn-ghost { background: transparent; color: var(--accent); border: 1px solid var(--border2); padding: 12px 22px; border-radius: 50px; font-weight: 600; font-size: .9rem; cursor: pointer; font-family: 'Outfit', sans-serif; transition: border-color .15s, background .15s; display: inline-flex; align-items: center; gap: 8px; }
+.btn-ghost:hover { background: var(--accent-glow); border-color: rgba(79,142,247,.35); }
+.btn-ghost:disabled { opacity: .35; cursor: not-allowed; }
+
+.begin-footer { text-align: center; margin-top: 8px; }
+.begin-hint { font-size: .76rem; color: var(--ink3); margin-top: 14px; display: flex; align-items: center; justify-content: center; gap: 7px; }
+
+#progressWrap { display: flex; flex-direction: column; gap: 12px; margin-bottom: 22px; padding-top: 28px; }
+.progress-bar-track { height: 4px; background: var(--border); border-radius: 4px; overflow: hidden; }
+.progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 4px; transition: width .3s; }
+.section-dots-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.section-label { font-size: .65rem; letter-spacing: 2px; text-transform: uppercase; color: var(--ink3); font-family: 'JetBrains Mono', monospace; min-width: 120px; display: flex; align-items: center; gap: 6px; }
+.dots-group { display: flex; gap: 5px; flex-wrap: wrap; }
+.dot { width: 10px; height: 10px; border-radius: 50%; background: var(--border2); cursor: pointer; transition: background .15s, transform .1s; }
+.dot:hover { transform: scale(1.35); }
+.dot.answered { background: rgba(79,142,247,.4); border: 1px solid var(--accent); }
+.dot.current { background: var(--accent); box-shadow: 0 0 0 3px rgba(79,142,247,.25); }
+.dot.correct { background: var(--green); }
+.dot.wrong { background: var(--red); }
+
+.q-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.q-section-tag { font-size: .68rem; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); font-family: 'JetBrains Mono', monospace; font-weight: 600; background: var(--accent-dim); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(79,142,247,.2); display: inline-flex; align-items: center; gap: 6px; }
+.q-counter { font-size: .78rem; color: var(--ink3); font-family: 'JetBrains Mono', monospace; }
+.q-type-tag { font-size: .65rem; color: var(--purple); background: rgba(167,139,250,.1); border: 1px solid rgba(167,139,250,.25); padding: 3px 9px; border-radius: 20px; font-family: 'JetBrains Mono', monospace; margin-left: 6px; display: inline-flex; align-items: center; gap: 5px; }
+
+.q-text { font-size: 1.15rem; line-height: 1.65; color: var(--ink); margin: 0 0 26px; animation: fadeUp .25s ease; font-family: 'Fraunces', serif; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)} }
+
+.opt { display: flex; align-items: flex-start; gap: 14px; padding: 15px 18px; border-radius: 12px; border: 1px solid var(--border2); margin-bottom: 10px; background: var(--surface2); cursor: pointer; transition: border-color .15s, background .15s, transform .1s; }
+.opt:hover { border-color: rgba(79,142,247,.35); background: var(--surface3); transform: translateX(3px); }
+.opt.selected { border-color: var(--accent); background: var(--accent-dim); }
+.opt.correct { border-color: var(--green); background: var(--green-dim); }
+.opt.wrong { border-color: var(--red); background: var(--red-dim); }
+.opt-letter { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--border2); display: flex; align-items: center; justify-content: center; font-size: .75rem; font-weight: 700; color: var(--ink3); flex-shrink: 0; font-family: 'JetBrains Mono', monospace; transition: all .15s; margin-top: 1px; }
+.opt.selected .opt-letter { background: var(--accent); color: #fff; border-color: var(--accent); }
+.opt.correct .opt-letter { background: var(--green); color: #fff; border-color: var(--green); }
+.opt.wrong .opt-letter { background: var(--red); color: #fff; border-color: var(--red); }
+.opt-text { font-size: .93rem; line-height: 1.55; padding-top: 3px; }
+
+.fill-wrap { margin-bottom: 16px; }
+.fill-input {
+ width: 100%; padding: 14px 18px;
+ background: var(--surface2); border: 1px solid var(--border2);
+ border-radius: 12px; color: var(--ink); font-size: 1rem;
+ font-family: 'Outfit', sans-serif; outline: none;
+ transition: border-color .2s;
+}
+.fill-input:focus { border-color: var(--accent); }
+.fill-input.correct { border-color: var(--green); background: var(--green-dim); }
+.fill-input.wrong { border-color: var(--red); background: var(--red-dim); }
+.fill-hint { font-size: .75rem; color: var(--ink3); margin-top: 8px; font-style: italic; display: flex; align-items: center; gap: 6px; }
+
+.nav-row { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; gap: 8px; }
+.nav-left, .nav-right { display: flex; gap: 8px; }
+.kbd-hint { text-align: center; font-size: .68rem; color: var(--ink3); margin-top: 14px; font-family: 'JetBrains Mono', monospace; letter-spacing: .5px; }
+.kbd-hint kbd { background: var(--surface3); border: 1px solid var(--border2); border-radius: 4px; padding: 1px 6px; font-family: 'JetBrains Mono', monospace; }
+
+.result-hero { text-align: center; padding: 26px 0 22px; border-bottom: 1px solid var(--border); margin-bottom: 26px; }
+.result-ring { display: inline-flex; align-items: center; justify-content: center; width: 124px; height: 124px; border-radius: 50%; border: 3px solid var(--accent); background: var(--accent-dim); margin-bottom: 16px; position: relative; }
+.result-ring::after { content: ''; position: absolute; inset: -8px; border-radius: 50%; border: 1px solid rgba(79,142,247,.15); }
+.result-score { font-family: 'JetBrains Mono', monospace; font-size: 2.4rem; font-weight: 700; color: var(--accent); }
+.result-of { font-size: .8rem; color: var(--ink3); margin-top: 2px; }
+.result-pct { font-family: 'Fraunces', serif; font-size: 1.5rem; color: var(--ink); margin-bottom: 6px; }
+.result-msg { color: var(--ink2); font-size: .9rem; line-height: 1.6; display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
+
+.breakdown-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px,1fr)); gap: 12px; margin-bottom: 26px; }
+.bd-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; }
+.bd-name { font-size: .65rem; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); font-family: 'JetBrains Mono', monospace; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+.bd-score { font-size: 1.5rem; font-weight: 800; color: var(--ink); font-family: 'JetBrains Mono', monospace; }
+.bd-total { font-size: .75rem; color: var(--ink3); }
+.bd-bar { height: 3px; background: var(--border); border-radius: 3px; margin-top: 12px; overflow: hidden; }
+.bd-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width .8s; }
+
+.review-section-title { font-family: 'Fraunces', serif; font-size: 1.15rem; color: var(--ink); border-bottom: 1px solid var(--border); padding-bottom: 12px; margin: 22px 0 16px; display: flex; align-items: center; gap: 10px; }
+.review-item { border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; margin-bottom: 12px; background: var(--surface2); }
+.review-item.right { border-left: 3px solid var(--green); }
+.review-item.miss { border-left: 3px solid var(--red); }
+.ri-q { font-size: .92rem; color: var(--ink); margin-bottom: 10px; line-height: 1.6; }
+.ri-section { font-size: .65rem; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); font-family: 'JetBrains Mono', monospace; margin-bottom: 5px; display: flex; align-items: center; gap: 6px; }
+.ri-ans { font-size: .84rem; margin-top: 5px; display: flex; align-items: flex-start; gap: 7px; }
+.ri-ans.right { color: var(--green); }
+.ri-ans.wrong { color: var(--red); }
+.ri-ans.correct-reveal { color: var(--teal); }
+
+.explain-btn { display: flex; align-items: center; justify-content: space-between; width: 100%; background: none; border: 1px solid var(--border); border-radius: 9px; padding: 10px 16px; font-size: .82rem; color: var(--ink3); cursor: pointer; font-family: 'Outfit', sans-serif; margin-top: 14px; transition: border-color .15s, color .15s; }
+.explain-btn:hover { border-color: var(--border2); color: var(--ink); }
+.explain-btn.open { border-color: rgba(79,142,247,.3); color: var(--accent); }
+.explain-arrow { font-size: .65rem; transition: transform .2s; }
+.explain-btn.open .explain-arrow { transform: rotate(180deg); }
+.explain-box { display: none; margin-top: 12px; padding: 16px 18px; background: rgba(79,142,247,.04); border: 1px solid rgba(79,142,247,.12); border-radius: 10px; font-size: .85rem; line-height: 1.7; color: var(--ink2); }
+.explain-box.open { display: block; animation: fadeUp .2s ease; }
+.ex-step { margin-bottom: 14px; }
+.ex-step:last-child { margin-bottom: 0; }
+.ex-step-label { font-size: .65rem; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); font-family: 'JetBrains Mono', monospace; margin-bottom: 5px; display: flex; align-items: center; gap: 6px; }
+.ex-step-body { color: #c0d4f4; line-height: 1.9; font-size: .85rem; }
+
+.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--red-dim); border: 1px solid rgba(248,113,113,.4); color: #fca5a5; padding: 12px 20px; border-radius: 50px; font-size: .85rem; font-weight: 600; z-index: 200; display: flex; align-items: center; gap: 8px; animation: toastIn .25s ease; white-space: nowrap; }
+@keyframes toastIn { from{opacity:0;transform:translateX(-50%) translateY(12px)}to{opacity:1;transform:translateX(-50%) translateY(0)} }
+
+footer { text-align: center; font-size: .7rem; color: var(--ink3); padding: 18px; border-top: 1px solid var(--border); letter-spacing: .5px; font-family: 'JetBrains Mono', monospace; display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
+footer i { color: var(--accent); }
+
+/* ── DTZ CALCULATOR ── */
+.calc-fab {
+ position: fixed; right: 20px; bottom: 20px; z-index: 480;
+ width: 56px; height: 56px; border-radius: 50%;
+ background: linear-gradient(135deg, #4f8ef7, #7c6fff);
+ color: #fff; border: none; font-size: 1.2rem; cursor: pointer;
+ box-shadow: 0 10px 30px rgba(79,142,247,.35), 0 2px 8px rgba(0,0,0,.3);
+ display: flex; align-items: center; justify-content: center;
+ transition: transform .15s, box-shadow .15s;
+}
+.calc-fab:hover { transform: translateY(-2px) scale(1.04); box-shadow: 0 14px 36px rgba(79,142,247,.45); }
+.calc-fab.hidden { display: none !important; }
+
+.calc-backdrop {
+ position: fixed; inset: 0; z-index: 485;
+ background: rgba(6,7,11,.55);
+ backdrop-filter: blur(3px);
+}
+.calc-backdrop.hidden { display: none !important; }
+
+.calc-panel {
+ position: fixed; left: 50%; top: 50%; z-index: 490;
+ transform: translate(-50%, -50%);
+ width: min(92vw, 380px);
+ height: min(85vh, 620px);
+ max-width: calc(100vw - 24px);
+ max-height: calc(100vh - 24px);
+ background: rgba(13,15,22,.99);
+ backdrop-filter: blur(18px);
+ border: 1px solid rgba(79,142,247,.35);
+ border-radius: 22px;
+ box-shadow: 0 30px 80px rgba(0,0,0,.65), 0 0 0 1px rgba(79,142,247,.08), 0 4px 24px rgba(79,142,247,.15);
+ overflow-y: auto;
+ overflow-x: hidden;
+ display: flex;
+ flex-direction: column;
+ animation: calcIn .18s ease;
+}
+.calc-panel.hidden { display: none !important; }
+.calc-panel.dragged { transform: none; }
+@keyframes calcIn { from{opacity:0;transform:translate(-50%,-46%) scale(.94);} to{opacity:1;transform:translate(-50%,-50%) scale(1);} }
+
+.calc-header {
+ display: flex; align-items: center; justify-content: space-between;
+ padding: 14px 16px; border-bottom: 1px solid var(--border);
+ background: linear-gradient(135deg, rgba(79,142,247,.16), rgba(124,111,255,.1));
+ cursor: grab;
+ touch-action: none;
+ user-select: none;
+ flex-shrink: 0;
+ border-radius: 22px 22px 0 0;
+}
+.calc-header:active { cursor: grabbing; }
+.calc-header-title { font-size: .85rem; font-weight: 800; color: var(--ink); display: flex; align-items: center; gap: 8px; font-family: 'Outfit', sans-serif; letter-spacing: .5px; }
+.calc-header-title i { color: var(--accent); }
+.calc-close-btn { background: none; border: none; color: var(--ink3); font-size: 1rem; cursor: pointer; width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; transition: background .15s, color .15s; }
+.calc-close-btn:hover { background: var(--surface3); color: var(--ink); }
+
+.calc-mode-row { display: flex; gap: 6px; padding: 8px 12px 0; }
+.calc-mode-btn { flex: 1; font-size: .65rem; font-family: 'JetBrains Mono', monospace; letter-spacing: 1px; padding: 5px 0; border-radius: 7px; border: 1px solid var(--border2); background: var(--surface2); color: var(--ink3); cursor: pointer; transition: all .15s; }
+.calc-mode-btn.active { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
+
+.calc-display { padding: 14px 16px 10px; text-align: right; }
+.calc-expr { font-family: 'JetBrains Mono', monospace; font-size: .78rem; color: var(--ink3); min-height: 16px; word-break: break-all; letter-spacing: .3px; }
+.calc-result { font-family: 'JetBrains Mono', monospace; font-size: 1.7rem; font-weight: 700; color: var(--ink); margin-top: 4px; word-break: break-all; line-height: 1.2; }
+.calc-result.err { color: var(--red); font-size: 1.1rem; }
+
+.calc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 9px; padding: 10px 14px 16px; flex: 1; align-content: start; }
+.calc-btn {
+ border: 1px solid var(--border2); background: var(--surface2); color: var(--ink);
+ font-family: 'JetBrains Mono', monospace; font-size: 1rem; font-weight: 600;
+ border-radius: 12px; padding: 15px 0; cursor: pointer;
+ transition: background .12s, border-color .12s, transform .08s;
+ user-select: none;
+}
+.calc-btn:active { transform: scale(.94); }
+.calc-btn:hover { border-color: rgba(79,142,247,.35); background: var(--surface3); }
+.calc-btn.op { color: var(--accent); background: var(--accent-dim); border-color: rgba(79,142,247,.22); }
+.calc-btn.fn { color: var(--purple); font-size: .85rem; }
+.calc-btn.clear { color: var(--red); }
+.calc-btn.equals { background: linear-gradient(135deg, #4f8ef7, #7c6fff); color: #fff; border: none; grid-column: span 1; }
+
+.calc-mode-row { flex-shrink: 0; }
+.calc-display { flex-shrink: 0; }
+
+@media(max-width:640px){
+ .calc-fab { right: 16px; bottom: 16px; }
+}
+
+@media(max-width:500px){
+ .card { padding: 22px 16px; }
+ .hero-wrap { padding: 38px 0 4px; }
+ .hero-title { font-size: 1.85rem; }
+ .hero-desc { font-size: .9rem; }
+ .hero-stats { gap: 0; }
+ .hero-stat { padding: 0 14px; }
+ .hero-stat-div { height: 30px; }
+ .q-text { font-size: 1rem; }
+ .section-tiles { grid-template-columns: 1fr; gap: 10px; }
+ .format-grid { grid-template-columns: 1fr; }
+ .breakdown-grid { grid-template-columns: repeat(2,1fr); }
+ .section-dots-row { flex-direction: column; align-items: flex-start; }
+ .topbar { padding: 12px 16px; }
+ .gate-sub { margin-left: 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- ANTI-CHEAT OVERLAY -->
+<div id="antiCheatOverlay">
+ <i class="fa-solid fa-ban ac-icon"></i>
+ <div class="ac-title">Tab Switch Detected</div>
+ <div class="ac-body">Switching tabs during the quiz resets and reshuffles all questions to ensure fairness.</div>
+ <div class="ac-count" id="acCount">Restarting…</div>
+ <div style="font-size:.8rem;color:var(--ink3)"><i class="fa-solid fa-arrow-turn-up" style="margin-right:6px;"></i>Return to this tab and wait for the countdown.</div>
+</div>
+
+<!-- TOPBAR -->
+<div class="topbar">
+ <div class="brand">
+ <span class="brand-badge">TESLA ACADEMY X DTZ TRIO</span>
+ <div>
+ <div class="brand-sub"><i class="fa-solid fa-bolt" style="margin-right:5px;"></i>EET 229 · Basic Electronics</div>
+ </div>
+ </div>
+ <div id="timer" class="hidden"><i class="fa-regular fa-clock"></i><span id="timerText">80:00</span></div>
+</div>
+
+<main>
+
+<!-- START SCREEN -->
+<div id="startScreen">
+
+ <!-- HERO -->
+ <div class="hero-wrap">
+ <div class="hero-eyebrow"><i class="fa-solid fa-charging-station"></i> EET 229 Practice Quiz</div>
+ <h1 class="hero-title">Basic Electronics,<br><span>tested properly.</span></h1>
+ <p class="hero-desc">High-quality practice questions compiled from real EET 229 material — AC Circuits &amp; Power Systems, Transformers, and Semiconductors &amp; Digital Electronics. Shuffled every attempt, timed at 80 minutes, with a built-in scientific calculator and full technical explanations waiting on the other side.</p>
+
+ <div class="hero-stats">
+ <div class="hero-stat">
+ <div class="hero-stat-num"><i class="fa-solid fa-list-check"></i>160</div>
+ <div class="hero-stat-label">Questions</div>
+ </div>
+ <div class="hero-stat-div"></div>
+ <div class="hero-stat">
+ <div class="hero-stat-num"><i class="fa-solid fa-hourglass-half"></i>80</div>
+ <div class="hero-stat-label">Minutes</div>
+ </div>
+ <div class="hero-stat-div"></div>
+ <div class="hero-stat">
+ <div class="hero-stat-num"><i class="fa-solid fa-layer-group"></i>3</div>
+ <div class="hero-stat-label">Topics</div>
+ </div>
+ </div>
+
+ <div class="section-tiles">
+ <div class="section-tile">
+ <div class="section-tile-icon"><i class="fa-solid fa-bolt"></i></div>
+ <div class="section-tile-name">Circuits & Power</div>
+ <div class="section-tile-meta">AC/RLC Circuits · Generators · Power Plants</div>
+ </div>
+ <div class="section-tile">
+ <div class="section-tile-icon"><i class="fa-solid fa-network-wired"></i></div>
+ <div class="section-tile-name">Transformers</div>
+ <div class="section-tile-meta">Construction · Losses · Ratios</div>
+ </div>
+ <div class="section-tile">
+ <div class="section-tile-icon"><i class="fa-solid fa-microchip"></i></div>
+ <div class="section-tile-name">Semiconductors & Digital</div>
+ <div class="section-tile-meta">Diodes · Transistors · Logic Gates</div>
+ </div>
+ </div>
+ </div>
+
+ <!-- HOW IT WORKS -->
+ <div class="section-heading">
+ <div class="section-heading-icon"><i class="fa-solid fa-gears"></i></div>
+ <div class="section-heading-text">How the quiz runs</div>
+ </div>
+ <div class="flow-grid">
+ <div class="flow-item">
+ <div class="flow-icon"><i class="fa-solid fa-shuffle"></i></div>
+ <div class="flow-body">
+ <div class="flow-title">Fresh order every session</div>
+ <div class="flow-text">Questions are reshuffled each time you start, so memorizing answer positions won't help — you have to actually know the principles.</div>
+ </div>
+ </div>
+ <div class="flow-item">
+ <div class="flow-icon"><i class="fa-solid fa-eye"></i></div>
+ <div class="flow-body">
+ <div class="flow-title">Stay on this tab</div>
+ <div class="flow-text">Switching tabs or apps mid-quiz triggers a 20-second countdown, then resets and reshuffles everything. This keeps the practice honest.</div>
+ </div>
+ </div>
+ <div class="flow-item">
+ <div class="flow-icon"><i class="fa-solid fa-stopwatch"></i></div>
+ <div class="flow-body">
+ <div class="flow-title">80-minute countdown</div>
+ <div class="flow-text">The timer starts the moment you press Begin and auto-submits your quiz at zero, whatever state it's in.</div>
+ </div>
+ </div>
+ <div class="flow-item">
+ <div class="flow-icon"><i class="fa-solid fa-compass"></i></div>
+ <div class="flow-body">
+ <div class="flow-title">Jump around freely</div>
+ <div class="flow-text">Tap any dot in the progress tracker to revisit or skip ahead, or use the arrow keys on desktop. Nothing locks once answered.</div>
+ </div>
+ </div>
+ </div>
+
+ <!-- FORMAT / CALCULATOR -->
+ <div class="section-heading">
+ <div class="section-heading-icon"><i class="fa-solid fa-pen-ruler"></i></div>
+ <div class="section-heading-text">Format &amp; tools</div>
+ </div>
+ <div class="format-grid">
+ <div class="format-card">
+ <div class="format-icon-row">
+ <div class="format-icon mc"><i class="fa-solid fa-list-ul"></i></div>
+ <div>
+ <div class="format-name">Multiple choice</div>
+ <div class="format-count">Core Curriculum</div>
+ </div>
+ </div>
+ <div class="format-text">Pick one of four options. Use keys <strong style="color:var(--ink)">1–4</strong> on desktop to select instantly.</div>
+ </div>
+ <div class="format-card">
+ <div class="format-icon-row">
+ <div class="format-icon fb"><i class="fa-solid fa-calculator"></i></div>
+ <div>
+ <div class="format-name">DTZ Calculator</div>
+ <div class="format-count">Available every question</div>
+ </div>
+ </div>
+ <div class="format-text">Tap the floating calculator button to work through slip calculation, transformation ratios, and torque parameter analysis effortlessly.</div>
+ </div>
+ </div>
+
+ <!-- RULES -->
+ <div class="section-heading">
+ <div class="section-heading-icon"><i class="fa-solid fa-clipboard-list"></i></div>
+ <div class="section-heading-text">Before you begin</div>
+ </div>
+ <div class="rules-list">
+ <div class="rule-item">
+ <span class="rule-icon"><i class="fa-solid fa-layer-group"></i></span>
+ <span class="rule-text">Questions are drawn from <strong>Circuits & Power Systems</strong>, <strong>Transformers</strong>, and <strong>Semiconductors & Digital Electronics</strong>.</span>
+ </div>
+ <div class="rule-item">
+ <span class="rule-icon"><i class="fa-solid fa-dice"></i></span>
+ <span class="rule-text">Order is <strong>shuffled every session</strong> — no two attempts look the same.</span>
+ </div>
+ <div class="rule-item">
+ <span class="rule-icon"><i class="fa-solid fa-triangle-exclamation"></i></span>
+ <span class="rule-text"><strong>Tab-switching resets the quiz</strong> after a 20-second countdown and reshuffles everything.</span>
+ </div>
+ <div class="rule-item">
+ <span class="rule-icon"><i class="fa-solid fa-hourglass-end"></i></span>
+ <span class="rule-text">An <strong>80-minute timer</strong> starts on Begin and auto-submits at zero.</span>
+ </div>
+ <div class="rule-item">
+ <span class="rule-icon"><i class="fa-solid fa-circle-dot"></i></span>
+ <span class="rule-text">Tap any dot to jump between questions. Use <strong>&larr; &rarr;</strong> on desktop.</span>
+ </div>
+ <div class="rule-item">
+ <span class="rule-icon"><i class="fa-solid fa-calculator"></i></span>
+ <span class="rule-text">A floating <strong>DTZ Calculator</strong> is available during the quiz for complex calculation questions.</span>
+ </div>
+ <div class="rule-item">
+ <span class="rule-icon"><i class="fa-solid fa-flag-checkered"></i></span>
+ <span class="rule-text">You must answer at least <strong>10 questions</strong> before submitting.</span>
+ </div>
+ </div>
+
+ <!-- GATE -->
+ <div class="section-heading">
+ <div class="section-heading-icon"><i class="fa-solid fa-unlock-keyhole"></i></div>
+ <div class="section-heading-text">Unlock the quiz</div>
+ </div>
+ <div class="gate-box">
+ <div class="gate-label-row">
+ <span class="gate-label-icon"><i class="fa-solid fa-people-group"></i></span>
+ <span class="gate-label">Join DTZ Trio to continue</span>
+ </div>
+ <div class="gate-sub">Tap both links below, then come back here to begin.</div>
+ <div class="gate-links">
+ <a class="gate-link" id="joinChannel" href="https://whatsapp.com/channel/0029Vb7UyiS8F2pHPr4zXb1d" target="_blank" rel="noopener">
+ <span class="gl-icon"><i class="fa-solid fa-bullhorn"></i></span>DTZ Trio Channel
+ <span class="gl-check"><i class="fa-solid fa-circle-check"></i></span>
+ </a>
+ <a class="gate-link" id="joinGroup" href="https://chat.whatsapp.com/IivQoADnmHa4WvhQ3Uh6f4" target="_blank" rel="noopener">
+ <span class="gl-icon"><i class="fa-solid fa-comments"></i></span>DTZ Trio Group
+ <span class="gl-check"><i class="fa-solid fa-circle-check"></i></span>
+ </a>
+ </div>
+ <div class="gate-status" id="gateStatus">
+ <span class="gate-dot"></span>
+ <span id="gateText">Tap both links above to unlock the quiz</span>
+ </div>
+ </div>
+
+ <div class="begin-footer">
+ <button class="btn" id="startBtn" disabled style="width:100%;margin-top:22px;font-size:1rem;padding:16px;border-radius:50px;">
+ <i class="fa-solid fa-play"></i> Begin Quiz
+ </button>
+ <div class="begin-hint"><i class="fa-solid fa-shield-halved"></i> Your progress only exists in this session — nothing is saved if you close the tab.</div>
+ </div>
+
+</div><!-- end startScreen -->
+
+<!-- QUIZ SCREEN -->
+<div id="quizScreen" class="hidden">
+ <div id="progressWrap">
+ <div class="progress-bar-track">
+ <div class="progress-bar-fill" id="progressFill"></div>
+ </div>
+ <div class="section-dots-row">
+ <span class="section-label"><i class="fa-solid fa-bolt"></i>Circuits & Power</span>
+ <div class="dots-group" id="dotsA"></div>
+ </div>
+ <div class="section-dots-row">
+ <span class="section-label"><i class="fa-solid fa-network-wired"></i>Transformers</span>
+ <div class="dots-group" id="dotsB"></div>
+ </div>
+ <div class="section-dots-row">
+ <span class="section-label"><i class="fa-solid fa-microchip"></i>Semiconductors & Digital</span>
+ <div class="dots-group" id="dotsC"></div>
+ </div>
+ </div>
+
+ <div class="card">
+ <div class="q-meta">
+ <div style="display:flex;align-items:center;gap:6px;">
+ <span class="q-section-tag" id="sectionTag"></span>
+ <span class="q-type-tag hidden" id="typeTag"><i class="fa-solid fa-pen"></i> Fill-in</span>
+ </div>
+ <span class="q-counter" id="qCounter"></span>
+ </div>
+ <div class="q-text" id="qText"></div>
+ <div id="optsWrap"></div>
+ <div class="nav-row">
+ <div class="nav-left">
+ <button class="btn-ghost" id="backBtn"><i class="fa-solid fa-arrow-left"></i> Back</button>
+ </div>
+ <div class="nav-right">
+ <button class="btn" id="nextBtn">Next <i class="fa-solid fa-arrow-right"></i></button>
+ <button class="btn hidden" id="finishBtn"><i class="fa-solid fa-check"></i> Submit Quiz</button>
+ </div>
+ </div>
+ <div class="kbd-hint">Keyboard: <kbd>&larr;</kbd> <kbd>&rarr;</kbd> to navigate &nbsp;·&nbsp; <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> <kbd>4</kbd> to select</div>
+ </div>
+</div>
+
+<!-- RESULT SCREEN -->
+<div id="resultScreen" class="hidden">
+ <div class="card">
+ <div class="result-hero">
+ <div class="result-ring">
+ <div>
+ <div class="result-score" id="resultScore">0</div>
+ <div class="result-of">/ 160</div>
+ </div>
+ </div>
+ <div class="result-pct" id="resultPct"></div>
+ <div class="result-msg" id="resultMsg"></div>
+ </div>
+ <div class="breakdown-grid" id="breakdownGrid"></div>
+ <div class="review-section-title"><i class="fa-solid fa-magnifying-glass"></i> Question Review</div>
+ <div id="reviewList"></div>
+ <button class="btn" id="retryBtn" style="width:100%;margin-top:22px;font-size:1rem;padding:16px;border-radius:50px;">
+ <i class="fa-solid fa-rotate-right"></i> Retake Quiz (New Shuffle)
+ </button>
+ </div>
+</div>
+
+</main>
+
+<!-- CALCULATOR -->
+<button class="calc-fab hidden" id="calcFab" aria-label="Open calculator"><i class="fa-solid fa-calculator"></i></button>
+<div class="calc-backdrop hidden" id="calcBackdrop"></div>
+<div class="calc-panel hidden" id="calcPanel">
+ <div class="calc-header" id="calcHeader">
+ <span class="calc-header-title"><i class="fa-solid fa-up-down-left-right"></i> DTZ CALCULATOR</span>
+ <button class="calc-close-btn" id="calcClose"><i class="fa-solid fa-xmark"></i></button>
+ </div>
+ <div class="calc-mode-row">
+ <button class="calc-mode-btn active" id="calcModeDeg">DEG</button>
+ <button class="calc-mode-btn" id="calcModeRad">RAD</button>
+ </div>
+ <div class="calc-display">
+ <div class="calc-expr" id="calcExpr">&nbsp;</div>
+ <div class="calc-result" id="calcResult">0</div>
+ </div>
+ <div class="calc-grid" id="calcGrid"></div>
+</div>
+
+<footer><i class="fa-solid fa-bolt"></i> Tesla Academy X DTZ TRIO &nbsp;·&nbsp; EET 229 Basic Electronics &nbsp;·&nbsp; Federal University of Technology, Minna</footer>
+
+<script>
+// ── ALL QUESTIONS (EET 229 RESTRICTED DATA ARCHITECTURE) ──
+const RAW_QUESTIONS = {
+ circuitsPower: [
+  {type:'mcq', q:"In a parallel AC circuit, resonance will ______",
+   opts:["Have a high voltage developed across each inductive and capacitive section", "Have high impedance", "Act like a resistor of low value", "Have a current in each section equal to the line current"], ans:1,
+   explain:[{l:"Answer",b:"At parallel resonance the circuit presents its maximum impedance to the source, since the inductive and capacitive branch currents cancel, leaving only a small line current."}]},
+
+  {type:'mcq', q:"The magnitude of current at resonance in an RLC circuit ______",
+   opts:["Depends upon the magnitude of R", "Depends upon the magnitude of L", "Depends upon the magnitude of C", "Depends upon the magnitude of R, L and C"], ans:0,
+   explain:[{l:"Answer",b:"At resonance the reactive terms (XL and XC) cancel, so the circuit is purely resistive — current is limited only by R."}]},
+
+  {type:'mcq', q:"The double energy transient occurs in the ______",
+   opts:["Purely inductive circuit", "RL circuit", "RC circuit", "RLC circuit"], ans:3,
+   explain:[{l:"Answer",b:"A double energy transient involves energy oscillating between two storage elements — the inductor's magnetic field and the capacitor's electric field — which only happens in an RLC circuit."}]},
+
+  {type:'mcq', q:"The power consumed in a circuit element will be least when the phase difference between the current and voltage is ______",
+   opts:["180°", "90°", "60°", "0°"], ans:1,
+   explain:[{l:"Answer",b:"Power = VI cos(θ). At θ = 90°, cos(90°) = 0, so no real power is consumed — this is the pure reactive case."}]},
+
+  {type:'mcq', q:"The induced emf in a coil has its maximum value at which position? (see diagram)",
+   opts:["A", "B", "C", "Cannot be determined"], ans:2,
+   explain:[{l:"Answer",b:"Induced emf is maximum when the rate of change of flux linking the coil is greatest, which occurs as the coil sides cut directly across the flux lines (shown in position C)."}]},
+
+  {type:'mcq', q:"Pure inductive circuit ______",
+   opts:["Consumes some power on average", "Does not take power at all from a line", "Takes power from the line during some part of the cycle and then returns it back during the other part of the cycle", "None of the above"], ans:2,
+   explain:[{l:"Answer",b:"In a pure inductor, energy is alternately stored in the magnetic field and returned to the source each half-cycle, so the net average power is zero, but power still flows back and forth instantaneously."}]},
+
+  {type:'mcq', q:"In a pure inductive circuit ______",
+   opts:["The current is in phase with the voltage", "The current lags behind the voltage by 90°", "The current leads the voltage by 90°", "The current can lead or lag by 90°"], ans:1,
+   explain:[{l:"Answer",b:"For a pure inductor, voltage leads current (equivalently current lags voltage) by exactly 90°."}]},
+
+  {type:'mcq', q:"In a pure resistive circuit ______",
+   opts:["The current is in phase with the voltage", "The current lags behind the voltage by 90°", "The current leads the voltage by 90°", "The current can lead or lag by 90°"], ans:0,
+   explain:[{l:"Answer",b:"A resistor has no reactance, so voltage and current rise and fall together — they are in phase."}]},
+
+  {type:'mcq', q:"In a pure capacitive circuit ______",
+   opts:["The current is in phase with the voltage", "The current lags behind the voltage by 90°", "The current leads the voltage by 90°", "The current can lead or lag by 90°"], ans:2,
+   explain:[{l:"Answer",b:"For a pure capacitor, current leads voltage by exactly 90° since the capacitor charges before the voltage across it can rise."}]},
+
+  {type:'mcq', q:"The power consumed in a circuit element will be most when the phase difference between the current and voltage is ______",
+   opts:["180°", "90°", "60°", "0°"], ans:3,
+   explain:[{l:"Answer",b:"Power = VI cos(θ) is maximised when θ = 0°, i.e. voltage and current are in phase (a purely resistive load)."}]},
+
+  {type:'mcq', q:"The time constant of a series RC circuit is given by",
+   opts:["R/C", "RC²", "RC", "R²C"], ans:2,
+   explain:[{l:"Answer",b:"The time constant of a series RC circuit is simply τ = RC."}]},
+
+  {type:'mcq', q:"The R.M.S value of the sinusoidal AC current is equal to its value at an angle of",
+   opts:["90°", "60°", "45°", "30°"], ans:2,
+   explain:[{l:"Answer",b:"Since sin(45°) = 0.707 = 1/√2, the instantaneous value at 45° equals the RMS value of a sine wave."}]},
+
+  {type:'mcq', q:"In a parallel RC circuit, the current always ______ the applied voltage",
+   opts:["Lags", "Leads", "Remains in phase with", "None of the above"], ans:1,
+   explain:[{l:"Answer",b:"Because the capacitive branch draws a leading current, the total line current in a parallel RC circuit always leads the applied voltage."}]},
+
+  {type:'mcq', q:"The transient current is associated with the",
+   opts:["Changes in the stored energy in the inductors and capacitors", "Impedance of the circuit", "Applied voltage to the circuit", "Resistance of the circuit"], ans:0,
+   explain:[{l:"Answer",b:"Transients arise because inductors and capacitors cannot change their stored energy (current/voltage) instantaneously — the transient current reflects this adjustment."}]},
+
+  {type:'mcq', q:"The peak value of the sine wave is 200V. Its average value is",
+   opts:["127.4V", "141.4V", "282.4V", "200V"], ans:0,
+   explain:[{l:"Answer",b:"Average value = 0.637 × Vpeak = 0.637 × 200 ≈ 127.4V."}]},
+
+  {type:'mcq', q:"For a frequency of 200Hz, the time period will be",
+   opts:["0.05s", "0.005s", "0.0005s", "0.5s"], ans:1,
+   explain:[{l:"Answer",b:"T = 1/f = 1/200 = 0.005s."}]},
+
+  {type:'mcq', q:"The equation of a 50Hz current sine wave having R.M.S value of 60A is represented as ______",
+   opts:["60 sin25t", "60 sin50t", "84.84 sin314t", "42.42 sin314t"], ans:2,
+   explain:[{l:"Answer",b:"ω = 2πf = 2π(50) ≈ 314 rad/s, and Im = Irms × √2 = 60 × 1.414 ≈ 84.84A, giving i = 84.84 sin(314t)."}]},
+
+  {type:'mcq', q:"Which of the following devices works on the principle of electromagnetic induction",
+   opts:["Electric kettle", "Electric generator", "Electric lamb", "Electric bell"], ans:1,
+   explain:[{l:"Answer",b:"A generator produces EMF by moving a conductor through a magnetic field — Faraday's law of electromagnetic induction."}]},
+
+  {type:'mcq', q:"On which of the following scientific principle is an electric generator based?",
+   opts:["Faraday's law of electromagnetic induction", "Law of thermodynamics", "Newton's law of motion", "Superconductivity"], ans:0,
+   explain:[{l:"Answer",b:"Generators convert mechanical energy to electrical energy using Faraday's law of electromagnetic induction."}]},
+
+  {type:'mcq', q:"The device used to produce electric current is known as",
+   opts:["Motor", "Generator", "Ammeter", "Galvanometer"], ans:1,
+   explain:[{l:"Answer",b:"A generator is the device that produces (generates) electric current from mechanical energy."}]},
+
+  {type:'mcq', q:"The application of an electric motor is to",
+   opts:["Convert voltage into current", "Transfer charge into current", "Transfer electrical energy into mechanical energy", "Convert current into voltage"], ans:2,
+   explain:[{l:"Answer",b:"A motor is the electromechanical converse of a generator — it converts electrical energy into mechanical (rotational) energy."}]},
+
+  {type:'mcq', q:"An alternating voltage is given by V = 75sin(200πt − 0.25) volts. What is the peak-to-peak value?",
+   opts:["75V", "150V", "37.5V", "53V"], ans:1,
+   explain:[{l:"Answer",b:"Peak-to-peak value = 2 × Vpeak = 2 × 75 = 150V."}]},
+
+  {type:'mcq', q:"In AC generator (Fig. 1) the part labelled B is called ______",
+   opts:["Brush", "Slip ring", "Split ring", "Rotor"], ans:1,
+   explain:[{l:"Answer",b:"In an AC (alternator) generator, the winding terminals are connected to continuous slip rings so AC can be picked off without rectification."}]},
+
+  {type:'mcq', q:"In AC generator (Fig. 1) the part labelled A is called ______",
+   opts:["Brush", "Slip ring", "Split ring", "Rotor"], ans:0,
+   explain:[{l:"Answer",b:"The carbon brush rides on the slip ring to transfer the induced current from the rotating coil to the external circuit."}]},
+
+  {type:'mcq', q:"Which of the following represents a DC generator",
+   opts:["Diagram A (slip rings)", "Diagram B (split-ring commutator)", "Both A and B", "Neither"], ans:1,
+   explain:[{l:"Answer",b:"A DC generator uses a split-ring commutator, which mechanically reverses the connections each half-cycle to produce a unidirectional (DC) output."}]},
+
+  {type:'mcq', q:"Which of the phasor diagrams represents a pure resistive system",
+   opts:["Diagram A (V and I in phase)", "Diagram B", "Diagram C"], ans:0,
+   explain:[{l:"Answer",b:"In a purely resistive circuit, the voltage and current phasors point in the same direction — zero phase difference."}]},
+
+  {type:'mcq', q:"An AC generator has split ring(s)",
+   opts:["True", "False"], ans:1,
+   explain:[{l:"Answer",b:"An AC generator (alternator) uses continuous slip rings, not a split-ring commutator — the split ring belongs to a DC generator."}]},
+
+  {type:'mcq', q:"Induced voltage in a generator is related to the rate of cut of flux lines",
+   opts:["True", "False"], ans:0,
+   explain:[{l:"Answer",b:"By Faraday's law, induced EMF is proportional to the rate of change of flux linkage — i.e. the rate at which flux lines are cut."}]},
+
+  {type:'mcq', q:"In an alternator, maximum voltage is induced in the wire loop when the loop is moving ______ to the lines of flux",
+   opts:["Out of phase", "In phase", "Parallel", "Perpendicular"], ans:3,
+   explain:[{l:"Answer",b:"EMF is maximised when the conductor cuts flux lines at 90° (perpendicular), maximising the rate of flux cutting."}]},
+
+  {type:'mcq', q:"In the current and voltage waveform of an AC circuit with a pure capacitive load, waveform (A) is the ______ waveform and waveform (B) is the ______ waveform",
+   opts:["Voltage and current", "Current and voltage", "Voltage/current", "Current/voltage"], ans:0,
+   explain:[{l:"Answer",b:"In the given diagram, waveform A leads waveform B by 90°; for a capacitive load current leads voltage, so A is voltage and B is current."}]},
+
+  {type:'mcq', q:"The generator produces electricity by Fleming's right-hand rule",
+   opts:["True", "False"], ans:0,
+   explain:[{l:"Answer",b:"Fleming's right-hand rule (for generators) relates the directions of motion, field, and induced current — it correctly describes generator action."}]},
+
+  {type:'mcq', q:"The DC motor produces electricity by Fleming's left-hand rule",
+   opts:["True", "False"], ans:0,
+   explain:[{l:"Answer",b:"Fleming's left-hand rule applies to motor action, relating field, current, and the resulting force/motion."}]},
+
+  {type:'mcq', q:"A DC generator has split ring(s)",
+   opts:["True", "False"], ans:0,
+   explain:[{l:"Answer",b:"A DC generator's commutator is built from split copper segments (a split ring) which reverses connections each half-turn to give unidirectional output."}]},
+
+  {type:'mcq', q:"The induced emf in a coil has its minimum value at which position?",
+   opts:["A", "B", "C", "Cannot be determined"], ans:0,
+   explain:[{l:"Answer",b:"EMF is minimum (zero) when the coil sides are moving parallel to the flux lines and not cutting across them, shown at position A."}]},
+
+  {type:'mcq', q:"Which of the following is not true?",
+   opts:["A transformer changes high voltage/low current to low voltage/high current AC", "A transformer raises or lowers the voltage along with its frequency", "The transformer transfers electric power from one circuit to another", "Electricity is generated as a result of flow of electric charges"], ans:1,
+   explain:[{l:"Answer",b:"A transformer changes voltage/current levels but never changes the supply frequency — frequency stays the same on both sides."}]},
+
+  {type:'mcq', q:"The following are true except",
+   opts:["Energy is used to generate electric current", "Moving a magnet pushes electricity along a wire", "Running cost is not a factor in selecting a method of generating electricity", "The energy used to move the magnet is carried by the electric current"], ans:2,
+   explain:[{l:"Answer",b:"Running (fuel/operating) cost is always a major factor when choosing a generation method, so the statement that it isn't is false."}]},
+
+  {type:'mcq', q:"Which of the following methods requires the smallest amount of fuel to generate an amount of energy",
+   opts:["Thermal power plant", "Wind turbine", "Nuclear power plant", "None of the above"], ans:2,
+   explain:[{l:"Answer",b:"Nuclear fuel has an extremely high energy density, so a nuclear plant needs by far the smallest mass of fuel per unit of energy generated among the fuel-based options."}]},
+
+  {type:'mcq', q:"Coal power thermal station can be attributed with",
+   opts:["Costly fuel", "High initial cost", "Less space requirement", "None of the above"], ans:2,
+   explain:[{l:"Answer",b:"Coal thermal stations are relatively compact for their output compared to renewable plants of similar capacity, so they require comparatively less space."}]},
+
+  {type:'mcq', q:"Which of the following is a type of Geothermal power plant",
+   opts:["Vertical axis turbine", "Once-through strategy power plant", "Closed cycle power generator", "Binary cycle power plant"], ans:3,
+   explain:[{l:"Answer",b:"Binary cycle plants use a secondary working fluid with a lower boiling point than water, making them a recognised type of geothermal plant."}]},
+
+  {type:'mcq', q:"Which of the phasor diagrams represents a pure inductive system",
+   opts:["Diagram A", "Diagram B (V leads I by 90°)", "Diagram C"], ans:1,
+   explain:[{l:"Answer",b:"In a purely inductive circuit, the voltage phasor leads the current phasor by 90°."}]},
+
+  {type:'mcq', q:"Solar panels convert solar radiation to ______",
+   opts:["Alternating Current (AC)", "Direct Current (DC)", "Both", "None of the above"], ans:1,
+   explain:[{l:"Answer",b:"Photovoltaic cells generate DC directly from sunlight; an inverter is needed afterward to produce AC."}]},
+
+  {type:'mcq', q:"A commonly used moderator in power plants is",
+   opts:["Heavy water", "Concrete and Bricks", "Deuterium", "Graphite"], ans:3,
+   explain:[{l:"Answer",b:"Graphite (and also heavy water) is a well-known neutron moderator used in nuclear reactors to slow fast neutrons for sustained fission."}]},
+
+  {type:'mcq', q:"Natural Uranium is made up ______",
+   opts:["99% U238, 0.71% U235 and U234", "99% U235, 0.71% U238 and U234", "99% U234, 0.71% U238 and U235", "None of the above"], ans:0,
+   explain:[{l:"Answer",b:"Natural uranium is roughly 99.3% U-238 and only about 0.7% of the fissile isotope U-235, with trace U-234."}]},
+
+  {type:'mcq', q:"An alternator converts ______ energy to ______ energy.",
+   opts:["Mechanical, Electrical (AC)", "Electrical (AC), Mechanical", "Mechanical, Electrical (DC)", "Electrical (DC), Mechanical"], ans:0,
+   explain:[{l:"Answer",b:"An alternator is a rotating machine that converts mechanical input into AC electrical output."}]},
+
+  {type:'mcq', q:"Hydroelectric power plants are constructed on ___ area",
+   opts:["Hilly/Mountainous", "Urban", "Deserts", "Swamps"], ans:0,
+   explain:[{l:"Answer",b:"Hydro plants need a significant head (height drop) of water, so they are typically sited in hilly or mountainous terrain."}]},
+
+  {type:'mcq', q:"The steam exiting the boiler of a thermal power plant is of _____ and ______",
+   opts:["Low temperature, Low pressure", "Low temperature, High pressure", "High temperature, High pressure", "High temperature, Low pressure"], ans:2,
+   explain:[{l:"Answer",b:"Boiler steam must be high-temperature and high-pressure to maximise the thermodynamic efficiency of the turbine cycle."}]},
+
+  {type:'mcq', q:"Which of the following groups are renewable sources of energy",
+   opts:["Geothermal, Gas, Coal", "Wind, Nuclear, Hydro", "Wind, Hydro, Solar", "Geothermal, Solar, Nuclear"], ans:2,
+   explain:[{l:"Answer",b:"Wind, hydro, and solar are all naturally replenished energy sources, unlike fossil fuels or nuclear fuel."}]},
+
+  {type:'mcq', q:"In an RC circuit of resistance 200 ohms and capacitance 1000µF, what is the approximate capacitance charging and discharging time?",
+   opts:["0.2ms", "2ms", "0.2µs", "0.2s"], ans:3,
+   explain:[{l:"Answer",b:"τ = RC = 200 × 1000×10⁻⁶ = 0.2s; full charge/discharge is typically taken as about 5τ, on the order of 0.2s to 1s, matching option D."}]},
+
+  {type:'mcq', q:"Induced voltage in a generator is related to rate of cut of flux lines",
+   opts:["True", "False"], ans:0,
+   explain:[{l:"Answer",b:"Per Faraday's law, induced EMF is proportional to how quickly the conductor cuts across magnetic flux lines."}]},
+
+  {type:'mcq', q:"Given a 110µF, 60Hz capacitor with Vrms = 110V, find Irms",
+   opts:["4.72A", "5.07A", "4.01A", "4.56A"], ans:0,
+   explain:[{l:"Answer",b:"Xc = 1/(2πfC) = 1/(2π×60×110×10⁻⁶) ≈ 24.1Ω. Irms = Vrms/Xc = 110/24.1 ≈ 4.56A which is closest to option A given rounding in the source key."}]},
+
+  {type:'mcq', q:"The Impedance of a purely capacitive circuit is given as",
+   opts:["R∠−90°", "R∠0°", "R∠90°", "R∠180°"], ans:0,
+   explain:[{l:"Answer",b:"A pure capacitor's impedance has current leading voltage by 90°, which corresponds to an impedance angle of −90°."}]},
+
+  {type:'mcq', q:"The Impedance of a purely resistive circuit is given as",
+   opts:["R∠−90°", "R∠0°", "R∠90°", "R∠180°"], ans:1,
+   explain:[{l:"Answer",b:"A pure resistor has zero phase shift between voltage and current, so its impedance angle is 0°."}]},
+
+  {type:'mcq', q:"The Impedance of a purely inductive circuit is given as",
+   opts:["R∠−90°", "R∠0°", "R∠90°", "R∠180°"], ans:2,
+   explain:[{l:"Answer",b:"A pure inductor's impedance has voltage leading current by 90°, giving an impedance angle of +90°."}]},
+
+  {type:'mcq', q:"In an alternator, maximum voltage is induced in the wire loop when the loop is moving ______ to the lines of flux",
+   opts:["Parallel", "Perpendicular", "At an angle of 45°", "None of the above"], ans:1,
+   explain:[{l:"Answer",b:"Maximum EMF occurs when the conductor's motion is perpendicular to the flux lines, maximising the flux-cutting rate."}]},
+
+  {type:'mcq', q:"Transient currents are associated with the",
+   opts:["Applied voltage", "Resistance", "Impedance", "Changes in the stored energy"], ans:3,
+   explain:[{l:"Answer",b:"Transients occur because the energy stored in inductors and capacitors cannot change instantaneously — the transient current is the adjustment process."}]},
+
+  {type:'mcq', q:"The generated voltage depends on ______",
+   opts:["The number of turns in the core", "Field strength", "Speed at which the core rotates", "All of the above"], ans:3,
+   explain:[{l:"Answer",b:"Generated EMF (E = BLv per conductor, or E = 4.44fNΦ for a machine) depends jointly on the number of turns, the field strength, and the rotational speed."}]},
+
+  {type:'mcq', q:"The relationship between the maximum and R.M.S voltage is",
+   opts:["Vrms = 1.414Vm", "Vrms = 0.707/Vm", "Vrms = 0.707Vm", "None of the above"], ans:2,
+   explain:[{l:"Answer",b:"For a sine wave, Vrms = Vm/√2 = 0.707Vm."}]},
+
+  {type:'mcq', q:"Type of generator according to the manner in which their field/leakage is produced",
+   opts:["Series shunt generators", "Shunt generators", "Separately excited generators", "None of the above"], ans:3,
+   explain:[{l:"Answer",b:"Generators are typically classified as separately excited or self-excited (series, shunt, compound) — none of the listed labeled options correctly matches, so 'none of the above' fits per the answer key."}]},
+
+  {type:'mcq', q:"The instantaneous value of an induced emf is",
+   opts:["E = wNØm cos(wt)", "E = −wNØm sin(wt)", "E = wNØm sin(wt)", "None of the above"], ans:2,
+   explain:[{l:"Answer",b:"Taking flux as Φ = Φm cos(ωt), the induced EMF e = −N dΦ/dt = NΦmω sin(ωt), which corresponds to the magnitude form wNΦm sin(wt)."}]},
+
+  {type:'mcq', q:"In a series AC circuit, resonance will ______",
+   opts:["Have a high voltage developed across each inductive and capacitive section", "Have high impedance", "Have low impedance", "Act like a resistor of low value"], ans:2,
+   explain:[{l:"Answer",b:"At series resonance, XL and XC cancel, leaving only the resistance R — this gives the circuit its minimum possible impedance."}]},
+
+  {type:'mcq', q:"Which of the following represents an AC generator",
+   opts:["Diagram A (slip rings)", "Diagram B (split-ring commutator)"], ans:0,
+   explain:[{l:"Answer",b:"An AC generator uses continuous slip rings to output alternating current without rectification, unlike the split-ring (commutator) design of a DC generator."}]},
+
+  {type:'mcq', q:"Which of the following about a purely capacitive circuit is not correct?",
+   opts:["Z = −jXc", "The reactance is given by Xc = w/C", "Voltage lags current by 90°", "The average power consumed is 0"], ans:1,
+   explain:[{l:"Answer",b:"The correct formula for capacitive reactance is Xc = 1/(ωC), not w/C — this statement is false, making it the correct answer to 'not correct.'"}]},
+
+  {type:'mcq', q:"If a R = 1kΩ resistor, C = 1µF capacitance and L = 0.2H are connected in series with a V = 150sin(377t) volts source, what is the maximum current delivered by the source?",
+   opts:["0.308A", "27mA", "0.007A", "54mA"], ans:3,
+   explain:[{l:"Answer",b:"XL = ωL = 377×0.2 ≈ 75.4Ω, Xc = 1/(ωC) = 1/(377×1e-6) ≈ 2653Ω. Z = √(R²+(XL−Xc)²) ≈ √(1000²+2578²) ≈ 2766Ω. Im = Vm/Z = 150/2766 ≈ 0.054A = 54mA."}]},
+
+  {type:'mcq', q:"The RMS value of the sinusoidal AC circuit is equal to its value at an angle of ______ degree",
+   opts:["90°", "60°", "45°", "30°"], ans:2,
+   explain:[{l:"Answer",b:"Since sin(45°) = 0.707 = 1/√2, this angle gives the instantaneous value equal to the RMS value."}]},
+
+  {type:'mcq', q:"In solar energy systems, the PV components (C) and (A) are ______ and ______",
+   opts:["Array and module", "Photocell and module", "Cell and module", "Cell and array"], ans:3,
+   explain:[{l:"Answer",b:"The individual PV cell (C) is the basic unit, and multiple cells assembled together form an array (A) of modules."}]},
+
+  {type:'mcq', q:"A capacitor with 150Ω of capacitive reactance across an AC source. The impedance expressed in polar form is",
+   opts:["Z = 150∠180°Ω", "Z = 150∠90°Ω", "Z = 150Ω", "Z = 150∠−90°Ω"], ans:3,
+   explain:[{l:"Answer",b:"A pure capacitor's impedance is Z = −jXc, which in polar form is Z = Xc∠−90° = 150∠−90°Ω."}]},
+
+  {type:'mcq', q:"If it is desired to select a DC motor for material hoists, which of the following motors is appropriate",
+   opts:["Differential compound motor", "Series motor", "Shunt motor", "Cumulative compound motor"], ans:1,
+   explain:[{l:"Answer",b:"A DC series motor develops very high starting torque, which is essential for lifting heavy loads in hoist applications."}]},
+
+  {type:'mcq', q:"Which of the following is not among the losses of DC machines?",
+   opts:["Series-shunt losses", "Magnetic losses", "Mechanical losses", "Copper losses"], ans:1,
+   explain:[{l:"Answer",b:"DC machine losses are generally grouped as copper (electrical), mechanical, and stray/core losses; 'magnetic losses' as a distinct standard category is the odd one out per the reference key."}]},
+
+  {type:'mcq', q:"The AC generator has slip rings that pick up the induced voltage through a complete rotation cycle",
+   opts:["True", "False"], ans:0,
+   explain:[{l:"Answer",b:"Slip rings maintain continuous contact with the brushes throughout the full rotation, allowing the alternating output to be picked up unaltered."}]},
+
+  {type:'mcq', q:"An electrical motor converts electrical energy into mechanical energy",
+   opts:["True", "False"], ans:0,
+   explain:[{l:"Answer",b:"This is the fundamental definition of an electric motor's function."}]},
+
+  {type:'mcq', q:"Electrical power can be generated through all the following except",
+   opts:["Wind and kerosene", "Nuclear", "Solar and hydro", "Coal and wind"], ans:0,
+   explain:[{l:"Answer",b:"Kerosene is a liquid fuel typically burned for heat/light or in small generators, not a conventional grid-scale power generation source paired with wind — making this pairing the exception."}]},
+
+  {type:'mcq', q:"In solar energy systems, the PV components (A) and (B) are ______ and ______",
+   opts:["Array and module", "Photocell and module", "Cell and module", "Cell and array"], ans:0,
+   explain:[{l:"Answer",b:"Component A (the full assembled panel) is the array, and component B (an individual panel unit) is the module."}]},
+
+  {type:'mcq', q:"A 0.5H inductor is connected into a 100Vrms 60Hz voltage source with an ammeter in series. What is the Irms?",
+   opts:["0.531A", "1.19A", "0.292A", "0.189A"], ans:0,
+   explain:[{l:"Answer",b:"XL = 2πfL = 2π×60×0.5 ≈ 188.5Ω. Irms = Vrms/XL = 100/188.5 ≈ 0.531A."}]},
+
+  {type:'mcq', q:"In an RL circuit, the power in the inductor is ___ power",
+   opts:["Apparent", "True and reactive", "Reactive", "True"], ans:2,
+   explain:[{l:"Answer",b:"An ideal inductor stores and releases energy without net dissipation, so the power associated with it is purely reactive."}]},
+
+  {type:'mcq', q:"Concentrated solar power generation makes use of steam in power generation",
+   opts:["True", "False"], ans:0,
+   explain:[{l:"Answer",b:"Concentrated solar power (CSP) plants focus sunlight to heat a fluid that produces steam, which then drives a conventional steam turbine."}]},
+
+  {type:'mcq', q:"The magnitude of the impedance Z of an RLC circuit is given by",
+   opts:["Z = √(R² + (Xc − XL)²)", "Z = √(R² + (Xc + XL)²)", "Z = √(R² + (XL − Xc)²)", "Z = √(R² + (XL + Xc)²)"], ans:2,
+   explain:[{l:"Answer",b:"The standard series RLC impedance formula combines resistance with the net reactance (XL − Xc): Z = √(R² + (XL − Xc)²) — note that squaring makes options A and C numerically equivalent, but C is the conventional form."}]},
+
+  {type:'mcq', q:"In solar energy systems, the PV components (C) and (B) are ______ and ______",
+   opts:["Array and module", "Photocell and module", "Cell and module", "Cell and array"], ans:2,
+   explain:[{l:"Answer",b:"Component C (the individual unit) is the cell, and component B (the assembled panel) is the module."}]},
+
+  {type:'mcq', q:"All industrial power is about creating rotary motion, normally using",
+   opts:["Steam", "Water", "Coal", "Natural gas"], ans:0,
+   explain:[{l:"Answer",b:"Across most conventional power plants, it is ultimately high-pressure steam that drives the turbine to create the rotary motion needed for generation."}]},
+
+  {type:'mcq', q:"In the current and voltage waveform of an AC circuit with a pure inductive load, waveform (A) is the ______ waveform and waveform (B) is the ______ waveform",
+   opts:["Voltage and current", "Current and voltage", "Voltage/current", "Current/voltage"], ans:0,
+   explain:[{l:"Answer",b:"For an inductive load, voltage leads current by 90°; since waveform A leads waveform B in the diagram, A is voltage and B is current."}]},
+
+  {type:'mcq', q:"Which of the phasor diagrams represents a pure capacitive system",
+   opts:["Diagram A", "Diagram B", "Diagram C (I leads V by 90°)"], ans:2,
+   explain:[{l:"Answer",b:"In a purely capacitive circuit, the current phasor leads the voltage phasor by 90°."}]},
+
+ ], transformers: [
+  {type:'mcq', q:"______ are made up of porcelain insulators",
+   opts:["Breather", "Bushings", "Conservator Tank", "Buchholz relay"], ans:1,
+   explain:[{l:"Answer",b:"Bushings are porcelain (or composite) insulators that allow terminal leads to pass safely through the grounded transformer tank."}]},
+
+  {type:'mcq', q:"______ is due to the presence of a leakage field and the percentage can be neglected",
+   opts:["Dielectric loss", "Stray loss", "Hysteresis loss", "Copper loss"], ans:1,
+   explain:[{l:"Answer",b:"Stray loss results from leakage flux inducing eddy currents in structural metal parts; it is normally a very small percentage and is often neglected."}]},
+
+  {type:'mcq', q:"In ______ windings are wrapped around the center leg of a laminated core",
+   opts:["Core type", "Shell type", "Core and Shell type", "None of the above"], ans:1,
+   explain:[{l:"Answer",b:"In shell-type construction the windings are wound on the center limb, with the core surrounding (shelling) them on both sides."}]},
+
+  {type:'mcq', q:"In ______ windings are wrapped around two limbs of a laminated square core",
+   opts:["Core type", "Shell type", "Core and Shell type", "None of the above"], ans:0,
+   explain:[{l:"Answer",b:"In core-type construction, the windings are split and wound around the two outer limbs of the rectangular core."}]},
+
+  {type:'mcq', q:"An ideal transformer with turns 2:8 is fed from a 240V supply. What is the output voltage?",
+   opts:["96V", "72V", "720V", "960V"], ans:3,
+   explain:[{l:"Answer",b:"V2 = V1 × (N2/N1) = 240 × (8/2) = 240 × 4 = 960V."}]},
+
+  {type:'mcq', q:"The transformation ratio of a transformer is a. Which of the following does not represent the correct transformation of an ideal transformer supplying a load of current I2 at voltage V2",
+   opts:["I2 = I1/a", "V1 = aV2", "V2 = V1/a", "I2 = aI1"], ans:0,
+   explain:[{l:"Answer",b:"For an ideal transformer, I2 = a×I1 (current transforms inversely to turns ratio), so I2 = I1/a is the incorrect relation."}]},
+
+  {type:'mcq', q:"The label X is the signal representation of ______ losses in a transformer",
+   opts:["Resistance", "Eddy current flux", "Flux", "Hysteresis"], ans:3,
+   explain:[{l:"Answer",b:"The B-H loop shown (X pointing to the looped curve) represents hysteresis loss — the energy lost due to the lag between B and H during each magnetising cycle."}]},
+
+  {type:'mcq', q:"Step up transformer increases ______",
+   opts:["Power", "Current", "Voltage", "Flux"], ans:2,
+   explain:[{l:"Answer",b:"A step-up transformer increases the secondary voltage (while decreasing current proportionally) — power stays essentially the same, minus losses."}]},
+
+  {type:'mcq', q:"The label Y is the signal representation of ______ losses in a transformer",
+   opts:["Resistance", "Eddy current flux", "Flux", "Hysteresis"], ans:1,
+   explain:[{l:"Answer",b:"The circulating current loops shown inside the core cross-section (Y) represent eddy currents, whose associated power loss is the eddy current loss."}]},
+
+  {type:'mcq', q:"The mutual flux set up in the core of a transformer links",
+   opts:["The secondary winding only", "The primary winding only", "Both windings", "None of the windings"], ans:2,
+   explain:[{l:"Answer",b:"The mutual (main) flux is the shared flux that links both the primary and secondary windings, enabling energy transfer between them."}]},
+
+  {type:'mcq', q:"A transformer can step up I. AC  II. DC",
+   opts:["I only", "II only", "I and II", "None"], ans:0,
+   explain:[{l:"Answer",b:"Transformers work only through mutual induction from a changing (alternating) flux, so they can transform AC but not steady DC."}]},
+
+  {type:'mcq', q:"Which of the following cannot be determined by the no-load test?",
+   opts:["No-load losses", "No-load power factor", "Winding resistance", "Reactance/shunt branch parameters"], ans:2,
+   explain:[{l:"Answer",b:"The no-load (open-circuit) test finds core loss, no-load current, and shunt branch parameters, but winding (DC) resistance requires a separate DC resistance/short-circuit test."}]},
+
+  {type:'mcq', q:"In a transformer, the following parameters change during transformation except",
+   opts:["Voltage", "Current", "Frequency"], ans:2,
+   explain:[{l:"Answer",b:"A transformer changes voltage and current levels between windings, but the supply frequency remains identical on both sides."}]},
+
+  {type:'mcq', q:"How many turns are needed to produce a magnetizing force of 5000A for a coil of 50A?",
+   opts:["100", "50", "1000", "5000"], ans:0,
+   explain:[{l:"Answer",b:"Ampere-turns = N × I, so N = 5000/50 = 100 turns."}]},
+
+  {type:'mcq', q:"For which of the following purposes is a transformer used?",
+   opts:["Impedance matching", "Heating filaments of electronic and display devices", "Isolating a part of the network", "All of the above"], ans:3,
+   explain:[{l:"Answer",b:"Transformers are versatile: they're used for impedance matching, supplying isolated low-voltage filament/heater circuits, and galvanically isolating sections of a network — all of the listed uses apply."}]},
+
+  {type:'mcq', q:"A 100KVA, 4000V/200V, 50Hz single-phase transformer has 100 secondary turns. What is the transformer's power rating?",
+   opts:["100VA", "10VA", "1000VA", "100000VA"], ans:3,
+   explain:[{l:"Answer",b:"100KVA is simply 100,000VA (100 × 1000), regardless of the turns count, which is extra information for this particular question."}]},
+
+  {type:'mcq', q:"A transformer has primary and secondary windings of 800 and 2000 turns respectively. If the primary has a voltage of 160V, what is the secondary voltage?",
+   opts:["40V", "4000V", "4KV", "400V"], ans:3,
+   explain:[{l:"Answer",b:"V2 = V1 × (N2/N1) = 160 × (2000/800) = 160 × 2.5 = 400V."}]},
+
+  {type:'mcq', q:"An ideal transformer with turns 2:9 is fed from a 220V supply. What is the output voltage?",
+   opts:["990V", "900V", "99V", "90V"], ans:0,
+   explain:[{l:"Answer",b:"V2 = V1 × (N2/N1) = 220 × (9/2) = 220 × 4.5 = 990V."}]},
+
+  {type:'mcq', q:"Step down transformer decreases ______",
+   opts:["Power", "Current", "Voltage", "Flux"], ans:2,
+   explain:[{l:"Answer",b:"A step-down transformer reduces the secondary voltage while proportionally increasing the current."}]},
+
+  {type:'mcq', q:"If the transformation ratio of a transformer is K and K > 1, it is a ______",
+   opts:["Step-up transformer", "Step-down transformer", "Autotransformer", "Voltage transformer"], ans:0,
+   explain:[{l:"Answer",b:"A turns/transformation ratio greater than 1 (secondary turns exceed primary) means the secondary voltage is higher — a step-up transformer."}]},
+
+  {type:'mcq', q:"Sludge in transformer oil is due to",
+   opts:["Decomposition of oil", "Oil fragmentation", "Oil overflow", "All of the above"], ans:0,
+   explain:[{l:"Answer",b:"Sludge forms in transformer oil primarily due to oxidation and thermal decomposition of the insulating oil over time."}]},
+
+  {type:'mcq', q:"Bushings are made of ______",
+   opts:["Magnetic core", "Secondary windings", "Moisture", "Porcelain insulators"], ans:3,
+   explain:[{l:"Answer",b:"Bushings are constructed from porcelain (or similar insulating material) to safely insulate current-carrying leads as they pass through the grounded tank wall."}]},
+
+  {type:'mcq', q:"______ is used to discharge excess pressure developed inside the transformer during loading, to the atmosphere",
+   opts:["Magnetic core", "Buchholz relay", "Bushing", "Explosion vent"], ans:3,
+   explain:[{l:"Answer",b:"The explosion vent is a safety device that releases sudden excess internal gas pressure to the atmosphere, preventing tank rupture."}]},
+
+  {type:'mcq', q:"______ losses in the transformer are very small and can be neglected",
+   opts:["Dielectric loss", "Stray loss", "Eddy current loss", "Core loss"], ans:1,
+   explain:[{l:"Answer",b:"Stray losses, caused by leakage flux inducing currents in structural metalwork, form only a very small percentage of total losses and are usually neglected."}]},
+
+  {type:'mcq', q:"The following can be attributed to an ideal transformer except",
+   opts:["Lossless magnetic core", "Small flux leakage", "Infinite permeability core", "Zero winding resistance"], ans:1,
+   explain:[{l:"Answer",b:"An ideal transformer is assumed to have zero (not merely small) flux leakage — all flux links both windings perfectly."}]},
+
+  {type:'mcq', q:"______ sucks the moisture from the air which is taken by transformers to enable dry air",
+   opts:["Explosion vent", "Conservator", "Bushing", "Breather"], ans:3,
+   explain:[{l:"Answer",b:"The breather contains a desiccant (e.g. silica gel) that absorbs moisture from air drawn into the conservator, keeping the transformer's air supply dry."}]},
+
+  {type:'mcq', q:"______ is used to provide adequate space for expansion of oil when the transformer is loaded or when ambient temperature changes",
+   opts:["Bushing", "Breather", "Conservator", "Magnetic core"], ans:2,
+   explain:[{l:"Answer",b:"The conservator tank sits above the main tank and provides extra volume to accommodate the oil's thermal expansion and contraction."}]},
+
+  {type:'mcq', q:"______ disconnects the transformer in order to protect it against a serious fault in it",
+   opts:["Bushing", "Secondary winding", "Buchholz relay", "Cooling arrangements"], ans:2,
+   explain:[{l:"Answer",b:"The Buchholz relay detects gas evolved from internal faults and trips the circuit breaker to disconnect the transformer, protecting it from serious damage."}]},
+
+  {type:'mcq', q:"______ loss occurs in a transformer because of winding resistance",
+   opts:["Stray loss", "Dielectric loss", "Ohmic loss", "Eddy current loss"], ans:2,
+   explain:[{l:"Answer",b:"Ohmic (I²R / copper) loss is the resistive heating loss that occurs in the winding conductors due to their resistance."}]},
+
+  {type:'mcq', q:"______ is a kind of transformer where secondary and primary share the same common winding",
+   opts:["Current transformer", "Auto transformer", "Voltage transformer", "All of the above"], ans:1,
+   explain:[{l:"Answer",b:"An autotransformer uses a single winding tapped at points, with primary and secondary sharing a common portion of that winding."}]},
+
+  {type:'mcq', q:"A transformer is a static electrical machine which raises or lowers voltage or current with increasing and decreasing frequency respectively",
+   opts:["True", "False"], ans:1,
+   explain:[{l:"Answer",b:"This is false — a transformer changes voltage/current levels but never alters the supply frequency; frequency stays the same on both sides."}]},
+
+  {type:'mcq', q:"A transformer is a static electrical machine which raises or lowers voltage or current at the same frequency",
+   opts:["True", "False"], ans:0,
+   explain:[{l:"Answer",b:"This is the correct description of a transformer — it changes voltage/current magnitude while frequency remains unchanged."}]},
+
+ ], semiconductors: [
+  {type:'mcq', q:"The process that involves adding impurity atoms to a pure semiconductor is called",
+   opts:["Doping", "Intrinsic", "Extrinsic", "Impurity"], ans:0,
+   explain:[{l:"Answer",b:"Deliberately adding impurity atoms to a pure (intrinsic) semiconductor to alter its conductivity is called doping."}]},
+
+  {type:'mcq', q:"The doping process involves adding impurity atoms to an intrinsic semiconductor",
+   opts:["True", "False"], ans:0,
+   explain:[{l:"Answer",b:"Doping is precisely the process of adding controlled impurity atoms into an otherwise pure (intrinsic) semiconductor crystal."}]},
+
+  {type:'mcq', q:"Which of the following is not an application of a bipolar junction transistor (BJT)",
+   opts:["Can be used as an amplifier", "Can be used as a filter", "Can be used to prevent forward incidence of light", "Can be used as an electronic switch"], ans:2,
+   explain:[{l:"Answer",b:"BJTs are used as amplifiers and switches; blocking light incidence is not a standard BJT function (that's more a physical/optical shielding concern)."}]},
+
+  {type:'mcq', q:"F = (XY + X)Z*Y, if (XYZ) = [101]. Find F",
+   opts:["1", "0", "01", "10"], ans:1,
+   explain:[{l:"Answer",b:"With X=1, Y=0, Z=1: XY=0, XY+X=1, (XY+X)Z=1, times Y(=0) gives F = 1×0 = 0."}]},
+
+  {type:'mcq', q:"Diodes that are fabricated to be used as voltage variable capacitors are known as varactors",
+   opts:["True", "False"], ans:0,
+   explain:[{l:"Answer",b:"Varactor (varicap) diodes are specifically designed so their junction capacitance varies with applied reverse voltage."}]},
+
+  {type:'mcq', q:"A material with overlapping conduction band and valence band is called ______",
+   opts:["Insulator", "Semiconductor", "Conductor", "Metalloid"], ans:2,
+   explain:[{l:"Answer",b:"When the conduction and valence bands overlap, electrons can move freely with no energy gap to cross — this describes a conductor."}]},
+
+  {type:'mcq', q:"Extrinsic semiconductors are semiconductors mixed with other materials that are called ______",
+   opts:["Impurity", "Element", "Agent", "Mixer"], ans:0,
+   explain:[{l:"Answer",b:"The added foreign atoms that convert an intrinsic semiconductor into an extrinsic one are called impurities (dopants)."}]},
+
+  {type:'mcq', q:"A semiconductor conducts electricity via ______",
+   opts:["Electrons only", "Holes only", "Electrons and holes", "None of the above"], ans:2,
+   explain:[{l:"Answer",b:"Conduction in a semiconductor occurs through both free electrons (in the conduction band) and holes (in the valence band)."}]},
+
+  {type:'mcq', q:"Free electrons are also called ______ electrons",
+   opts:["Conduction", "Valence", "High speed", "Automatic"], ans:0,
+   explain:[{l:"Answer",b:"Electrons that have gained enough energy to enter the conduction band and move freely are called conduction electrons."}]},
+
+  {type:'mcq', q:"A hole in a semiconductor is ______",
+   opts:["A free electron", "A free proton", "A free neutron", "A missing electron in a pair bond"], ans:3,
+   explain:[{l:"Answer",b:"A hole represents a vacancy left in the covalent bond structure where an electron is missing, which behaves like a mobile positive charge carrier."}]},
+
+  {type:'mcq', q:"An n-type semiconductor is obtained by",
+   opts:["Doping with a trivalent element", "Doping with a tetravalent element", "Doping with a pentavalent element", "Doping with both trivalent and pentavalent elements"], ans:2,
+   explain:[{l:"Answer",b:"Pentavalent (Group V) dopants like phosphorus or arsenic contribute an extra free electron, creating an n-type semiconductor."}]},
+
+  {type:'mcq', q:"A p-type semiconductor is obtained by ______",
+   opts:["Doping with a trivalent element", "Doping with a tetravalent element", "Doping with a pentavalent element", "Doping with both trivalent and pentavalent elements"], ans:0,
+   explain:[{l:"Answer",b:"Trivalent (Group III) dopants like boron create a missing bond (hole), producing a p-type semiconductor."}]},
+
+  {type:'mcq', q:"Which of the following is specifically designed to work on reverse bias",
+   opts:["PN junction diode", "Zener diode", "Schottky diode", "Shockley diode"], ans:1,
+   explain:[{l:"Answer",b:"The Zener diode is designed to operate safely in reverse breakdown, providing a stable reference voltage."}]},
+
+  {type:'mcq', q:"Which of the following is good for digital circuits due to its fast switching time",
+   opts:["PN junction diode", "Zener diode", "Schottky diode", "Shockley diode"], ans:2,
+   explain:[{l:"Answer",b:"The Schottky diode's metal-semiconductor junction has very low charge storage, giving it extremely fast switching — ideal for digital circuits."}]},
+
+  {type:'mcq', q:"Which of the following is sensitive to light",
+   opts:["Light emitting diode", "Photodiode", "Schottky diode", "Shockley diode"], ans:1,
+   explain:[{l:"Answer",b:"A photodiode is designed so its reverse current changes in response to incident light."}]},
+
+  {type:'mcq', q:"The process whereby some electrons fill some of the holes is called ______",
+   opts:["Recombination", "Combination", "Elimination", "Generation"], ans:0,
+   explain:[{l:"Answer",b:"When a free electron falls into a hole, the two carriers annihilate each other in a process called recombination."}]},
+
+  {type:'mcq', q:"At absolute zero temperature, an intrinsic silicon crystal acts as an insulator",
+   opts:["True", "False"], ans:0,
+   explain:[{l:"Answer",b:"At absolute zero, no electrons have enough thermal energy to jump the band gap into the conduction band, so intrinsic silicon behaves as a perfect insulator."}]},
+
+  {type:'mcq', q:"______ describes the closeness of emitter current and collector current",
+   opts:["DC alpha", "DC beta", "AC alpha", "AC beta"], ans:0,
+   explain:[{l:"Answer",b:"DC alpha (α = IC/IE) expresses how close the collector current is to the emitter current in a BJT."}]},
+
+  {type:'mcq', q:"The depletion zone around a pn junction",
+   opts:["Contains electrons only as free carriers", "Contains both free electrons and holes", "Contains holes only as free carriers", "Does not contain mobile carriers"], ans:3,
+   explain:[{l:"Answer",b:"The depletion region is stripped of mobile charge carriers, leaving only fixed ionised dopant atoms — it has no mobile carriers."}]},
+
+  {type:'mcq', q:"A transistor has the following currents IE = 50mA, IC = 49mA, calculate IB",
+   opts:["99mA", "1mA", "245mA", "1.02mA"], ans:1,
+   explain:[{l:"Answer",b:"IE = IB + IC, so IB = IE − IC = 50 − 49 = 1mA."}]},
+
+  {type:'mcq', q:"(NPN transistor diagram) The part labelled A is ______",
+   opts:["Base", "Collector", "Emitter", "Diffuser"], ans:1,
+   explain:[{l:"Answer",b:"In the standard NPN symbol layout, the top terminal (A) is the collector."}]},
+
+  {type:'mcq', q:"The part labelled B is ______",
+   opts:["Base", "Collector", "Emitter", "Diffuser"], ans:0,
+   explain:[{l:"Answer",b:"The side terminal into the transistor body (B) is the base, which controls current flow between collector and emitter."}]},
+
+  {type:'mcq', q:"The output S = [s1, s2] of an inequality detector with input A = [1,0] and B = [0,1] is",
+   opts:["[1,1]", "A = [0,0]", "1", "0"], ans:0,
+   explain:[{l:"Answer",b:"An inequality (comparator) detector flags both A>B and A<B outputs; since A=[1,0]=1(decimal-ish) and B=[0,1] differ, both inequality outputs assert, giving [1,1]."}]},
+
+  {type:'mcq', q:"A semiconductor device that converts light into electricity is known as",
+   opts:["Light emitting diode", "General purpose diode", "Photo diode", "Schottky diode"], ans:2,
+   explain:[{l:"Answer",b:"A photodiode generates a photocurrent proportional to the light striking its junction, converting light energy into electrical energy."}]},
+
+  {type:'mcq', q:"Which is the majority carrier in the n-type semiconductor?",
+   opts:["Holes", "Negative electrons", "Positive electrons", "Ions"], ans:1,
+   explain:[{l:"Answer",b:"In n-type material, donor doping supplies excess free electrons, making electrons the majority carrier."}]},
+
+  {type:'mcq', q:"Which is the majority carrier in the p-type semiconductor?",
+   opts:["Holes", "Negative electrons", "Positive electrons", "Ions"], ans:0,
+   explain:[{l:"Answer",b:"In p-type material, acceptor doping creates excess holes, making holes the majority carrier."}]},
+
+  {type:'mcq', q:"In an n-type semiconductor, holes are called",
+   opts:["Protons", "Charge carriers", "Majority carriers", "Minority carriers"], ans:3,
+   explain:[{l:"Answer",b:"Since electrons dominate in n-type material, the comparatively few holes present are the minority carriers."}]},
+
+  {type:'mcq', q:"In a p-type semiconductor, holes are called",
+   opts:["Protons", "Charge carriers", "Majority carriers", "Minority carriers"], ans:2,
+   explain:[{l:"Answer",b:"Holes are the dominant carrier type in p-type material, so they are classified as majority carriers."}]},
+
+  {type:'mcq', q:"Which of these is true about the AND Gate?",
+   opts:["Equivalent to a parallel switching circuit", "Equivalent to a series switching circuit", "An any-or-all gate", "Implements logic addition"], ans:1,
+   explain:[{l:"Answer",b:"An AND gate only outputs HIGH when all inputs are HIGH, just like a series (chain) of switches that must all close for current to flow."}]},
+
+  {type:'mcq', q:"Diodes are unidirectional",
+   opts:["True", "False"], ans:0,
+   explain:[{l:"Answer",b:"A diode allows current to flow easily in only one direction (forward bias) and blocks it in the reverse direction — hence unidirectional."}]},
+
+  {type:'mcq', q:"A semiconductor in its purest form is called",
+   opts:["Pure semiconductor", "Doped semiconductor", "Intrinsic semiconductor", "Extrinsic semiconductor"], ans:2,
+   explain:[{l:"Answer",b:"A semiconductor with no significant impurities added is termed intrinsic."}]},
+
+  {type:'mcq', q:"The BJT label X represents",
+   opts:["NPN", "PNP"], ans:1,
+   explain:[{l:"Answer",b:"In the two-diode equivalent model shown, the arrangement with the arrow/diode orientation labelled X corresponds to a PNP transistor."}]},
+
+  {type:'mcq', q:"When a diode is forward-biased, it acts as a ______ switch",
+   opts:["ON", "OFF", "None of the above", "Both ON/OFF"], ans:0,
+   explain:[{l:"Answer",b:"Forward biasing lowers the junction's resistance dramatically, letting current flow freely — behaving like a closed (ON) switch."}]},
+
+  {type:'mcq', q:"Which is the minority carrier in the n-type semiconductor?",
+   opts:["Holes", "Negative electrons", "Positive electrons", "Ions"], ans:0,
+   explain:[{l:"Answer",b:"Since electrons are the majority carrier in n-type material, holes are present only in small numbers as minority carriers."}]},
+
+  {type:'mcq', q:"Which is the minority carrier in the p-type semiconductor?",
+   opts:["Holes", "Negative electrons", "Positive electrons", "Ions"], ans:1,
+   explain:[{l:"Answer",b:"Since holes are the majority carrier in p-type material, free electrons are the minority carriers."}]},
+
+  {type:'mcq', q:"Evaluate the boolean expression Q = (X + YZ)(X + ZX)(YX + Z) when (XYZ) = [111]",
+   opts:["111", "010", "1", "0"], ans:2,
+   explain:[{l:"Answer",b:"With X=Y=Z=1: (X+YZ)=1, (X+ZX)=1, (YX+Z)=1, so Q = 1×1×1 = 1."}]},
+
+  {type:'mcq', q:"Evaluate the boolean expression Q = (X + YZ)(X' + Z'X')'(YX + Z) when (XYZ) = [111]",
+   opts:["111", "010", "1", "0"], ans:3,
+   explain:[{l:"Answer",b:"With X=Y=Z=1: X'=0 so (X'+Z'X')=0, and its complement (X'+Z'X')' = 1' = 0, which forces the whole product Q = 0."}]},
+
+  {type:'mcq', q:"Reverse biasing a diode allows current to flow easily through the diode",
+   opts:["True", "False"], ans:1,
+   explain:[{l:"Answer",b:"Reverse biasing widens the depletion region and blocks conventional current flow (aside from a tiny leakage current) — it does not allow easy conduction."}]},
+
+  {type:'mcq', q:"A diode conducts when reverse-biased and does not conduct when forward-biased",
+   opts:["True", "False"], ans:1,
+   explain:[{l:"Answer",b:"This statement has the bias conditions backwards — a diode conducts when forward-biased and blocks when reverse-biased."}]},
+
+  {type:'mcq', q:"A NOR gate is ON (its output is HIGH) only when all its inputs are",
+   opts:["ON", "OFF", "HIGH", "Positive"], ans:1,
+   explain:[{l:"Answer",b:"A NOR gate output is HIGH only when every input is LOW (OFF); any input going HIGH forces the output LOW."}]},
+
+  {type:'mcq', q:"The BJT label X represents",
+   opts:["NPN", "PNP"], ans:1,
+   explain:[{l:"Answer",b:"Based on the diode-equivalent orientation shown for X, the configuration corresponds to a PNP transistor."}]},
+
+  {type:'mcq', q:"Evaluate the boolean expression F = (XY + X)Z when (XYZ) = [101]",
+   opts:["111", "010", "1", "0"], ans:2,
+   explain:[{l:"Answer",b:"With X=1, Y=0, Z=1: XY=0, XY+X=1, F=(1)(1)=1."}]},
+
+  {type:'mcq', q:"Which of the following is not an application of BJT?",
+   opts:["Electronic switch", "Voltage and current amplifier", "Power amplifier", "Rectification of AC to DC"], ans:2,
+   explain:[{l:"Answer",b:"Rectification is normally performed by diodes, not BJTs, but per the reference answer key the listed exception among these applications is power amplification."}]},
+
+  {type:'mcq', q:"Whenever an electronic input signal of 10100 is connected to a NOT gate, the output is",
+   opts:["10101", "01011", "10100", "00101"], ans:1,
+   explain:[{l:"Answer",b:"A NOT gate inverts every bit: 10100 → 01011."}]},
+
+  {type:'mcq', q:"BJT common base connection has ______",
+   opts:["Voltage gain", "Current gain"], ans:0,
+   explain:[{l:"Answer",b:"The common-base configuration provides high voltage gain but a current gain slightly less than 1 (no current gain)."}]},
+
+  {type:'mcq', q:"Diodes are not unidirectional",
+   opts:["True", "False"], ans:1,
+   explain:[{l:"Answer",b:"This statement is false — diodes are indeed unidirectional, conducting freely in only one direction."}]},
+
+  {type:'mcq', q:"In an n-type semiconductor, free electrons are called",
+   opts:["Protons", "Charge carriers", "Majority carriers", "Minority carriers"], ans:2,
+   explain:[{l:"Answer",b:"Free electrons are the dominant carrier type introduced by donor doping in n-type material, making them majority carriers."}]},
+
+  {type:'mcq', q:"In a p-type semiconductor, free electrons are called",
+   opts:["Protons", "Charge carriers", "Majority carriers", "Minority carriers"], ans:3,
+   explain:[{l:"Answer",b:"In p-type material, holes dominate, so the comparatively few free electrons present are classified as minority carriers."}]},
+
+ ],
+};
+
+// ── HELPERS ──
+function shuffle(arr) {
+ const a = [...arr];
+ for (let i = a.length - 1; i > 0; i--) {
+ const j = Math.floor(Math.random() * (i + 1));
+ [a[i], a[j]] = [a[j], a[i]];
+ }
+ return a;
+}
+
+function checkFillAnswer(userAnswer, acceptedAnswers) {
+ const clean = userAnswer.trim().toLowerCase();
+ return acceptedAnswers.some(a => a.toLowerCase() === clean);
+}
+
+function buildFlatQuestions() {
+ const f = shuffle(RAW_QUESTIONS.circuitsPower).map((q,i) => ({...q, section:'Circuits & Power Systems', sectionKey:'A', globalIdx:i}));
+ const se = shuffle(RAW_QUESTIONS.transformers).map((q,i) => ({...q, section:'Transformers', sectionKey:'B', globalIdx:f.length+i}));
+ const hs = shuffle(RAW_QUESTIONS.semiconductors).map((q,i) => ({...q, section:'Semiconductors & Digital', sectionKey:'C', globalIdx:f.length+se.length+i}));
+ return [...f, ...se, ...hs];
+}
+
+// ── STATE ──
+let flatQ = [];
+let answers = [];
+let current = 0;
+let timeLeft = 80 * 60;
+let timerID = null;
+let finished = false;
+let quizActive = false;
+
+// ── GATE ──
+let ch = false, gr = false;
+const joinChannel = document.getElementById('joinChannel');
+const joinGroup = document.getElementById('joinGroup');
+const startBtn = document.getElementById('startBtn');
+const gateStatus = document.getElementById('gateStatus');
+const gateText = document.getElementById('gateText');
+
+function refreshGate() {
+ if (ch) joinChannel.classList.add('joined');
+ if (gr) joinGroup.classList.add('joined');
+ if (ch && gr) {
+ gateStatus.classList.add('ok');
+ gateText.textContent = "You're in! Ready to begin.";
+ startBtn.disabled = false;
+ } else {
+ const missing = [];
+ if (!ch) missing.push('Channel');
+ if (!gr) missing.push('Group');
+ gateText.textContent = `Join the ${missing.join(' and ')} above to unlock`;
+ }
+}
+joinChannel.addEventListener('click', () => { ch = true; setTimeout(refreshGate, 200); });
+joinGroup.addEventListener('click', () => { gr = true; setTimeout(refreshGate, 200); });
+
+// ── ANTI-CHEAT (20 second countdown) ──
+let antiCheatActive = false;
+const overlay = document.getElementById('antiCheatOverlay');
+const acCount = document.getElementById('acCount');
+
+document.addEventListener('visibilitychange', () => {
+ if (!quizActive || finished) return;
+ if (document.hidden) triggerAntiCheat();
+});
+
+function triggerAntiCheat() {
+ if (antiCheatActive) return;
+ antiCheatActive = true;
+ clearInterval(timerID);
+ overlay.classList.add('active');
+ let c = 20;
+ acCount.textContent = `Restarting in ${c}…`;
+ const iv = setInterval(() => {
+ c--;
+ if (c <= 0) {
+ clearInterval(iv);
+ overlay.classList.remove('active');
+ antiCheatActive = false;
+ resetQuiz();
+ } else {
+ acCount.textContent = `Restarting in ${c}…`;
+ }
+ }, 1000);
+}
+
+function resetQuiz() {
+ finished = false;
+ timeLeft = 80 * 60;
+ flatQ = buildFlatQuestions();
+ answers = new Array(flatQ.length).fill(null);
+ current = 0;
+ document.getElementById('quizScreen').classList.remove('hidden');
+ document.getElementById('resultScreen').classList.add('hidden');
+ buildDots();
+ render(0);
+ timerID = setInterval(tick, 1000);
+ updateTimerDisplay();
+}
+
+// ── TOAST ──
+let toastTimer = null;
+function showToast(msg) {
+ const existing = document.querySelector('.toast');
+ if (existing) existing.remove();
+ const t = document.createElement('div');
+ t.className = 'toast';
+ t.innerHTML = `<i class="fa-solid fa-circle-exclamation"></i> ${msg}`;
+ document.body.appendChild(t);
+ clearTimeout(toastTimer);
+ toastTimer = setTimeout(() => t.remove(), 3000);
+}
+
+// ── QUIZ FLOW ──
+document.getElementById('startBtn').addEventListener('click', startQuiz);
+document.getElementById('backBtn').addEventListener('click', () => go(current - 1));
+document.getElementById('nextBtn').addEventListener('click', () => go(current + 1));
+document.getElementById('finishBtn').addEventListener('click', () => {
+ const answered = answers.filter(a => a !== null).length;
+ if (answered < 10) {
+ showToast(`Answer at least 10 questions to submit. You've answered ${answered}.`);
+ return;
+ }
+ submitQuiz();
+});
+document.getElementById('retryBtn').addEventListener('click', () => location.reload());
+
+function startQuiz() {
+ flatQ = buildFlatQuestions();
+ answers = new Array(flatQ.length).fill(null);
+ current = 0;
+ finished = false;
+ quizActive = true;
+ document.getElementById('startScreen').classList.add('hidden');
+ document.getElementById('quizScreen').classList.remove('hidden');
+ document.getElementById('timer').classList.remove('hidden');
+ document.getElementById('calcFab').classList.remove('hidden');
+ buildDots();
+ render(0);
+ timerID = setInterval(tick, 1000);
+ updateTimerDisplay();
+}
+
+function tick() {
+ timeLeft--;
+ if (timeLeft <= 0) {
+ timeLeft = 0;
+ updateTimerDisplay();
+ clearInterval(timerID);
+ submitQuiz();
+ return;
+ }
+ updateTimerDisplay();
+}
+
+function updateTimerDisplay() {
+ const m = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+ const s = (timeLeft % 60).toString().padStart(2, '0');
+ const el = document.getElementById('timer');
+ document.getElementById('timerText').textContent = `${m}:${s}`;
+ el.classList.toggle('warn', timeLeft <= 300);
+}
+
+function go(i) {
+ if (i < 0 || i >= flatQ.length) return;
+ if (flatQ[current].type === 'fill') {
+ const inp = document.getElementById('fillInput');
+ if (inp) answers[current] = inp.value || null;
+ }
+ current = i;
+ render(i);
+}
+
+function render(i) {
+ const item = flatQ[i];
+ document.getElementById('sectionTag').innerHTML = `<i class="fa-solid ${sectionIcon(item.sectionKey)}"></i> ${item.section}`;
+ document.getElementById('qCounter').textContent = `Question ${i + 1} of ${flatQ.length}`;
+
+ const typeTag = document.getElementById('typeTag');
+ if (item.type === 'fill') {
+ typeTag.classList.remove('hidden');
+ } else {
+ typeTag.classList.add('hidden');
+ }
+
+ const answered = answers.filter(a => a !== null).length;
+ document.getElementById('progressFill').style.width = (answered / flatQ.length * 100) + '%';
+
+ document.getElementById('qText').innerHTML = item.q;
+
+ const ow = document.getElementById('optsWrap');
+ ow.innerHTML = '';
+
+ if (item.type === 'fill') {
+ const wrap = document.createElement('div');
+ wrap.className = 'fill-wrap';
+ const inp = document.createElement('input');
+ inp.type = 'text';
+ inp.className = 'fill-input';
+ inp.id = 'fillInput';
+ inp.placeholder = 'Type your answer here…';
+ inp.value = answers[i] || '';
+ inp.autocomplete = 'off';
+ inp.addEventListener('input', () => {
+ answers[i] = inp.value || null;
+ updateDots();
+ });
+ inp.addEventListener('keydown', e => {
+ if (e.key === 'Enter') go(current + 1);
+ });
+ const hint = document.createElement('div');
+ hint.className = 'fill-hint';
+ hint.innerHTML = '<i class="fa-solid fa-circle-info"></i> Tip: engineering syntax matters — verify calculations carefully.';
+ wrap.appendChild(inp);
+ wrap.appendChild(hint);
+ ow.appendChild(wrap);
+ setTimeout(() => inp.focus(), 50);
+ } else {
+ item.opts.forEach((opt, oi) => {
+ const d = document.createElement('div');
+ d.className = 'opt' + (answers[i] === oi ? ' selected' : '');
+ d.innerHTML = `<span class="opt-letter">${String.fromCharCode(65 + oi)}</span><span class="opt-text">${opt}</span>`;
+ d.addEventListener('click', () => {
+ if (finished) return;
+ answers[i] = oi;
+ render(i);
+ updateDots();
+ });
+ ow.appendChild(d);
+ });
+ }
+
+ document.getElementById('backBtn').disabled = (i === 0);
+ const nb = document.getElementById('nextBtn');
+ const fb = document.getElementById('finishBtn');
+ if (i === flatQ.length - 1) { nb.classList.add('hidden'); fb.classList.remove('hidden'); }
+ else { nb.classList.remove('hidden'); fb.classList.add('hidden'); }
+
+ updateDots();
+ window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function sectionIcon(key) {
+ return key === 'A' ? 'fa-bolt' : key === 'B' ? 'fa-network-wired' : 'fa-microchip';
+}
+
+function buildDots() {
+ ['dotsA','dotsB','dotsC'].forEach(id => document.getElementById(id).innerHTML = '');
+ flatQ.forEach((item, i) => {
+ const d = document.createElement('div');
+ d.className = 'dot'; d.id = 'dot-' + i; d.title = 'Q' + (i + 1);
+ d.addEventListener('click', () => go(i));
+ const container = item.sectionKey === 'A' ? 'dotsA' : item.sectionKey === 'B' ? 'dotsB' : 'dotsC';
+ document.getElementById(container).appendChild(d);
+ });
+}
+
+function updateDots() {
+ flatQ.forEach((_, i) => {
+ const d = document.getElementById('dot-' + i);
+ if (!d) return;
+ d.classList.remove('answered', 'current');
+ if (i === current) d.classList.add('current');
+ else if (answers[i] !== null) d.classList.add('answered');
+ });
+}
+
+// ── KEYBOARD ──
+document.addEventListener('keydown', e => {
+ if (document.getElementById('quizScreen').classList.contains('hidden') || finished) return;
+ if (document.activeElement && document.activeElement.closest && document.activeElement.closest('#calcPanel')) return;
+ if (e.key === 'ArrowRight') go(current + 1);
+ if (e.key === 'ArrowLeft') go(current - 1);
+ if (flatQ[current] && flatQ[current].type === 'mcq') {
+ if (['1','2','3','4'].includes(e.key)) {
+ const oi = parseInt(e.key) - 1;
+ if (flatQ[current].opts[oi] !== undefined) { answers[current] = oi; render(current); }
+ }
+ }
+});
+
+// ── SUBMIT ──
+function submitQuiz() {
+ if (finished) return;
+ if (flatQ[current] && flatQ[current].type === 'fill') {
+ const inp = document.getElementById('fillInput');
+ if (inp) answers[current] = inp.value || null;
+ }
+ finished = true; quizActive = false;
+ clearInterval(timerID);
+ document.getElementById('quizScreen').classList.add('hidden');
+ document.getElementById('timer').classList.add('hidden');
+ document.getElementById('calcFab').classList.add('hidden');
+ document.getElementById('calcPanel').classList.add('hidden');
+ document.getElementById('calcBackdrop').classList.add('hidden');
+ document.getElementById('resultScreen').classList.remove('hidden');
+
+ let score = 0;
+ flatQ.forEach((item, i) => {
+ if (item.type === 'mcq') {
+ if (answers[i] === item.ans) score++;
+ } else {
+ if (answers[i] && checkFillAnswer(answers[i], item.acceptedAnswers)) score++;
+ }
+ });
+
+ const total = flatQ.length;
+ const pct = Math.round(score / total * 100);
+
+ document.getElementById('resultScore').textContent = score;
+ document.querySelector('.result-of').textContent = '/ ' + total;
+ document.getElementById('resultPct').textContent = pct + '%';
+ document.getElementById('resultMsg').innerHTML =
+ pct >= 70 ? '<i class="fa-solid fa-trophy" style="color:var(--green);"></i> Terrific technical acumen! Excellent command of parameters.' :
+ pct >= 50 ? '<i class="fa-solid fa-arrow-trend-up" style="color:var(--accent);"></i> Solid effort. Run through solution cards to sharpen execution metrics.' :
+ '<i class="fa-solid fa-book" style="color:var(--purple);"></i> Core machine parameters require optimization. Review architecture and retry.';
+
+ const bd = document.getElementById('breakdownGrid');
+ bd.innerHTML = '';
+ const sectionMeta = {
+ 'Circuits & Power Systems': 'fa-bolt',
+ 'Transformers': 'fa-network-wired',
+ 'Semiconductors & Digital': 'fa-microchip'
+ };
+ ['Circuits & Power Systems','Transformers','Semiconductors & Digital'].forEach(sec => {
+ const idx = flatQ.map((f, i) => f.section === sec ? i : -1).filter(x => x >= 0);
+ let sc = 0;
+ idx.forEach(i => {
+ const item = flatQ[i];
+ if (item.type === 'mcq' && answers[i] === item.ans) sc++;
+ else if (item.type === 'fill' && answers[i] && checkFillAnswer(answers[i], item.acceptedAnswers)) sc++;
+ });
+ const sp = idx.length > 0 ? Math.round(sc / idx.length * 100) : 0;
+ const c = document.createElement('div');
+ c.className = 'bd-card';
+ c.innerHTML = `<div class="bd-name"><i class="fa-solid ${sectionMeta[sec]}"></i> ${sec}</div><div><span class="bd-score">${sc}</span><span class="bd-total"> / ${idx.length}</span></div><div class="bd-bar"><div class="bd-bar-fill" style="width:0%"></div></div>`;
+ bd.appendChild(c);
+ setTimeout(() => { c.querySelector('.bd-bar-fill').style.width = sp + '%'; }, 150);
+ });
+
+ const rl = document.getElementById('reviewList');
+ rl.innerHTML = '';
+ flatQ.forEach((item, i) => {
+ let isRight = false;
+ let chosenText = 'No answer';
+ let corrText = '';
+
+ if (item.type === 'mcq') {
+ isRight = answers[i] === item.ans;
+ chosenText = answers[i] !== null ? item.opts[answers[i]] : 'No answer';
+ corrText = item.opts[item.ans];
+ } else {
+ isRight = answers[i] ? checkFillAnswer(answers[i], item.acceptedAnswers) : false;
+ chosenText = answers[i] || 'No answer';
+ corrText = item.acceptedAnswers[0];
+ }
+
+ const div = document.createElement('div');
+ div.className = 'review-item ' + (isRight ? 'right' : 'miss');
+ const stepsHTML = (item.explain || []).map(s =>
+ `<div class="ex-step"><div class="ex-step-label"><i class="fa-solid fa-circle-check"></i> ${s.l}</div><div class="ex-step-body">${s.b.replace(/\n/g,'<br>')}</div></div>`
+ ).join('');
+
+ div.innerHTML = `
+ <div class="ri-section"><i class="fa-solid ${sectionMeta[item.section]}"></i> ${item.section}${item.type === 'fill' ? ' · Fill-in' : ''}</div>
+ <div class="ri-q">${i + 1}. ${item.q}</div>
+ <div class="ri-ans ${isRight ? 'right' : 'wrong'}"><i class="fa-solid ${isRight ? 'fa-circle-check' : 'fa-circle-xmark'}"></i> Your answer: ${chosenText}</div>
+ ${!isRight ? `<div class="ri-ans correct-reveal"><i class="fa-solid fa-circle-check"></i> Correct: ${corrText}</div>` : ''}
+ ${stepsHTML ? `<button class="explain-btn" onclick="toggleExplain(this)"><span><i class="fa-solid fa-lightbulb"></i> Show Solution</span><span class="explain-arrow"><i class="fa-solid fa-chevron-down"></i></span></button><div class="explain-box">${stepsHTML}</div>` : ''}
+ `;
+ rl.appendChild(div);
+ });
+}
+
+function toggleExplain(btn) {
+ const box = btn.nextElementSibling;
+ const open = box.classList.contains('open');
+ box.classList.toggle('open', !open);
+ btn.classList.toggle('open', !open);
+ btn.querySelector('span').innerHTML = open
+ ? '<i class="fa-solid fa-lightbulb"></i> Show Solution'
+ : '<i class="fa-solid fa-book-open"></i> Hide Solution';
+}
+
+// ══════════════════════════════════════════
+// ── DTZ CALCULATOR ──
+// ══════════════════════════════════════════
+(function() {
+ const fab = document.getElementById('calcFab');
+ const backdrop = document.getElementById('calcBackdrop');
+ const panel = document.getElementById('calcPanel');
+ const header = document.getElementById('calcHeader');
+ const closeBtn = document.getElementById('calcClose');
+ const exprEl = document.getElementById('calcExpr');
+ const resEl = document.getElementById('calcResult');
+ const grid = document.getElementById('calcGrid');
+ const modeDeg = document.getElementById('calcModeDeg');
+ const modeRad = document.getElementById('calcModeRad');
+
+ let expr = '';
+ let angleMode = 'deg';
+ let justEvaluated = false;
+
+ const BUTTONS = [
+ {label:'AC', cls:'clear', act:'clear'},
+ {label:'DEL', cls:'clear', act:'del'},
+ {label:'%', cls:'op', act:'insert', val:'%'},
+ {label:'÷', cls:'op', act:'insert', val:'÷'},
+
+ {label:'sin', cls:'fn', act:'insert', val:'sin('},
+ {label:'cos', cls:'fn', act:'insert', val:'cos('},
+ {label:'tan', cls:'fn', act:'insert', val:'tan('},
+ {label:'×', cls:'op', act:'insert', val:'×'},
+
+ {label:'log', cls:'fn', act:'insert', val:'log('},
+ {label:'ln', cls:'fn', act:'insert', val:'ln('},
+ {label:'√', cls:'fn', act:'insert', val:'√('},
+ {label:'−', cls:'op', act:'insert', val:'−'},
+
+ {label:'π', cls:'fn', act:'insert', val:'π'},
+ {label:'e', cls:'fn', act:'insert', val:'e'},
+ {label:'^', cls:'op', act:'insert', val:'^'},
+ {label:'+', cls:'op', act:'insert', val:'+'},
+
+ {label:'7', act:'insert', val:'7'},
+ {label:'8', act:'insert', val:'8'},
+ {label:'9', act:'insert', val:'9'},
+ {label:'(', act:'insert', val:'('},
+
+ {label:'4', act:'insert', val:'4'},
+ {label:'5', act:'insert', val:'5'},
+ {label:'6', act:'insert', val:'6'},
+ {label:')', act:'insert', val:')'},
+
+ {label:'1', act:'insert', val:'1'},
+ {label:'2', act:'insert', val:'2'},
+ {label:'3', act:'insert', val:'3'},
+ {label:'EXP', cls:'fn', act:'insert', val:'×10^'},
+
+ {label:'0', act:'insert', val:'0'},
+ {label:'.', act:'insert', val:'.'},
+ {label:'x²', cls:'fn', act:'insert', val:'^2'},
+ {label:'=', cls:'equals', act:'eval'},
+ ];
+
+ BUTTONS.forEach(b => {
+ const btn = document.createElement('button');
+ btn.className = 'calc-btn' + (b.cls ? ' ' + b.cls : '');
+ btn.textContent = b.label;
+ btn.type = 'button';
+ btn.addEventListener('click', () => handleAction(b));
+ grid.appendChild(btn);
+ });
+
+ function handleAction(b) {
+ if (b.act === 'clear') {
+ expr = ''; justEvaluated = false; updateDisplay();
+ return;
+ }
+ if (b.act === 'del') {
+ expr = expr.slice(0, -1); justEvaluated = false; updateDisplay();
+ return;
+ }
+ if (b.act === 'insert') {
+ if (justEvaluated) {
+ if (/^[0-9.]$/.test(b.val) || b.val === '(' ) { expr = ''; }
+ }
+ justEvaluated = false;
+ expr += b.val;
+ updateDisplay();
+ return;
+ }
+ if (b.act === 'eval') {
+ evaluate();
+ return;
+ }
+ }
+
+ function updateDisplay() {
+ exprEl.textContent = expr || '\u00A0';
+ resEl.classList.remove('err');
+ }
+
+ function evaluate() {
+ if (!expr.trim()) return;
+ try {
+ const val = computeExpr(expr, angleMode);
+ if (val === null || Number.isNaN(val) || !Number.isFinite(val)) throw new Error('bad');
+ const display = formatResult(val);
+ const openCount = (expr.match(/\(/g) || []).length;
+ const closeCount = (expr.match(/\)/g) || []).length;
+ const shownExpr = openCount > closeCount ? expr + ')'.repeat(openCount - closeCount) : expr;
+ exprEl.textContent = shownExpr + ' =';
+ resEl.textContent = display;
+ resEl.classList.remove('err');
+ expr = display;
+ justEvaluated = true;
+ } catch (e) {
+ resEl.textContent = 'Error';
+ resEl.classList.add('err');
+ justEvaluated = false;
+ }
+ }
+
+ function formatResult(val) {
+ if (Math.abs(val) !== 0 && (Math.abs(val) < 1e-6 || Math.abs(val) >= 1e12)) {
+ return val.toExponential(6).replace(/e\+?(-?)(\d+)/, ' × 10^$1$2');
+ }
+ let s = parseFloat(val.toFixed(10)).toString();
+ return s;
+ }
+
+ function computeExpr(raw, mode) {
+ let s = raw;
+ const openCount = (s.match(/\(/g) || []).length;
+ const closeCount = (s.match(/\)/g) || []).length;
+ if (openCount > closeCount) s += ')'.repeat(openCount - closeCount);
+
+ s = s.replace(/×10\^/g, '*10^');
+
+ const sinT = mode === 'deg' ? (x => Math.sin(x * Math.PI / 180)) : Math.sin;
+ const cosT = mode === 'deg' ? (x => Math.cos(x * Math.PI / 180)) : Math.cos;
+ const tanT = mode === 'deg' ? (x => Math.tan(x * Math.PI / 180)) : Math.tan;
+
+ const FUNCS = {
+ 'sin': sinT, 'cos': cosT, 'tan': tanT,
+ 'log': Math.log10, 'ln': Math.log, '√': Math.sqrt, 'sqrt': Math.sqrt,
+ };
+ const CONSTS = { 'π': Math.PI, 'pi': Math.PI, 'e': Math.E };
+
+ const tokens = [];
+ let i = 0;
+ const isDigit = c => c >= '0' && c <= '9';
+ const isAlpha = c => /[a-zA-Zπ√]/.test(c);
+ while (i < s.length) {
+ const c = s[i];
+ if (c === ' ') { i++; continue; }
+ if (c === '×') { tokens.push({t:'op', v:'*'}); i++; continue; }
+ if (c === '÷') { tokens.push({t:'op', v:'/'}); i++; continue; }
+ if (c === '−') { tokens.push({t:'op', v:'-'}); i++; continue; }
+ if ('+-*/^(),%'.includes(c)) { tokens.push({t: c === '(' ? 'lp' : c === ')' ? 'rp' : 'op', v:c}); i++; continue; }
+ if (isDigit(c) || c === '.') {
+ let j = i;
+ while (j < s.length && (isDigit(s[j]) || s[j] === '.')) j++;
+ tokens.push({t:'num', v:parseFloat(s.slice(i,j))});
+ i = j; continue;
+ }
+ if (isAlpha(c)) {
+ let j = i;
+ while (j < s.length && isAlpha(s[j])) j++;
+ const word = s.slice(i,j);
+ if (FUNCS[word]) tokens.push({t:'func', v:word});
+ else if (CONSTS[word] !== undefined) tokens.push({t:'num', v:CONSTS[word]});
+ else throw new Error('unknown token: ' + word);
+ i = j; continue;
+ }
+ throw new Error('unexpected char: ' + c);
+ }
+
+ let pos = 0;
+ const peek = () => tokens[pos];
+ const next = () => tokens[pos++];
+
+ function parseExpression() { return parseAddSub(); }
+
+ function parseAddSub() {
+ let left = parseMulDiv();
+ while (peek() && peek().t === 'op' && (peek().v === '+' || peek().v === '-')) {
+ const op = next().v;
+ const right = parseMulDiv();
+ left = op === '+' ? left + right : left - right;
+ }
+ return left;
+ }
+
+ function parseMulDiv() {
+ let left = parseUnary();
+ while (peek() && peek().t === 'op' && (peek().v === '*' || peek().v === '/')) {
+ const op = next().v;
+ const right = parseUnary();
+ left = op === '*' ? left * right : left / right;
+ }
+ return left;
+ }
+
+ function parseUnary() {
+ if (peek() && peek().t === 'op' && peek().v === '-') { next(); return -parseUnary(); }
+ if (peek() && peek().t === 'op' && peek().v === '+') { next(); return parseUnary(); }
+ return parsePower();
+ }
+
+ function parsePower() {
+ let base = parsePostfix();
+ if (peek() && peek().t === 'op' && peek().v === '^') {
+ next();
+ const exp = parseUnary();
+ base = Math.pow(base, exp);
+ }
+ return base;
+ }
+
+ function parsePostfix() {
+ let val = parseAtom();
+ while (peek() && peek().t === 'op' && peek().v === '%') {
+ next();
+ val = val / 100;
+ }
+ return val;
+ }
+
+ function parseAtom() {
+ const tok = peek();
+ if (!tok) throw new Error('unexpected end');
+ if (tok.t === 'num') { next(); return tok.v; }
+ if (tok.t === 'func') {
+ next();
+ if (!peek() || peek().t !== 'lp') throw new Error('expected ( after function');
+ next();
+ const arg = parseExpression();
+ if (!peek() || peek().t !== 'rp') throw new Error('expected )');
+ next();
+ return FUNCS[tok.v](arg);
+ }
+ if (tok.t === 'lp') {
+ next();
+ const val = parseExpression();
+ if (!peek() || peek().t !== 'rp') throw new Error('expected )');
+ next();
+ return val;
+ }
+ throw new Error('unexpected token');
+ }
+
+ const result = parseExpression();
+ if (pos !== tokens.length) throw new Error('trailing tokens');
+ return result;
+ }
+
+ function openCalc() {
+ panel.classList.remove('hidden');
+ backdrop.classList.remove('hidden');
+ }
+ function closeCalc() {
+ panel.classList.add('hidden');
+ backdrop.classList.add('hidden');
+ }
+
+ fab.addEventListener('click', openCalc);
+ closeBtn.addEventListener('click', closeCalc);
+ backdrop.addEventListener('click', closeCalc);
+
+ modeDeg.addEventListener('click', () => {
+ angleMode = 'deg';
+ modeDeg.classList.add('active'); modeRad.classList.remove('active');
+ });
+ modeRad.addEventListener('click', () => {
+ angleMode = 'rad';
+ modeRad.classList.add('active'); modeDeg.classList.remove('active');
+ });
+
+ let dragging = false, dragOffX = 0, dragOffY = 0;
+
+ function startDrag(clientX, clientY) {
+ dragging = true;
+ const rect = panel.getBoundingClientRect();
+ panel.classList.add('dragged');
+ panel.style.left = rect.left + 'px';
+ panel.style.top = rect.top + 'px';
+ dragOffX = clientX - rect.left;
+ dragOffY = clientY - rect.top;
+ panel.style.transition = 'none';
+ }
+ function moveDrag(clientX, clientY) {
+ if (!dragging) return;
+ const pw = panel.offsetWidth, ph = panel.offsetHeight;
+ let nl = clientX - dragOffX;
+ let nt = clientY - dragOffY;
+ nl = Math.min(Math.max(nl, 4), window.innerWidth - pw - 4);
+ nt = Math.min(Math.max(nt, 4), window.innerHeight - ph - 4);
+ panel.style.left = nl + 'px';
+ panel.style.top = nt + 'px';
+ }
+ function endDrag() {
+ if (!dragging) return;
+ dragging = false;
+ panel.style.transition = '';
+ }
+
+ header.addEventListener('mousedown', e => { startDrag(e.clientX, e.clientY); e.preventDefault(); });
+ window.addEventListener('mousemove', e => moveDrag(e.clientX, e.clientY));
+ window.addEventListener('mouseup', endDrag);
+
+ header.addEventListener('touchstart', e => {
+ const t = e.touches[0];
+ startDrag(t.clientX, t.clientY);
+ }, {passive:true});
+ window.addEventListener('touchmove', e => {
+ if (!dragging) return;
+ const t = e.touches[0];
+ moveDrag(t.clientX, t.clientY);
+ }, {passive:false});
+ window.addEventListener('touchend', endDrag);
+})();
+</script>
+</body>
+</html>
