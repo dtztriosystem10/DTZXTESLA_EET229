@@ -1,0 +1,1519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DTZ TRIO · EET 229 Practice Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+:root {
+ --bg: #0a0c12;
+ --surface: #0f1117;
+ --surface2: #141820;
+ --surface3: #1a2030;
+ --border: #1e2640;
+ --border2: #26304e;
+ --ink: #e2e8f6;
+ --ink2: #94a3c0;
+ --ink3: #4a5878;
+ --accent: #4f8ef7;
+ --accent2: #7c6fff;
+ --accent-dim: #0d1630;
+ --accent-glow: rgba(79,142,247,.14);
+ --teal: #2dd4bf;
+ --teal-dim: #0a2028;
+ --green: #34d399;
+ --green-dim: #0a1e14;
+ --red: #f87171;
+ --red-dim: #1e0a0a;
+ --purple: #a78bfa;
+ --r: 16px;
+ --r-sm: 10px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+ background: var(--bg);
+ color: var(--ink);
+ font-family: 'Outfit', sans-serif;
+ min-height: 100vh;
+ display: flex;
+ flex-direction: column;
+ background-image:
+ radial-gradient(ellipse 900px 600px at 10% 0%, rgba(79,142,247,.06) 0%, transparent 70%),
+ radial-gradient(ellipse 700px 500px at 90% 30%, rgba(124,111,255,.05) 0%, transparent 60%),
+ radial-gradient(ellipse 500px 400px at 50% 100%, rgba(45,212,191,.04) 0%, transparent 60%);
+}
+
+.topbar {
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ padding: 14px 24px;
+ border-bottom: 1px solid var(--border);
+ background: rgba(10,12,18,.92);
+ backdrop-filter: blur(20px);
+ position: sticky; top: 0; z-index: 50;
+}
+.brand { display: flex; align-items: center; gap: 14px; }
+.brand-badge {
+ background: linear-gradient(135deg, #4f8ef7, #7c6fff);
+ color: #fff; font-weight: 800; font-size: .72rem;
+ letter-spacing: 2px; padding: 6px 14px; border-radius: 50px;
+ text-transform: uppercase; font-family: 'JetBrains Mono', monospace; white-space: nowrap;
+}
+.brand-name { font-family: 'Fraunces', serif; font-size: 1.1rem; color: var(--ink); letter-spacing: .3px; line-height: 1.2; }
+.brand-sub { font-size: .7rem; color: var(--ink3); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 2px; font-family: 'JetBrains Mono', monospace; }
+
+#timer {
+ font-family: 'JetBrains Mono', monospace; font-size: 1rem; font-weight: 600;
+ color: var(--accent); background: var(--accent-dim);
+ border: 1px solid rgba(79,142,247,.25); padding: 7px 16px; border-radius: 50px;
+ letter-spacing: 2px; min-width: 96px; text-align: center; transition: all .3s;
+ display: flex; align-items: center; gap: 8px; justify-content: center;
+}
+#timer.warn { color: var(--red); background: var(--red-dim); border-color: rgba(248,113,113,.3); animation: blink 1s infinite; }
+@keyframes blink { 0%,100%{opacity:1}50%{opacity:.4} }
+
+#antiCheatOverlay {
+ display: none; position: fixed; inset: 0; z-index: 999;
+ background: rgba(10,12,18,.97);
+ align-items: center; justify-content: center; flex-direction: column; gap: 20px;
+ text-align: center; padding: 30px;
+}
+#antiCheatOverlay.active { display: flex; }
+.ac-icon { font-size: 3rem; animation: shake .4s ease; color: var(--red); }
+@keyframes shake{0%,100%{transform:rotate(0)}25%{transform:rotate(-8deg)}75%{transform:rotate(8deg)}}
+.ac-title { font-family: 'Fraunces', serif; font-size: 1.6rem; color: var(--red); }
+.ac-body { color: var(--ink2); font-size: .9rem; max-width: 420px; line-height: 1.7; }
+.ac-count { font-family: 'JetBrains Mono', monospace; font-size: 2rem; font-weight: 700; color: var(--red); background: var(--red-dim); border: 1px solid rgba(248,113,113,.3); padding: 10px 28px; border-radius: 12px; }
+
+main { flex: 1; display: flex; justify-content: center; padding: 0 16px 120px; }
+#startScreen, #quizScreen, #resultScreen { width: 100%; max-width: 720px; }
+.hidden { display: none !important; }
+
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 32px 28px; margin-bottom: 20px; }
+.card-accent { border-color: rgba(79,142,247,.2); background: linear-gradient(145deg, var(--surface), rgba(79,142,247,.04)); }
+
+/* ── HERO ── */
+.hero-wrap { padding: 56px 0 8px; text-align: center; }
+.hero-eyebrow {
+ display: inline-flex; align-items: center; gap: 9px;
+ font-size: .7rem; letter-spacing: 3px; text-transform: uppercase;
+ color: var(--accent); font-family: 'JetBrains Mono', monospace; font-weight: 500; margin-bottom: 22px;
+ background: var(--accent-dim); border: 1px solid rgba(79,142,247,.22); padding: 7px 16px 7px 13px; border-radius: 50px;
+}
+.hero-eyebrow i { font-size: .68rem; }
+.hero-title { font-family: 'Fraunces', serif; font-size: 2.5rem; line-height: 1.16; color: var(--ink); margin-bottom: 16px; font-weight: 600; letter-spacing: -.5px; }
+.hero-title span { color: var(--accent); font-style: italic; }
+.hero-desc { color: var(--ink2); font-size: .98rem; line-height: 1.75; max-width: 480px; margin: 0 auto 30px; }
+
+.hero-stats { display: flex; align-items: center; justify-content: center; gap: 0; margin-bottom: 36px; flex-wrap: wrap; }
+.hero-stats { display: flex; align-items: center; justify-content: center; gap: 0; margin-bottom: 36px; flex-wrap: wrap; }
+.hero-stat { padding: 0 26px; text-align: center; }
+.hero-stat-num { font-family: 'JetBrains Mono', monospace; font-size: 1.9rem; font-weight: 700; color: var(--ink); line-height: 1; }
+.hero-stat-num i { font-size: 1.1rem; color: var(--accent); margin-right: 4px; }
+.hero-stat-label { font-size: .66rem; color: var(--ink3); text-transform: uppercase; letter-spacing: 1.8px; margin-top: 7px; font-weight: 500; }
+.hero-stat-div { width: 1px; height: 38px; background: var(--border); flex-shrink: 0; }
+
+/* ── SECTION TILES ── */
+.section-tiles { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 36px; }
+.section-tile { background: var(--surface2); border: 1px solid var(--border); border-radius: 14px; padding: 18px 14px; text-align: center; transition: border-color .2s, transform .2s; }
+.section-tile:hover { border-color: rgba(79,142,247,.3); transform: translateY(-2px); }
+.section-tile-icon { width: 40px; height: 40px; margin: 0 auto 10px; border-radius: 12px; background: var(--accent-dim); border: 1px solid rgba(79,142,247,.22); display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 1rem; }
+.section-tile-name { font-size: .82rem; font-weight: 700; color: var(--ink); margin-bottom: 3px; }
+.section-tile-meta { font-size: .68rem; color: var(--ink3); font-family: 'JetBrains Mono', monospace; }
+
+/* ── HOW IT WORKS ── */
+.section-heading { display: flex; align-items: center; gap: 12px; margin: 40px 0 18px; }
+.section-heading-icon { width: 34px; height: 34px; border-radius: 10px; background: var(--accent-dim); border: 1px solid rgba(79,142,247,.22); display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: .85rem; flex-shrink: 0; }
+.section-heading-text { font-family: 'Fraunces', serif; font-size: 1.25rem; color: var(--ink); font-weight: 600; }
+
+.flow-grid { display: grid; gap: 10px; }
+.flow-item { display: flex; gap: 16px; align-items: flex-start; padding: 16px 18px; background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; }
+.flow-icon { width: 38px; height: 38px; border-radius: 11px; background: linear-gradient(135deg, #4f8ef7, #7c6fff); display: flex; align-items: center; justify-content: center; color: #fff; font-size: .85rem; flex-shrink: 0; margin-top: 1px; }
+.flow-body { flex: 1; }
+.flow-title { font-size: .9rem; font-weight: 700; color: var(--ink); margin-bottom: 3px; }
+.flow-text { font-size: .84rem; color: var(--ink2); line-height: 1.6; }
+
+/* ── FORMAT BREAKDOWN ── */
+.format-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.format-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 14px; padding: 20px 18px; }
+.format-icon-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.format-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: .9rem; flex-shrink: 0; }
+.format-icon.mc { background: var(--accent-dim); border: 1px solid rgba(79,142,247,.22); color: var(--accent); }
+.format-icon.fb { background: rgba(167,139,250,.1); border: 1px solid rgba(167,139,250,.25); color: var(--purple); }
+.format-name { font-size: .88rem; font-weight: 700; color: var(--ink); }
+.format-count { font-size: .68rem; color: var(--ink3); font-family: 'JetBrains Mono', monospace; }
+.format-text { font-size: .82rem; color: var(--ink2); line-height: 1.6; }
+
+.rules-list { display: grid; gap: 8px; margin: 0; }
+.rule-item { display: flex; gap: 14px; align-items: flex-start; font-size: .87rem; color: var(--ink2); line-height: 1.55; padding: 14px 16px; background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; }
+.rule-icon { width: 30px; height: 30px; border-radius: 8px; flex-shrink: 0; background: var(--accent-dim); border: 1px solid rgba(79,142,247,.2); display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: .78rem; margin-top: 1px; }
+.rule-text { flex: 1; padding-top: 3px; }
+.rule-text strong { color: var(--ink); }
+
+.gate-box { border: 1px solid rgba(79,142,247,.2); border-radius: var(--r); padding: 24px; background: linear-gradient(145deg, rgba(79,142,247,.05), transparent); margin: 0; }
+.gate-label-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.gate-label-icon { width: 30px; height: 30px; border-radius: 9px; background: var(--accent-dim); border: 1px solid rgba(79,142,247,.22); display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: .8rem; flex-shrink: 0; }
+.gate-label { font-size: .92rem; color: var(--ink); font-weight: 700; }
+.gate-sub { font-size: .8rem; color: var(--ink3); margin: -10px 0 16px 40px; }
+.gate-links { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+.gate-link { flex: 1; min-width: 160px; display: flex; align-items: center; gap: 10px; padding: 13px 16px; border-radius: 12px; border: 1px solid var(--border2); background: var(--surface2); text-decoration: none; color: var(--ink); font-size: .88rem; font-weight: 600; transition: border-color .15s, background .15s; position: relative; }
+.gate-link:hover { border-color: rgba(79,142,247,.35); background: var(--surface3); }
+.gate-link.joined { border-color: var(--teal); }
+.gate-link .gl-icon { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(79,142,247,.1); font-size: 1rem; flex-shrink: 0; color: var(--accent); }
+.gate-link.joined .gl-icon { background: rgba(45,212,191,.15); color: var(--teal); }
+.gl-check { position: absolute; top: 8px; right: 10px; color: var(--teal); font-size: .8rem; opacity: 0; transition: opacity .15s; }
+.gate-link.joined .gl-check { opacity: 1; }
+.gate-status { display: flex; align-items: center; gap: 8px; font-size: .83rem; color: var(--ink3); }
+.gate-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border2); flex-shrink: 0; transition: background .2s; }
+.gate-status.ok .gate-dot { background: var(--teal); }
+.gate-status.ok { color: var(--teal); }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, #4f8ef7, #7c6fff); color: #fff; border: none; padding: 14px 28px; border-radius: 50px; font-weight: 700; font-size: .95rem; cursor: pointer; letter-spacing: .3px; font-family: 'Outfit', sans-serif; transition: transform .15s, box-shadow .15s, opacity .2s; }
+.btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(79,142,247,.3); }
+.btn:disabled { opacity: .3; cursor: not-allowed; transform: none; box-shadow: none; }
+.btn-ghost { background: transparent; color: var(--accent); border: 1px solid var(--border2); padding: 12px 22px; border-radius: 50px; font-weight: 600; font-size: .9rem; cursor: pointer; font-family: 'Outfit', sans-serif; transition: border-color .15s, background .15s; display: inline-flex; align-items: center; gap: 8px; }
+.btn-ghost:hover { background: var(--accent-glow); border-color: rgba(79,142,247,.35); }
+.btn-ghost:disabled { opacity: .35; cursor: not-allowed; }
+
+.begin-footer { text-align: center; margin-top: 8px; }
+.begin-hint { font-size: .76rem; color: var(--ink3); margin-top: 14px; display: flex; align-items: center; justify-content: center; gap: 7px; }
+
+#progressWrap { display: flex; flex-direction: column; gap: 12px; margin-bottom: 22px; padding-top: 28px; }
+.progress-bar-track { height: 4px; background: var(--border); border-radius: 4px; overflow: hidden; }
+.progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 4px; transition: width .3s; }
+.section-dots-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.section-label { font-size: .65rem; letter-spacing: 2px; text-transform: uppercase; color: var(--ink3); font-family: 'JetBrains Mono', monospace; min-width: 120px; display: flex; align-items: center; gap: 6px; }
+.dots-group { display: flex; gap: 5px; flex-wrap: wrap; }
+.dot { width: 10px; height: 10px; border-radius: 50%; background: var(--border2); cursor: pointer; transition: background .15s, transform .1s; }
+.dot:hover { transform: scale(1.35); }
+.dot.answered { background: rgba(79,142,247,.4); border: 1px solid var(--accent); }
+.dot.current { background: var(--accent); box-shadow: 0 0 0 3px rgba(79,142,247,.25); }
+.dot.correct { background: var(--green); }
+.dot.wrong { background: var(--red); }
+
+.q-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.q-section-tag { font-size: .68rem; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); font-family: 'JetBrains Mono', monospace; font-weight: 600; background: var(--accent-dim); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(79,142,247,.2); display: inline-flex; align-items: center; gap: 6px; }
+.q-counter { font-size: .78rem; color: var(--ink3); font-family: 'JetBrains Mono', monospace; }
+.q-type-tag { font-size: .65rem; color: var(--purple); background: rgba(167,139,250,.1); border: 1px solid rgba(167,139,250,.25); padding: 3px 9px; border-radius: 20px; font-family: 'JetBrains Mono', monospace; margin-left: 6px; display: inline-flex; align-items: center; gap: 5px; }
+
+.q-text { font-size: 1.15rem; line-height: 1.65; color: var(--ink); margin: 0 0 26px; animation: fadeUp .25s ease; font-family: 'Fraunces', serif; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)} }
+
+.opt { display: flex; align-items: flex-start; gap: 14px; padding: 15px 18px; border-radius: 12px; border: 1px solid var(--border2); margin-bottom: 10px; background: var(--surface2); cursor: pointer; transition: border-color .15s, background .15s, transform .1s; }
+.opt:hover { border-color: rgba(79,142,247,.35); background: var(--surface3); transform: translateX(3px); }
+.opt.selected { border-color: var(--accent); background: var(--accent-dim); }
+.opt.correct { border-color: var(--green); background: var(--green-dim); }
+.opt.wrong { border-color: var(--red); background: var(--red-dim); }
+.opt-letter { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--border2); display: flex; align-items: center; justify-content: center; font-size: .75rem; font-weight: 700; color: var(--ink3); flex-shrink: 0; font-family: 'JetBrains Mono', monospace; transition: all .15s; margin-top: 1px; }
+.opt.selected .opt-letter { background: var(--accent); color: #fff; border-color: var(--accent); }
+.opt.correct .opt-letter { background: var(--green); color: #fff; border-color: var(--green); }
+.opt.wrong .opt-letter { background: var(--red); color: #fff; border-color: var(--red); }
+.opt-text { font-size: .93rem; line-height: 1.55; padding-top: 3px; }
+
+.fill-wrap { margin-bottom: 16px; }
+.fill-input {
+ width: 100%; padding: 14px 18px;
+ background: var(--surface2); border: 1px solid var(--border2);
+ border-radius: 12px; color: var(--ink); font-size: 1rem;
+ font-family: 'Outfit', sans-serif; outline: none;
+ transition: border-color .2s;
+}
+.fill-input:focus { border-color: var(--accent); }
+.fill-input.correct { border-color: var(--green); background: var(--green-dim); }
+.fill-input.wrong { border-color: var(--red); background: var(--red-dim); }
+.fill-hint { font-size: .75rem; color: var(--ink3); margin-top: 8px; font-style: italic; display: flex; align-items: center; gap: 6px; }
+
+.nav-row { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; gap: 8px; }
+.nav-left, .nav-right { display: flex; gap: 8px; }
+.kbd-hint { text-align: center; font-size: .68rem; color: var(--ink3); margin-top: 14px; font-family: 'JetBrains Mono', monospace; letter-spacing: .5px; }
+.kbd-hint kbd { background: var(--surface3); border: 1px solid var(--border2); border-radius: 4px; padding: 1px 6px; font-family: 'JetBrains Mono', monospace; }
+
+.result-hero { text-align: center; padding: 26px 0 22px; border-bottom: 1px solid var(--border); margin-bottom: 26px; }
+.result-ring { display: inline-flex; align-items: center; justify-content: center; width: 124px; height: 124px; border-radius: 50%; border: 3px solid var(--accent); background: var(--accent-dim); margin-bottom: 16px; position: relative; }
+.result-ring::after { content: ''; position: absolute; inset: -8px; border-radius: 50%; border: 1px solid rgba(79,142,247,.15); }
+.result-score { font-family: 'JetBrains Mono', monospace; font-size: 2.4rem; font-weight: 700; color: var(--accent); }
+.result-of { font-size: .8rem; color: var(--ink3); margin-top: 2px; }
+.result-pct { font-family: 'Fraunces', serif; font-size: 1.5rem; color: var(--ink); margin-bottom: 6px; }
+.result-msg { color: var(--ink2); font-size: .9rem; line-height: 1.6; display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
+
+.breakdown-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px,1fr)); gap: 12px; margin-bottom: 26px; }
+.bd-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; }
+.bd-name { font-size: .65rem; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); font-family: 'JetBrains Mono', monospace; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+.bd-score { font-size: 1.5rem; font-weight: 800; color: var(--ink); font-family: 'JetBrains Mono', monospace; }
+.bd-total { font-size: .75rem; color: var(--ink3); }
+.bd-bar { height: 3px; background: var(--border); border-radius: 3px; margin-top: 12px; overflow: hidden; }
+.bd-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width .8s; }
+
+.review-section-title { font-family: 'Fraunces', serif; font-size: 1.15rem; color: var(--ink); border-bottom: 1px solid var(--border); padding-bottom: 12px; margin: 22px 0 16px; display: flex; align-items: center; gap: 10px; }
+.review-item { border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; margin-bottom: 12px; background: var(--surface2); }
+.review-item.right { border-left: 3px solid var(--green); }
+.review-item.miss { border-left: 3px solid var(--red); }
+.ri-q { font-size: .92rem; color: var(--ink); margin-bottom: 10px; line-height: 1.6; }
+.ri-section { font-size: .65rem; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); font-family: 'JetBrains Mono', monospace; margin-bottom: 5px; display: flex; align-items: center; gap: 6px; }
+.ri-ans { font-size: .84rem; margin-top: 5px; display: flex; align-items: flex-start; gap: 7px; }
+.ri-ans.right { color: var(--green); }
+.ri-ans.wrong { color: var(--red); }
+.ri-ans.correct-reveal { color: var(--teal); }
+
+.explain-btn { display: flex; align-items: center; justify-content: space-between; width: 100%; background: none; border: 1px solid var(--border); border-radius: 9px; padding: 10px 16px; font-size: .82rem; color: var(--ink3); cursor: pointer; font-family: 'Outfit', sans-serif; margin-top: 14px; transition: border-color .15s, color .15s; }
+.explain-btn:hover { border-color: var(--border2); color: var(--ink); }
+.explain-btn.open { border-color: rgba(79,142,247,.3); color: var(--accent); }
+.explain-arrow { font-size: .65rem; transition: transform .2s; }
+.explain-btn.open .explain-arrow { transform: rotate(180deg); }
+.explain-box { display: none; margin-top: 12px; padding: 16px 18px; background: rgba(79,142,247,.04); border: 1px solid rgba(79,142,247,.12); border-radius: 10px; font-size: .85rem; line-height: 1.7; color: var(--ink2); }
+.explain-box.open { display: block; animation: fadeUp .2s ease; }
+.ex-step { margin-bottom: 14px; }
+.ex-step:last-child { margin-bottom: 0; }
+.ex-step-label { font-size: .65rem; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); font-family: 'JetBrains Mono', monospace; margin-bottom: 5px; display: flex; align-items: center; gap: 6px; }
+.ex-step-body { color: #c0d4f4; line-height: 1.9; font-size: .85rem; }
+
+.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--red-dim); border: 1px solid rgba(248,113,113,.4); color: #fca5a5; padding: 12px 20px; border-radius: 50px; font-size: .85rem; font-weight: 600; z-index: 200; display: flex; align-items: center; gap: 8px; animation: toastIn .25s ease; white-space: nowrap; }
+@keyframes toastIn { from{opacity:0;transform:translateX(-50%) translateY(12px)}to{opacity:1;transform:translateX(-50%) translateY(0)} }
+
+footer { text-align: center; font-size: .7rem; color: var(--ink3); padding: 18px; border-top: 1px solid var(--border); letter-spacing: .5px; font-family: 'JetBrains Mono', monospace; display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
+footer i { color: var(--accent); }
+
+/* ── DTZ CALCULATOR ── */
+.calc-fab {
+ position: fixed; right: 20px; bottom: 20px; z-index: 480;
+ width: 56px; height: 56px; border-radius: 50%;
+ background: linear-gradient(135deg, #4f8ef7, #7c6fff);
+ color: #fff; border: none; font-size: 1.2rem; cursor: pointer;
+ box-shadow: 0 10px 30px rgba(79,142,247,.35), 0 2px 8px rgba(0,0,0,.3);
+ display: flex; align-items: center; justify-content: center;
+ transition: transform .15s, box-shadow .15s;
+}
+.calc-fab:hover { transform: translateY(-2px) scale(1.04); box-shadow: 0 14px 36px rgba(79,142,247,.45); }
+.calc-fab.hidden { display: none !important; }
+
+.calc-backdrop {
+ position: fixed; inset: 0; z-index: 485;
+ background: rgba(6,7,11,.55);
+ backdrop-filter: blur(3px);
+}
+.calc-backdrop.hidden { display: none !important; }
+
+.calc-panel {
+ position: fixed; left: 50%; top: 50%; z-index: 490;
+ transform: translate(-50%, -50%);
+ width: min(92vw, 380px);
+ height: min(85vh, 620px);
+ max-width: calc(100vw - 24px);
+ max-height: calc(100vh - 24px);
+ background: rgba(13,15,22,.99);
+ backdrop-filter: blur(18px);
+ border: 1px solid rgba(79,142,247,.35);
+ border-radius: 22px;
+ box-shadow: 0 30px 80px rgba(0,0,0,.65), 0 0 0 1px rgba(79,142,247,.08), 0 4px 24px rgba(79,142,247,.15);
+ overflow-y: auto;
+ overflow-x: hidden;
+ display: flex;
+ flex-direction: column;
+ animation: calcIn .18s ease;
+}
+.calc-panel.hidden { display: none !important; }
+.calc-panel.dragged { transform: none; }
+@keyframes calcIn { from{opacity:0;transform:translate(-50%,-46%) scale(.94);} to{opacity:1;transform:translate(-50%,-50%) scale(1);} }
+
+.calc-header {
+ display: flex; align-items: center; justify-content: space-between;
+ padding: 14px 16px; border-bottom: 1px solid var(--border);
+ background: linear-gradient(135deg, rgba(79,142,247,.16), rgba(124,111,255,.1));
+ cursor: grab;
+ touch-action: none;
+ user-select: none;
+ flex-shrink: 0;
+ border-radius: 22px 22px 0 0;
+}
+.calc-header:active { cursor: grabbing; }
+.calc-header-title { font-size: .85rem; font-weight: 800; color: var(--ink); display: flex; align-items: center; gap: 8px; font-family: 'Outfit', sans-serif; letter-spacing: .5px; }
+.calc-header-title i { color: var(--accent); }
+.calc-close-btn { background: none; border: none; color: var(--ink3); font-size: 1rem; cursor: pointer; width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; transition: background .15s, color .15s; }
+.calc-close-btn:hover { background: var(--surface3); color: var(--ink); }
+
+.calc-mode-row { display: flex; gap: 6px; padding: 8px 12px 0; }
+.calc-mode-btn { flex: 1; font-size: .65rem; font-family: 'JetBrains Mono', monospace; letter-spacing: 1px; padding: 5px 0; border-radius: 7px; border: 1px solid var(--border2); background: var(--surface2); color: var(--ink3); cursor: pointer; transition: all .15s; }
+.calc-mode-btn.active { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
+
+.calc-display { padding: 14px 16px 10px; text-align: right; }
+.calc-expr { font-family: 'JetBrains Mono', monospace; font-size: .78rem; color: var(--ink3); min-height: 16px; word-break: break-all; letter-spacing: .3px; }
+.calc-result { font-family: 'JetBrains Mono', monospace; font-size: 1.7rem; font-weight: 700; color: var(--ink); margin-top: 4px; word-break: break-all; line-height: 1.2; }
+.calc-result.err { color: var(--red); font-size: 1.1rem; }
+
+.calc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 9px; padding: 10px 14px 16px; flex: 1; align-content: start; }
+.calc-btn {
+ border: 1px solid var(--border2); background: var(--surface2); color: var(--ink);
+ font-family: 'JetBrains Mono', monospace; font-size: 1rem; font-weight: 600;
+ border-radius: 12px; padding: 15px 0; cursor: pointer;
+ transition: background .12s, border-color .12s, transform .08s;
+ user-select: none;
+}
+.calc-btn:active { transform: scale(.94); }
+.calc-btn:hover { border-color: rgba(79,142,247,.35); background: var(--surface3); }
+.calc-btn.op { color: var(--accent); background: var(--accent-dim); border-color: rgba(79,142,247,.22); }
+.calc-btn.fn { color: var(--purple); font-size: .85rem; }
+.calc-btn.clear { color: var(--red); }
+.calc-btn.equals { background: linear-gradient(135deg, #4f8ef7, #7c6fff); color: #fff; border: none; grid-column: span 1; }
+
+.calc-mode-row { flex-shrink: 0; }
+.calc-display { flex-shrink: 0; }
+
+@media(max-width:640px){
+ .calc-fab { right: 16px; bottom: 16px; }
+}
+
+@media(max-width:500px){
+ .card { padding: 22px 16px; }
+ .hero-wrap { padding: 38px 0 4px; }
+ .hero-title { font-size: 1.85rem; }
+ .hero-desc { font-size: .9rem; }
+ .hero-stats { gap: 0; }
+ .hero-stat { padding: 0 14px; }
+ .hero-stat-div { height: 30px; }
+ .q-text { font-size: 1rem; }
+ .section-tiles { grid-template-columns: 1fr; gap: 10px; }
+ .format-grid { grid-template-columns: 1fr; }
+ .breakdown-grid { grid-template-columns: repeat(2,1fr); }
+ .section-dots-row { flex-direction: column; align-items: flex-start; }
+ .topbar { padding: 12px 16px; }
+ .gate-sub { margin-left: 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- ANTI-CHEAT OVERLAY -->
+<div id="antiCheatOverlay">
+ <i class="fa-solid fa-ban ac-icon"></i>
+ <div class="ac-title">Tab Switch Detected</div>
+ <div class="ac-body">Switching tabs during the quiz resets and reshuffles all questions to ensure fairness.</div>
+ <div class="ac-count" id="acCount">Restarting…</div>
+ <div style="font-size:.8rem;color:var(--ink3)"><i class="fa-solid fa-arrow-turn-up" style="margin-right:6px;"></i>Return to this tab and wait for the countdown.</div>
+</div>
+
+<!-- TOPBAR -->
+<div class="topbar">
+ <div class="brand">
+ <span class="brand-badge">DTZ TRIO</span>
+ <div>
+ <div class="brand-sub"><i class="fa-solid fa-bolt" style="margin-right:5px;"></i>EET 229 · Electrical Machines</div>
+ </div>
+ </div>
+ <div id="timer" class="hidden"><i class="fa-regular fa-clock"></i><span id="timerText">60:00</span></div>
+</div>
+
+<main>
+
+<!-- START SCREEN -->
+<div id="startScreen">
+
+ <!-- HERO -->
+ <div class="hero-wrap">
+ <div class="hero-eyebrow"><i class="fa-solid fa-charging-station"></i> EET 229 Practice Quiz</div>
+ <h1 class="hero-title">Electrical Machines,<br><span>tested properly.</span></h1>
+ <p class="hero-desc">High-quality practice questions compiled from real EET 229 material — Transformers, DC Machines, and Induction Motors. Shuffled every attempt, timed at 60 minutes, with a built-in scientific calculator and full technical explanations waiting on the other side.</p>
+
+ <div class="hero-stats">
+ <div class="hero-stat">
+ <div class="hero-stat-num"><i class="fa-solid fa-list-check"></i>30</div>
+ <div class="hero-stat-label">Questions</div>
+ </div>
+ <div class="hero-stat-div"></div>
+ <div class="hero-stat">
+ <div class="hero-stat-num"><i class="fa-solid fa-hourglass-half"></i>60</div>
+ <div class="hero-stat-label">Minutes</div>
+ </div>
+ <div class="hero-stat-div"></div>
+ <div class="hero-stat">
+ <div class="hero-stat-num"><i class="fa-solid fa-layer-group"></i>3</div>
+ <div class="hero-stat-label">Topics</div>
+ </div>
+ </div>
+
+ <div class="section-tiles">
+ <div class="section-tile">
+ <div class="section-tile-icon"><i class="fa-solid fa-network-wired"></i></div>
+ <div class="section-tile-name">Transformers</div>
+ <div class="section-tile-meta">Equivalent Circuits · Losses · Efficiency</div>
+ </div>
+ <div class="section-tile">
+ <div class="section-tile-icon"><i class="fa-solid fa-car-battery"></i></div>
+ <div class="section-tile-name">DC Machines</div>
+ <div class="section-tile-meta">Armature Reaction · Generators · Motors</div>
+ </div>
+ <div class="section-tile">
+ <div class="section-tile-icon"><i class="fa-solid fa-rotate"></i></div>
+ <div class="section-tile-name">Induction Motors</div>
+ <div class="section-tile-meta">Slip Rate · Torque-Speed · RMF</div>
+ </div>
+ </div>
+ </div>
+
+ <!-- HOW IT WORKS -->
+ <div class="section-heading">
+ <div class="section-heading-icon"><i class="fa-solid fa-gears"></i></div>
+ <div class="section-heading-text">How the quiz runs</div>
+ </div>
+ <div class="flow-grid">
+ <div class="flow-item">
+ <div class="flow-icon"><i class="fa-solid fa-shuffle"></i></div>
+ <div class="flow-body">
+ <div class="flow-title">Fresh order every session</div>
+ <div class="flow-text">Questions are reshuffled each time you start, so memorizing answer positions won't help — you have to actually know the principles.</div>
+ </div>
+ </div>
+ <div class="flow-item">
+ <div class="flow-icon"><i class="fa-solid fa-eye"></i></div>
+ <div class="flow-body">
+ <div class="flow-title">Stay on this tab</div>
+ <div class="flow-text">Switching tabs or apps mid-quiz triggers a 20-second countdown, then resets and reshuffles everything. This keeps the practice honest.</div>
+ </div>
+ </div>
+ <div class="flow-item">
+ <div class="flow-icon"><i class="fa-solid fa-stopwatch"></i></div>
+ <div class="flow-body">
+ <div class="flow-title">60-minute countdown</div>
+ <div class="flow-text">The timer starts the moment you press Begin and auto-submits your quiz at zero, whatever state it's in.</div>
+ </div>
+ </div>
+ <div class="flow-item">
+ <div class="flow-icon"><i class="fa-solid fa-compass"></i></div>
+ <div class="flow-body">
+ <div class="flow-title">Jump around freely</div>
+ <div class="flow-text">Tap any dot in the progress tracker to revisit or skip ahead, or use the arrow keys on desktop. Nothing locks once answered.</div>
+ </div>
+ </div>
+ </div>
+
+ <!-- FORMAT / CALCULATOR -->
+ <div class="section-heading">
+ <div class="section-heading-icon"><i class="fa-solid fa-pen-ruler"></i></div>
+ <div class="section-heading-text">Format &amp; tools</div>
+ </div>
+ <div class="format-grid">
+ <div class="format-card">
+ <div class="format-icon-row">
+ <div class="format-icon mc"><i class="fa-solid fa-list-ul"></i></div>
+ <div>
+ <div class="format-name">Multiple choice</div>
+ <div class="format-count">Core Curriculum</div>
+ </div>
+ </div>
+ <div class="format-text">Pick one of four options. Use keys <strong style="color:var(--ink)">1–4</strong> on desktop to select instantly.</div>
+ </div>
+ <div class="format-card">
+ <div class="format-icon-row">
+ <div class="format-icon fb"><i class="fa-solid fa-calculator"></i></div>
+ <div>
+ <div class="format-name">DTZ Calculator</div>
+ <div class="format-count">Available every question</div>
+ </div>
+ </div>
+ <div class="format-text">Tap the floating calculator button to work through slip calculation, transformation ratios, and torque parameter analysis effortlessly.</div>
+ </div>
+ </div>
+
+ <!-- RULES -->
+ <div class="section-heading">
+ <div class="section-heading-icon"><i class="fa-solid fa-clipboard-list"></i></div>
+ <div class="section-heading-text">Before you begin</div>
+ </div>
+ <div class="rules-list">
+ <div class="rule-item">
+ <span class="rule-icon"><i class="fa-solid fa-layer-group"></i></span>
+ <span class="rule-text">Questions are drawn from <strong>Transformers</strong>, <strong>DC Machines</strong>, and <strong>Induction Motors</strong>.</span>
+ </div>
+ <div class="rule-item">
+ <span class="rule-icon"><i class="fa-solid fa-dice"></i></span>
+ <span class="rule-text">Order is <strong>shuffled every session</strong> — no two attempts look the same.</span>
+ </div>
+ <div class="rule-item">
+ <span class="rule-icon"><i class="fa-solid fa-triangle-exclamation"></i></span>
+ <span class="rule-text"><strong>Tab-switching resets the quiz</strong> after a 20-second countdown and reshuffles everything.</span>
+ </div>
+ <div class="rule-item">
+ <span class="rule-icon"><i class="fa-solid fa-hourglass-end"></i></span>
+ <span class="rule-text">A <strong>60-minute timer</strong> starts on Begin and auto-submits at zero.</span>
+ </div>
+ <div class="rule-item">
+ <span class="rule-icon"><i class="fa-solid fa-circle-dot"></i></span>
+ <span class="rule-text">Tap any dot to jump between questions. Use <strong>&larr; &rarr;</strong> on desktop.</span>
+ </div>
+ <div class="rule-item">
+ <span class="rule-icon"><i class="fa-solid fa-calculator"></i></span>
+ <span class="rule-text">A floating <strong>DTZ Calculator</strong> is available during the quiz for complex calculation questions.</span>
+ </div>
+ <div class="rule-item">
+ <span class="rule-icon"><i class="fa-solid fa-flag-checkered"></i></span>
+ <span class="rule-text">You must answer at least <strong>10 questions</strong> before submitting.</span>
+ </div>
+ </div>
+
+ <!-- GATE -->
+ <div class="section-heading">
+ <div class="section-heading-icon"><i class="fa-solid fa-unlock-keyhole"></i></div>
+ <div class="section-heading-text">Unlock the quiz</div>
+ </div>
+ <div class="gate-box">
+ <div class="gate-label-row">
+ <span class="gate-label-icon"><i class="fa-solid fa-people-group"></i></span>
+ <span class="gate-label">Join DTZ Trio to continue</span>
+ </div>
+ <div class="gate-sub">Tap both links below, then come back here to begin.</div>
+ <div class="gate-links">
+ <a class="gate-link" id="joinChannel" href="https://whatsapp.com/channel/0029Vb7UyiS8F2pHPr4zXb1d" target="_blank" rel="noopener">
+ <span class="gl-icon"><i class="fa-solid fa-bullhorn"></i></span>DTZ Trio Channel
+ <span class="gl-check"><i class="fa-solid fa-circle-check"></i></span>
+ </a>
+ <a class="gate-link" id="joinGroup" href="https://chat.whatsapp.com/IivQoADnmHa4WvhQ3Uh6f4" target="_blank" rel="noopener">
+ <span class="gl-icon"><i class="fa-solid fa-comments"></i></span>DTZ Trio Group
+ <span class="gl-check"><i class="fa-solid fa-circle-check"></i></span>
+ </a>
+ </div>
+ <div class="gate-status" id="gateStatus">
+ <span class="gate-dot"></span>
+ <span id="gateText">Tap both links above to unlock the quiz</span>
+ </div>
+ </div>
+
+ <div class="begin-footer">
+ <button class="btn" id="startBtn" disabled style="width:100%;margin-top:22px;font-size:1rem;padding:16px;border-radius:50px;">
+ <i class="fa-solid fa-play"></i> Begin Quiz
+ </button>
+ <div class="begin-hint"><i class="fa-solid fa-shield-halved"></i> Your progress only exists in this session — nothing is saved if you close the tab.</div>
+ </div>
+
+</div><!-- end startScreen -->
+
+<!-- QUIZ SCREEN -->
+<div id="quizScreen" class="hidden">
+ <div id="progressWrap">
+ <div class="progress-bar-track">
+ <div class="progress-bar-fill" id="progressFill"></div>
+ </div>
+ <div class="section-dots-row">
+ <span class="section-label"><i class="fa-solid fa-network-wired"></i>Transformers</span>
+ <div class="dots-group" id="dotsA"></div>
+ </div>
+ <div class="section-dots-row">
+ <span class="section-label"><i class="fa-solid fa-car-battery"></i>DC Machines</span>
+ <div class="dots-group" id="dotsB"></div>
+ </div>
+ <div class="section-dots-row">
+ <span class="section-label"><i class="fa-solid fa-rotate"></i>Induction Motors</span>
+ <div class="dots-group" id="dotsC"></div>
+ </div>
+ </div>
+
+ <div class="card">
+ <div class="q-meta">
+ <div style="display:flex;align-items:center;gap:6px;">
+ <span class="q-section-tag" id="sectionTag"></span>
+ <span class="q-type-tag hidden" id="typeTag"><i class="fa-solid fa-pen"></i> Fill-in</span>
+ </div>
+ <span class="q-counter" id="qCounter"></span>
+ </div>
+ <div class="q-text" id="qText"></div>
+ <div id="optsWrap"></div>
+ <div class="nav-row">
+ <div class="nav-left">
+ <button class="btn-ghost" id="backBtn"><i class="fa-solid fa-arrow-left"></i> Back</button>
+ </div>
+ <div class="nav-right">
+ <button class="btn" id="nextBtn">Next <i class="fa-solid fa-arrow-right"></i></button>
+ <button class="btn hidden" id="finishBtn"><i class="fa-solid fa-check"></i> Submit Quiz</button>
+ </div>
+ </div>
+ <div class="kbd-hint">Keyboard: <kbd>&larr;</kbd> <kbd>&rarr;</kbd> to navigate &nbsp;·&nbsp; <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> <kbd>4</kbd> to select</div>
+ </div>
+</div>
+
+<!-- RESULT SCREEN -->
+<div id="resultScreen" class="hidden">
+ <div class="card">
+ <div class="result-hero">
+ <div class="result-ring">
+ <div>
+ <div class="result-score" id="resultScore">0</div>
+ <div class="result-of">/ 30</div>
+ </div>
+ </div>
+ <div class="result-pct" id="resultPct"></div>
+ <div class="result-msg" id="resultMsg"></div>
+ </div>
+ <div class="breakdown-grid" id="breakdownGrid"></div>
+ <div class="review-section-title"><i class="fa-solid fa-magnifying-glass"></i> Question Review</div>
+ <div id="reviewList"></div>
+ <button class="btn" id="retryBtn" style="width:100%;margin-top:22px;font-size:1rem;padding:16px;border-radius:50px;">
+ <i class="fa-solid fa-rotate-right"></i> Retake Quiz (New Shuffle)
+ </button>
+ </div>
+</div>
+
+</main>
+
+<!-- CALCULATOR -->
+<button class="calc-fab hidden" id="calcFab" aria-label="Open calculator"><i class="fa-solid fa-calculator"></i></button>
+<div class="calc-backdrop hidden" id="calcBackdrop"></div>
+<div class="calc-panel hidden" id="calcPanel">
+ <div class="calc-header" id="calcHeader">
+ <span class="calc-header-title"><i class="fa-solid fa-up-down-left-right"></i> DTZ CALCULATOR</span>
+ <button class="calc-close-btn" id="calcClose"><i class="fa-solid fa-xmark"></i></button>
+ </div>
+ <div class="calc-mode-row">
+ <button class="calc-mode-btn active" id="calcModeDeg">DEG</button>
+ <button class="calc-mode-btn" id="calcModeRad">RAD</button>
+ </div>
+ <div class="calc-display">
+ <div class="calc-expr" id="calcExpr">&nbsp;</div>
+ <div class="calc-result" id="calcResult">0</div>
+ </div>
+ <div class="calc-grid" id="calcGrid"></div>
+</div>
+
+<footer><i class="fa-solid fa-bolt"></i> DTZ TRIO &nbsp;·&nbsp; EET 229 Electrical Machines &nbsp;·&nbsp; Federal University of Technology, Minna</footer>
+
+<script>
+// ── ALL QUESTIONS (EET 229 RESTRICTED DATA ARCHITECTURE) ──
+const RAW_QUESTIONS = {
+ transformers: [
+ {type:'mcq', q:"Which test is performed on a transformer to determine its core losses (iron losses)?",
+ opts:["Short-circuit test","Open-circuit test","Back-to-back test","Load test"], ans:1,
+ explain:[{l:"Answer",b:"The open-circuit test is conducted at rated voltage and normal frequency to determine the core or iron losses."}]},
+
+ {type:'mcq', q:"What kind of transformer losses are minimized by laminating the magnetic core assembly?",
+ opts:["Eddy current losses","Hysteresis losses","Copper losses","Friction losses"], ans:0,
+ explain:[{l:"Answer",b:"Core lamination breaks up continuous electrical paths, drastically reducing parasitic eddy current paths."}]},
+
+ {type:'mcq', q:"A single-phase transformer has 400 primary turns and 100 secondary turns. If the primary voltage is 240V, find the secondary open-circuit voltage.",
+ opts:["960 V","60 V","120 V","48 V"], ans:1,
+ explain:[{l:"Solution",b:"V2 = V1 * (N2 / N1) = 240 * (100 / 400) = 60V."}]},
+
+ {type:'mcq', q:"What condition produces the absolute maximum operating efficiency in an electrical power transformer?",
+ opts:["Copper losses equal core losses","Copper losses equal zero","Core losses exceed copper losses","The load factor reaches exactly 0.50"], ans:0,
+ explain:[{l:"Answer",b:"Peak machine efficiency is mathematically verified when variable copper losses equal constant iron losses."}]},
+
+ {type:'mcq', q:"Why is the transformer core constructed using high-permeability silicon steel?",
+ opts:["To minimize eddy currents","To eliminate winding copper losses","To minimize hysteresis losses","To increase the mechanical weight"], ans:2,
+ explain:[{l:"Answer",b:"Silicon steel possesses a narrow hysteresis loop, decreasing systemic energy loss during alternating magnetic cycles."}]},
+
+ {type:'mcq', q:"In an ideal transformer, what is the relative phase relationship between the primary induced EMF and the main core flux?",
+ opts:["EMF leads flux by 90°","EMF lags flux by 90°","They are perfectly in phase","They are 180° out of phase"], ans:1,
+ explain:[{l:"Answer",b:"By Faraday's law, e = -N*(dphi/dt). For a sinusoidal flux, the induced EMF lags the magnetic flux vector by 90°."}]},
+
+ {type:'mcq', q:"What parameter is directly evaluated during the short-circuit test of a power transformer?",
+ opts:["Core magnetizing admittance","Equivalent winding impedance","Hysteresis coefficient","Dielectric insulation strength"], ans:1,
+ explain:[{l:"Answer",b:"The short-circuit test provides the values of equivalent resistance, equivalent leakage reactance, and total impedance."}]},
+
+ {type:'mcq', q:"What function does a conservator tank perform on an oil-immersed distribution transformer?",
+ opts:["Provides extra cooling paths","Protects against lightning surges","Houses the high voltage bushings","Accommodates the expansion and contraction of insulating oil"], ans:3,
+ explain:[{l:"Answer",b:"The conservator tank acts as a buffer vessel to allow for the volume expansion/contraction of cooling oil during temperature changes."}]},
+
+ {type:'mcq', q:"A 10 kVA, 2000/200 V step-down transformer has an iron loss of 150W. Calculate the primary winding rated current.",
+ opts:["5 A","50 A","0.2 A","10 A"], ans:0,
+ explain:[{l:"Solution",b:"I1 = S / V1 = 10000 / 2000 = 5A."}]},
+
+ {type:'mcq', q:"Under what operational power factor does a typical industrial transformer exhibit the poorest voltage regulation performance?",
+ opts:["Unity power factor","Leading power factor","Lagging power factor","Poorest at zero load"], ans:2,
+ explain:[{l:"Answer",b:"A lagging power factor causes internal inductive drops to add cumulatively, decreasing terminal output significantly."}]}
+ ],
+
+ dcMachines: [
+ {type:'mcq', q:"What structural element changes the alternating EMF generated within a DC machine's armature coils into a unidirectional DC current output?",
+ opts:["Slip rings","Carbon brushes","The commutator profile","An interpolar winding"], ans:2,
+ explain:[{l:"Answer",b:"The commutator serves as a mechanical rectifier, reversing coil connections at critical zero-crossing instances."}]},
+
+ {type:'mcq', q:"What is the effect of armature reaction on the main field flux of a loaded DC generator?",
+ opts:["Cross-magnetization and demagnetization","Complete phase reversal","Increases flux density across all poles","Has no effect on main field parameters"], ans:0,
+ explain:[{l:"Answer",b:"Armature current sets up a cross-magnetic field distorting the air-gap flux profile and causing demagnetization."}]},
+
+ {type:'mcq', q:"A 4-pole DC machine uses a wave-connected armature winding layout. How many parallel paths (A) exist for armature currents?",
+ opts:["4 paths","2 paths","1 path","8 paths"], ans:1,
+ explain:[{l:"Answer",b:"Regardless of the pole count, a simplex wave winding always provides exactly 2 parallel path structures (A=2)."}]},
+
+ {type:'mcq', q:"Which type of DC motor is most susceptible to dangerous over-speeding if its field excitation winding becomes open-circuited?",
+ opts:["DC Series Motor","DC Shunt Motor","Cumulative Compound Motor","Differentially Compounded Motor"], ans:1,
+ explain:[{l:"Answer",b:"Since speed is inversely proportional to field flux (N &propto; E/&Phi;), dropping flux to residual levels forces speed to critical values to sustain back-EMF."}]},
+
+ {type:'mcq', q:"What starting equipment parameter protects a DC motor's internal armature circuit upon initial activation?",
+ opts:["A variable high value starting resistor","An automatic voltage step-down capacitor","A reverse current breaking isolator","Thicker carbon brush contacts"], ans:0,
+ explain:[{l:"Answer",b:"At zero speed, back-EMF is zero. High starting resistance is mandatory to prevent massive inrush currents from destroying the armature windings."}]},
+
+ {type:'mcq', q:"The back EMF (Eb) of a DC motor is calculated as 220V at a speed of 1000 RPM. If the speed drops to 500 RPM with constant flux, what is the new back EMF?",
+ opts:["440 V","110 V","220 V","55 V"], ans:1,
+ explain:[{l:"Solution",b:"Eb is directly proportional to speed when flux is constant. If speed cuts in half, Eb cuts in half: 220 / 2 = 110V."}]},
+
+ {type:'mcq', q:"Which terminal performance curve defines a DC shunt generator's characteristic behavior?",
+ opts:["Slightly drooping terminal voltage under load","Rapidly escalating voltage curve","Perfectly constant voltage profile","Voltage drops immediately to zero at half-rated load"], ans:0,
+ explain:[{l:"Answer",b:"Armature drop (IaRa) and minor armature reaction combined produce a slight droop in output voltage under loading."}]},
+
+ {type:'mcq', q:"What specific DC motor configuration is chosen to drive heavy-traction electric locomotives requiring extreme break-away torque values?",
+ opts:["DC Shunt Motor","DC Series Motor","Differentially Compounded Generator","Permanent Magnet Synchronous Profiler"], ans:1,
+ explain:[{l:"Answer",b:"In a DC series motor, starting torque varies with the square of armature current ($T \propto I_a^2$), producing unmatched starting torque."}]},
+
+ {type:'mcq', q:"What machine parameter defines critical field resistance in a self-excited DC shunt generator topology?",
+ opts:["The insulation resistance of the shunt windings","The maximum resistance above which the generator fails to build up voltage","The minimum resistance required to prevent short circuits","The thermal resistance limit of the commutator"], ans:1,
+ explain:[{l:"Answer",b:"If the shunt field loop resistance exceeds this threshold value, the machine cannot establish voltage buildup."}]},
+
+ {type:'mcq', q:"A 220V DC shunt motor has an armature resistance of 0.5 &Omega;. If the armature current is 20A, what is the generated back EMF?",
+ opts:["230 V","210 V","220 V","190 V"], ans:1,
+ explain:[{l:"Solution",b:"Eb = V - Ia*Ra = 220 - (20 * 0.5) = 220 - 10 = 210V."}]}
+ ],
+
+ inductionMotors: [
+ {type:'mcq', q:"What operational state is defined when an induction motor has a slip value of exactly 1 (s = 1.0)?",
+ opts:["The machine is running at synchronous speed","The motor is operating at rated full load","The rotor is completely stationary (standstill)","The machine is functioning as an asynchronous generator"], ans:2,
+ explain:[{l:"Answer",b:"Slip s = (Ns - Nr) / Ns. At standstill, Nr = 0, which makes s = Ns / Ns = 1."}]},
+
+ {type:'mcq', q:"How is the speed of a rotating magnetic field (synchronous speed) in a 3-phase induction motor calculated?",
+ opts:["Ns = 120f / P","Ns = 60f * P","Ns = f / (120 * P)","Ns = 120P / f"], ans:0,
+ explain:[{l:"Answer",b:"Synchronous speed is defined by the core frequency and pole allocation as: Ns = 120f / P."}]},
+
+ {type:'mcq', q:"A 6-pole, 3-phase induction motor operates from a 50Hz supply line. Calculate its synchronous speed profile.",
+ opts:["3000 RPM","1500 RPM","1000 RPM","750 RPM"], ans:2,
+ explain:[{l:"Solution",b:"Ns = (120 * 50) / 6 = 6000 / 6 = 1000 RPM."}]},
+
+ {type:'mcq', q:"Why can a standard asynchronous induction motor never reach its exact synchronous speed value under normal motoring operation?",
+ opts:"Rotor core magnetic saturation occurs",
+ opts:["The rotor current and driving electromagnetic torque would fall to zero","The ventilation cooling fans create too much drag","The supply phase lines would short circuit automatically"], ans:1,
+ explain:[{l:"Answer",b:"At synchronous speed, the relative velocity between the field and rotor is zero; zero EMF is induced, causing torque to vanish."}]},
+
+ {type:'mcq', q:"What structural component distinguishes a wound-rotor induction motor from a standard squirrel-cage machine configuration?",
+ opts:["Laminated stator core paths","Carbon brushes connected via external slip rings","Uninsulated solid copper armature end rings","An integrated permanent magnet assembly"], ans:1,
+ explain:[{l:"Answer",b:"Wound-rotor configurations utilize external slip rings to insert variable resistance paths into the rotor circuit during starting cycles."}]},
+
+ {type:'mcq', q:"If a 4-pole induction motor running from a 60Hz line has a rotor speed of 1710 RPM, calculate its operating slip.",
+ opts:["0.05 (5%)","0.10 (10%)","0.025 (2.5%)","0.01 (1%)"], ans:0,
+ explain:[{l:"Solution",b:"Ns = (120*60)/4 = 1800 RPM. Slip s = (1800 - 1710) / 1800 = 90 / 1800 = 0.05 or 5%."}]},
+
+ {type:'mcq', q:"What property determines the direction of rotation of the rotating magnetic field inside a 3-phase stator winding setup?",
+ opts:["The magnitude of line voltage applied","The spatial structural depth of the core slots","The physical phase sequence of the line connections","The absolute number of poles wound"], ans:2,
+ explain:[{l:"Answer",b:"Swapping any two input supply line connections (e.g., changing sequence from A-B-C to A-C-B) instantly reverses the field rotation."}]},
+
+ {type:'mcq', q:"What type of starting method cannot be applied directly to modify the starting torque of a squirrel-cage induction motor?",
+ opts:["Star-Delta starter control","Rotor resistance insertion method","Autotransformer terminal voltage scaling","Direct-on-Line (DOL) coupling"], ans:1,
+ explain:[{l:"Answer",b:"Squirrel-cage rotor structures are permanently short-circuited via end-rings, preventing external rotor resistance insertion."}]},
+
+ {type:'mcq', q:"What component of an induction motor's equivalent circuit model represents the actual mechanical power output?",
+ opts:["The core magnetizing reactance Xm","The primary winding resistance R1","The variable load resistance term R2*(1-s)/s","The primary winding core leakage path X1"], ans:2,
+ explain:[{l:"Answer",b:"The electric equivalent parameter R2'*(1-s)/s models the true mechanical power delivered by the shaft array."}]},
+
+ {type:'mcq', q:"An induction motor has a synchronous speed of 1500 RPM and operates at a slip of 4%. Find the actual running speed of the rotor.",
+ opts:["1440 RPM","1460 RPM","1560 RPM","1380 RPM"], ans:0,
+ explain:[{l:"Solution",b:"Nr = Ns * (1 - s) = 1500 * (1 - 0.04) = 1500 * 0.96 = 1440 RPM."}]}
+ ]
+};
+
+// ── HELPERS ──
+function shuffle(arr) {
+ const a = [...arr];
+ for (let i = a.length - 1; i > 0; i--) {
+ const j = Math.floor(Math.random() * (i + 1));
+ [a[i], a[j]] = [a[j], a[i]];
+ }
+ return a;
+}
+
+function checkFillAnswer(userAnswer, acceptedAnswers) {
+ const clean = userAnswer.trim().toLowerCase();
+ return acceptedAnswers.some(a => a.toLowerCase() === clean);
+}
+
+function buildFlatQuestions() {
+ const f = shuffle(RAW_QUESTIONS.transformers).map((q,i) => ({...q, section:'Transformers', sectionKey:'A', globalIdx:i}));
+ const se = shuffle(RAW_QUESTIONS.dcMachines).map((q,i) => ({...q, section:'DC Machines', sectionKey:'B', globalIdx:f.length+i}));
+ const hs = shuffle(RAW_QUESTIONS.inductionMotors).map((q,i) => ({...q, section:'Induction Motors', sectionKey:'C', globalIdx:f.length+se.length+i}));
+ return [...f, ...se, ...hs];
+}
+
+// ── STATE ──
+let flatQ = [];
+let answers = [];
+let current = 0;
+let timeLeft = 60 * 60;
+let timerID = null;
+let finished = false;
+let quizActive = false;
+
+// ── GATE ──
+let ch = false, gr = false;
+const joinChannel = document.getElementById('joinChannel');
+const joinGroup = document.getElementById('joinGroup');
+const startBtn = document.getElementById('startBtn');
+const gateStatus = document.getElementById('gateStatus');
+const gateText = document.getElementById('gateText');
+
+function refreshGate() {
+ if (ch) joinChannel.classList.add('joined');
+ if (gr) joinGroup.classList.add('joined');
+ if (ch && gr) {
+ gateStatus.classList.add('ok');
+ gateText.textContent = "You're in! Ready to begin.";
+ startBtn.disabled = false;
+ } else {
+ const missing = [];
+ if (!ch) missing.push('Channel');
+ if (!gr) missing.push('Group');
+ gateText.textContent = `Join the ${missing.join(' and ')} above to unlock`;
+ }
+}
+joinChannel.addEventListener('click', () => { ch = true; setTimeout(refreshGate, 200); });
+joinGroup.addEventListener('click', () => { gr = true; setTimeout(refreshGate, 200); });
+
+// ── ANTI-CHEAT (20 second countdown) ──
+let antiCheatActive = false;
+const overlay = document.getElementById('antiCheatOverlay');
+const acCount = document.getElementById('acCount');
+
+document.addEventListener('visibilitychange', () => {
+ if (!quizActive || finished) return;
+ if (document.hidden) triggerAntiCheat();
+});
+
+function triggerAntiCheat() {
+ if (antiCheatActive) return;
+ antiCheatActive = true;
+ clearInterval(timerID);
+ overlay.classList.add('active');
+ let c = 20;
+ acCount.textContent = `Restarting in ${c}…`;
+ const iv = setInterval(() => {
+ c--;
+ if (c <= 0) {
+ clearInterval(iv);
+ overlay.classList.remove('active');
+ antiCheatActive = false;
+ resetQuiz();
+ } else {
+ acCount.textContent = `Restarting in ${c}…`;
+ }
+ }, 1000);
+}
+
+function resetQuiz() {
+ finished = false;
+ timeLeft = 60 * 60;
+ flatQ = buildFlatQuestions();
+ answers = new Array(flatQ.length).fill(null);
+ current = 0;
+ document.getElementById('quizScreen').classList.remove('hidden');
+ document.getElementById('resultScreen').classList.add('hidden');
+ buildDots();
+ render(0);
+ timerID = setInterval(tick, 1000);
+ updateTimerDisplay();
+}
+
+// ── TOAST ──
+let toastTimer = null;
+function showToast(msg) {
+ const existing = document.querySelector('.toast');
+ if (existing) existing.remove();
+ const t = document.createElement('div');
+ t.className = 'toast';
+ t.innerHTML = `<i class="fa-solid fa-circle-exclamation"></i> ${msg}`;
+ document.body.appendChild(t);
+ clearTimeout(toastTimer);
+ toastTimer = setTimeout(() => t.remove(), 3000);
+}
+
+// ── QUIZ FLOW ──
+document.getElementById('startBtn').addEventListener('click', startQuiz);
+document.getElementById('backBtn').addEventListener('click', () => go(current - 1));
+document.getElementById('nextBtn').addEventListener('click', () => go(current + 1));
+document.getElementById('finishBtn').addEventListener('click', () => {
+ const answered = answers.filter(a => a !== null).length;
+ if (answered < 10) {
+ showToast(`Answer at least 10 questions to submit. You've answered ${answered}.`);
+ return;
+ }
+ submitQuiz();
+});
+document.getElementById('retryBtn').addEventListener('click', () => location.reload());
+
+function startQuiz() {
+ flatQ = buildFlatQuestions();
+ answers = new Array(flatQ.length).fill(null);
+ current = 0;
+ finished = false;
+ quizActive = true;
+ document.getElementById('startScreen').classList.add('hidden');
+ document.getElementById('quizScreen').classList.remove('hidden');
+ document.getElementById('timer').classList.remove('hidden');
+ document.getElementById('calcFab').classList.remove('hidden');
+ buildDots();
+ render(0);
+ timerID = setInterval(tick, 1000);
+ updateTimerDisplay();
+}
+
+function tick() {
+ timeLeft--;
+ if (timeLeft <= 0) {
+ timeLeft = 0;
+ updateTimerDisplay();
+ clearInterval(timerID);
+ submitQuiz();
+ return;
+ }
+ updateTimerDisplay();
+}
+
+function updateTimerDisplay() {
+ const m = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+ const s = (timeLeft % 60).toString().padStart(2, '0');
+ const el = document.getElementById('timer');
+ document.getElementById('timerText').textContent = `${m}:${s}`;
+ el.classList.toggle('warn', timeLeft <= 300);
+}
+
+function go(i) {
+ if (i < 0 || i >= flatQ.length) return;
+ if (flatQ[current].type === 'fill') {
+ const inp = document.getElementById('fillInput');
+ if (inp) answers[current] = inp.value || null;
+ }
+ current = i;
+ render(i);
+}
+
+function render(i) {
+ const item = flatQ[i];
+ document.getElementById('sectionTag').innerHTML = `<i class="fa-solid ${sectionIcon(item.sectionKey)}"></i> ${item.section}`;
+ document.getElementById('qCounter').textContent = `Question ${i + 1} of ${flatQ.length}`;
+
+ const typeTag = document.getElementById('typeTag');
+ if (item.type === 'fill') {
+ typeTag.classList.remove('hidden');
+ } else {
+ typeTag.classList.add('hidden');
+ }
+
+ const answered = answers.filter(a => a !== null).length;
+ document.getElementById('progressFill').style.width = (answered / flatQ.length * 100) + '%';
+
+ document.getElementById('qText').innerHTML = item.q;
+
+ const ow = document.getElementById('optsWrap');
+ ow.innerHTML = '';
+
+ if (item.type === 'fill') {
+ const wrap = document.createElement('div');
+ wrap.className = 'fill-wrap';
+ const inp = document.createElement('input');
+ inp.type = 'text';
+ inp.className = 'fill-input';
+ inp.id = 'fillInput';
+ inp.placeholder = 'Type your answer here…';
+ inp.value = answers[i] || '';
+ inp.autocomplete = 'off';
+ inp.addEventListener('input', () => {
+ answers[i] = inp.value || null;
+ updateDots();
+ });
+ inp.addEventListener('keydown', e => {
+ if (e.key === 'Enter') go(current + 1);
+ });
+ const hint = document.createElement('div');
+ hint.className = 'fill-hint';
+ hint.innerHTML = '<i class="fa-solid fa-circle-info"></i> Tip: engineering syntax matters — verify calculations carefully.';
+ wrap.appendChild(inp);
+ wrap.appendChild(hint);
+ ow.appendChild(wrap);
+ setTimeout(() => inp.focus(), 50);
+ } else {
+ item.opts.forEach((opt, oi) => {
+ const d = document.createElement('div');
+ d.className = 'opt' + (answers[i] === oi ? ' selected' : '');
+ d.innerHTML = `<span class="opt-letter">${String.fromCharCode(65 + oi)}</span><span class="opt-text">${opt}</span>`;
+ d.addEventListener('click', () => {
+ if (finished) return;
+ answers[i] = oi;
+ render(i);
+ updateDots();
+ });
+ ow.appendChild(d);
+ });
+ }
+
+ document.getElementById('backBtn').disabled = (i === 0);
+ const nb = document.getElementById('nextBtn');
+ const fb = document.getElementById('finishBtn');
+ if (i === flatQ.length - 1) { nb.classList.add('hidden'); fb.classList.remove('hidden'); }
+ else { nb.classList.remove('hidden'); fb.classList.add('hidden'); }
+
+ updateDots();
+ window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function sectionIcon(key) {
+ return key === 'A' ? 'fa-network-wired' : key === 'B' ? 'fa-car-battery' : 'fa-rotate';
+}
+
+function buildDots() {
+ ['dotsA','dotsB','dotsC'].forEach(id => document.getElementById(id).innerHTML = '');
+ flatQ.forEach((item, i) => {
+ const d = document.createElement('div');
+ d.className = 'dot'; d.id = 'dot-' + i; d.title = 'Q' + (i + 1);
+ d.addEventListener('click', () => go(i));
+ const container = item.sectionKey === 'A' ? 'dotsA' : item.sectionKey === 'B' ? 'dotsB' : 'dotsC';
+ document.getElementById(container).appendChild(d);
+ });
+}
+
+function updateDots() {
+ flatQ.forEach((_, i) => {
+ const d = document.getElementById('dot-' + i);
+ if (!d) return;
+ d.classList.remove('answered', 'current');
+ if (i === current) d.classList.add('current');
+ else if (answers[i] !== null) d.classList.add('answered');
+ });
+}
+
+// ── KEYBOARD ──
+document.addEventListener('keydown', e => {
+ if (document.getElementById('quizScreen').classList.contains('hidden') || finished) return;
+ if (document.activeElement && document.activeElement.closest && document.activeElement.closest('#calcPanel')) return;
+ if (e.key === 'ArrowRight') go(current + 1);
+ if (e.key === 'ArrowLeft') go(current - 1);
+ if (flatQ[current] && flatQ[current].type === 'mcq') {
+ if (['1','2','3','4'].includes(e.key)) {
+ const oi = parseInt(e.key) - 1;
+ if (flatQ[current].opts[oi] !== undefined) { answers[current] = oi; render(current); }
+ }
+ }
+});
+
+// ── SUBMIT ──
+function submitQuiz() {
+ if (finished) return;
+ if (flatQ[current] && flatQ[current].type === 'fill') {
+ const inp = document.getElementById('fillInput');
+ if (inp) answers[current] = inp.value || null;
+ }
+ finished = true; quizActive = false;
+ clearInterval(timerID);
+ document.getElementById('quizScreen').classList.add('hidden');
+ document.getElementById('timer').classList.add('hidden');
+ document.getElementById('calcFab').classList.add('hidden');
+ document.getElementById('calcPanel').classList.add('hidden');
+ document.getElementById('calcBackdrop').classList.add('hidden');
+ document.getElementById('resultScreen').classList.remove('hidden');
+
+ let score = 0;
+ flatQ.forEach((item, i) => {
+ if (item.type === 'mcq') {
+ if (answers[i] === item.ans) score++;
+ } else {
+ if (answers[i] && checkFillAnswer(answers[i], item.acceptedAnswers)) score++;
+ }
+ });
+
+ const total = flatQ.length;
+ const pct = Math.round(score / total * 100);
+
+ document.getElementById('resultScore').textContent = score;
+ document.querySelector('.result-of').textContent = '/ ' + total;
+ document.getElementById('resultPct').textContent = pct + '%';
+ document.getElementById('resultMsg').innerHTML =
+ pct >= 70 ? '<i class="fa-solid fa-trophy" style="color:var(--green);"></i> Terrific technical acumen! Excellent command of parameters.' :
+ pct >= 50 ? '<i class="fa-solid fa-arrow-trend-up" style="color:var(--accent);"></i> Solid effort. Run through solution cards to sharpen execution metrics.' :
+ '<i class="fa-solid fa-book" style="color:var(--purple);"></i> Core machine parameters require optimization. Review architecture and retry.';
+
+ const bd = document.getElementById('breakdownGrid');
+ bd.innerHTML = '';
+ const sectionMeta = {
+ 'Transformers': 'fa-network-wired',
+ 'DC Machines': 'fa-car-battery',
+ 'Induction Motors': 'fa-rotate'
+ };
+ ['Transformers','DC Machines','Induction Motors'].forEach(sec => {
+ const idx = flatQ.map((f, i) => f.section === sec ? i : -1).filter(x => x >= 0);
+ let sc = 0;
+ idx.forEach(i => {
+ const item = flatQ[i];
+ if (item.type === 'mcq' && answers[i] === item.ans) sc++;
+ else if (item.type === 'fill' && answers[i] && checkFillAnswer(answers[i], item.acceptedAnswers)) sc++;
+ });
+ const sp = idx.length > 0 ? Math.round(sc / idx.length * 100) : 0;
+ const c = document.createElement('div');
+ c.className = 'bd-card';
+ c.innerHTML = `<div class="bd-name"><i class="fa-solid ${sectionMeta[sec]}"></i> ${sec}</div><div><span class="bd-score">${sc}</span><span class="bd-total"> / ${idx.length}</span></div><div class="bd-bar"><div class="bd-bar-fill" style="width:0%"></div></div>`;
+ bd.appendChild(c);
+ setTimeout(() => { c.querySelector('.bd-bar-fill').style.width = sp + '%'; }, 150);
+ });
+
+ const rl = document.getElementById('reviewList');
+ rl.innerHTML = '';
+ flatQ.forEach((item, i) => {
+ let isRight = false;
+ let chosenText = 'No answer';
+ let corrText = '';
+
+ if (item.type === 'mcq') {
+ isRight = answers[i] === item.ans;
+ chosenText = answers[i] !== null ? item.opts[answers[i]] : 'No answer';
+ corrText = item.opts[item.ans];
+ } else {
+ isRight = answers[i] ? checkFillAnswer(answers[i], item.acceptedAnswers) : false;
+ chosenText = answers[i] || 'No answer';
+ corrText = item.acceptedAnswers[0];
+ }
+
+ const div = document.createElement('div');
+ div.className = 'review-item ' + (isRight ? 'right' : 'miss');
+ const stepsHTML = (item.explain || []).map(s =>
+ `<div class="ex-step"><div class="ex-step-label"><i class="fa-solid fa-circle-check"></i> ${s.l}</div><div class="ex-step-body">${s.b.replace(/\n/g,'<br>')}</div></div>`
+ ).join('');
+
+ div.innerHTML = `
+ <div class="ri-section"><i class="fa-solid ${sectionMeta[item.section]}"></i> ${item.section}${item.type === 'fill' ? ' · Fill-in' : ''}</div>
+ <div class="ri-q">${i + 1}. ${item.q}</div>
+ <div class="ri-ans ${isRight ? 'right' : 'wrong'}"><i class="fa-solid ${isRight ? 'fa-circle-check' : 'fa-circle-xmark'}"></i> Your answer: ${chosenText}</div>
+ ${!isRight ? `<div class="ri-ans correct-reveal"><i class="fa-solid fa-circle-check"></i> Correct: ${corrText}</div>` : ''}
+ ${stepsHTML ? `<button class="explain-btn" onclick="toggleExplain(this)"><span><i class="fa-solid fa-lightbulb"></i> Show Solution</span><span class="explain-arrow"><i class="fa-solid fa-chevron-down"></i></span></button><div class="explain-box">${stepsHTML}</div>` : ''}
+ `;
+ rl.appendChild(div);
+ });
+}
+
+function toggleExplain(btn) {
+ const box = btn.nextElementSibling;
+ const open = box.classList.contains('open');
+ box.classList.toggle('open', !open);
+ btn.classList.toggle('open', !open);
+ btn.querySelector('span').innerHTML = open
+ ? '<i class="fa-solid fa-lightbulb"></i> Show Solution'
+ : '<i class="fa-solid fa-book-open"></i> Hide Solution';
+}
+
+// ══════════════════════════════════════════
+// ── DTZ CALCULATOR ──
+// ══════════════════════════════════════════
+(function() {
+ const fab = document.getElementById('calcFab');
+ const backdrop = document.getElementById('calcBackdrop');
+ const panel = document.getElementById('calcPanel');
+ const header = document.getElementById('calcHeader');
+ const closeBtn = document.getElementById('calcClose');
+ const exprEl = document.getElementById('calcExpr');
+ const resEl = document.getElementById('calcResult');
+ const grid = document.getElementById('calcGrid');
+ const modeDeg = document.getElementById('calcModeDeg');
+ const modeRad = document.getElementById('calcModeRad');
+
+ let expr = '';
+ let angleMode = 'deg';
+ let justEvaluated = false;
+
+ const BUTTONS = [
+ {label:'AC', cls:'clear', act:'clear'},
+ {label:'DEL', cls:'clear', act:'del'},
+ {label:'%', cls:'op', act:'insert', val:'%'},
+ {label:'÷', cls:'op', act:'insert', val:'÷'},
+
+ {label:'sin', cls:'fn', act:'insert', val:'sin('},
+ {label:'cos', cls:'fn', act:'insert', val:'cos('},
+ {label:'tan', cls:'fn', act:'insert', val:'tan('},
+ {label:'×', cls:'op', act:'insert', val:'×'},
+
+ {label:'log', cls:'fn', act:'insert', val:'log('},
+ {label:'ln', cls:'fn', act:'insert', val:'ln('},
+ {label:'√', cls:'fn', act:'insert', val:'√('},
+ {label:'−', cls:'op', act:'insert', val:'−'},
+
+ {label:'π', cls:'fn', act:'insert', val:'π'},
+ {label:'e', cls:'fn', act:'insert', val:'e'},
+ {label:'^', cls:'op', act:'insert', val:'^'},
+ {label:'+', cls:'op', act:'insert', val:'+'},
+
+ {label:'7', act:'insert', val:'7'},
+ {label:'8', act:'insert', val:'8'},
+ {label:'9', act:'insert', val:'9'},
+ {label:'(', act:'insert', val:'('},
+
+ {label:'4', act:'insert', val:'4'},
+ {label:'5', act:'insert', val:'5'},
+ {label:'6', act:'insert', val:'6'},
+ {label:')', act:'insert', val:')'},
+
+ {label:'1', act:'insert', val:'1'},
+ {label:'2', act:'insert', val:'2'},
+ {label:'3', act:'insert', val:'3'},
+ {label:'EXP', cls:'fn', act:'insert', val:'×10^'},
+
+ {label:'0', act:'insert', val:'0'},
+ {label:'.', act:'insert', val:'.'},
+ {label:'x²', cls:'fn', act:'insert', val:'^2'},
+ {label:'=', cls:'equals', act:'eval'},
+ ];
+
+ BUTTONS.forEach(b => {
+ const btn = document.createElement('button');
+ btn.className = 'calc-btn' + (b.cls ? ' ' + b.cls : '');
+ btn.textContent = b.label;
+ btn.type = 'button';
+ btn.addEventListener('click', () => handleAction(b));
+ grid.appendChild(btn);
+ });
+
+ function handleAction(b) {
+ if (b.act === 'clear') {
+ expr = ''; justEvaluated = false; updateDisplay();
+ return;
+ }
+ if (b.act === 'del') {
+ expr = expr.slice(0, -1); justEvaluated = false; updateDisplay();
+ return;
+ }
+ if (b.act === 'insert') {
+ if (justEvaluated) {
+ if (/^[0-9.]$/.test(b.val) || b.val === '(' ) { expr = ''; }
+ }
+ justEvaluated = false;
+ expr += b.val;
+ updateDisplay();
+ return;
+ }
+ if (b.act === 'eval') {
+ evaluate();
+ return;
+ }
+ }
+
+ function updateDisplay() {
+ exprEl.textContent = expr || '\u00A0';
+ resEl.classList.remove('err');
+ }
+
+ function evaluate() {
+ if (!expr.trim()) return;
+ try {
+ const val = computeExpr(expr, angleMode);
+ if (val === null || Number.isNaN(val) || !Number.isFinite(val)) throw new Error('bad');
+ const display = formatResult(val);
+ const openCount = (expr.match(/\(/g) || []).length;
+ const closeCount = (expr.match(/\)/g) || []).length;
+ const shownExpr = openCount > closeCount ? expr + ')'.repeat(openCount - closeCount) : expr;
+ exprEl.textContent = shownExpr + ' =';
+ resEl.textContent = display;
+ resEl.classList.remove('err');
+ expr = display;
+ justEvaluated = true;
+ } catch (e) {
+ resEl.textContent = 'Error';
+ resEl.classList.add('err');
+ justEvaluated = false;
+ }
+ }
+
+ function formatResult(val) {
+ if (Math.abs(val) !== 0 && (Math.abs(val) < 1e-6 || Math.abs(val) >= 1e12)) {
+ return val.toExponential(6).replace(/e\+?(-?)(\d+)/, ' × 10^$1$2');
+ }
+ let s = parseFloat(val.toFixed(10)).toString();
+ return s;
+ }
+
+ function computeExpr(raw, mode) {
+ let s = raw;
+ const openCount = (s.match(/\(/g) || []).length;
+ const closeCount = (s.match(/\)/g) || []).length;
+ if (openCount > closeCount) s += ')'.repeat(openCount - closeCount);
+
+ s = s.replace(/×10\^/g, '*10^');
+
+ const sinT = mode === 'deg' ? (x => Math.sin(x * Math.PI / 180)) : Math.sin;
+ const cosT = mode === 'deg' ? (x => Math.cos(x * Math.PI / 180)) : Math.cos;
+ const tanT = mode === 'deg' ? (x => Math.tan(x * Math.PI / 180)) : Math.tan;
+
+ const FUNCS = {
+ 'sin': sinT, 'cos': cosT, 'tan': tanT,
+ 'log': Math.log10, 'ln': Math.log, '√': Math.sqrt, 'sqrt': Math.sqrt,
+ };
+ const CONSTS = { 'π': Math.PI, 'pi': Math.PI, 'e': Math.E };
+
+ const tokens = [];
+ let i = 0;
+ const isDigit = c => c >= '0' && c <= '9';
+ const isAlpha = c => /[a-zA-Zπ√]/.test(c);
+ while (i < s.length) {
+ const c = s[i];
+ if (c === ' ') { i++; continue; }
+ if (c === '×') { tokens.push({t:'op', v:'*'}); i++; continue; }
+ if (c === '÷') { tokens.push({t:'op', v:'/'}); i++; continue; }
+ if (c === '−') { tokens.push({t:'op', v:'-'}); i++; continue; }
+ if ('+-*/^(),%'.includes(c)) { tokens.push({t: c === '(' ? 'lp' : c === ')' ? 'rp' : 'op', v:c}); i++; continue; }
+ if (isDigit(c) || c === '.') {
+ let j = i;
+ while (j < s.length && (isDigit(s[j]) || s[j] === '.')) j++;
+ tokens.push({t:'num', v:parseFloat(s.slice(i,j))});
+ i = j; continue;
+ }
+ if (isAlpha(c)) {
+ let j = i;
+ while (j < s.length && isAlpha(s[j])) j++;
+ const word = s.slice(i,j);
+ if (FUNCS[word]) tokens.push({t:'func', v:word});
+ else if (CONSTS[word] !== undefined) tokens.push({t:'num', v:CONSTS[word]});
+ else throw new Error('unknown token: ' + word);
+ i = j; continue;
+ }
+ throw new Error('unexpected char: ' + c);
+ }
+
+ let pos = 0;
+ const peek = () => tokens[pos];
+ const next = () => tokens[pos++];
+
+ function parseExpression() { return parseAddSub(); }
+
+ function parseAddSub() {
+ let left = parseMulDiv();
+ while (peek() && peek().t === 'op' && (peek().v === '+' || peek().v === '-')) {
+ const op = next().v;
+ const right = parseMulDiv();
+ left = op === '+' ? left + right : left - right;
+ }
+ return left;
+ }
+
+ function parseMulDiv() {
+ let left = parseUnary();
+ while (peek() && peek().t === 'op' && (peek().v === '*' || peek().v === '/')) {
+ const op = next().v;
+ const right = parseUnary();
+ left = op === '*' ? left * right : left / right;
+ }
+ return left;
+ }
+
+ function parseUnary() {
+ if (peek() && peek().t === 'op' && peek().v === '-') { next(); return -parseUnary(); }
+ if (peek() && peek().t === 'op' && peek().v === '+') { next(); return parseUnary(); }
+ return parsePower();
+ }
+
+ function parsePower() {
+ let base = parsePostfix();
+ if (peek() && peek().t === 'op' && peek().v === '^') {
+ next();
+ const exp = parseUnary();
+ base = Math.pow(base, exp);
+ }
+ return base;
+ }
+
+ function parsePostfix() {
+ let val = parseAtom();
+ while (peek() && peek().t === 'op' && peek().v === '%') {
+ next();
+ val = val / 100;
+ }
+ return val;
+ }
+
+ function parseAtom() {
+ const tok = peek();
+ if (!tok) throw new Error('unexpected end');
+ if (tok.t === 'num') { next(); return tok.v; }
+ if (tok.t === 'func') {
+ next();
+ if (!peek() || peek().t !== 'lp') throw new Error('expected ( after function');
+ next();
+ const arg = parseExpression();
+ if (!peek() || peek().t !== 'rp') throw new Error('expected )');
+ next();
+ return FUNCS[tok.v](arg);
+ }
+ if (tok.t === 'lp') {
+ next();
+ const val = parseExpression();
+ if (!peek() || peek().t !== 'rp') throw new Error('expected )');
+ next();
+ return val;
+ }
+ throw new Error('unexpected token');
+ }
+
+ const result = parseExpression();
+ if (pos !== tokens.length) throw new Error('trailing tokens');
+ return result;
+ }
+
+ function openCalc() {
+ panel.classList.remove('hidden');
+ backdrop.classList.remove('hidden');
+ }
+ function closeCalc() {
+ panel.classList.add('hidden');
+ backdrop.classList.add('hidden');
+ }
+
+ fab.addEventListener('click', openCalc);
+ closeBtn.addEventListener('click', closeCalc);
+ backdrop.addEventListener('click', closeCalc);
+
+ modeDeg.addEventListener('click', () => {
+ angleMode = 'deg';
+ modeDeg.classList.add('active'); modeRad.classList.remove('active');
+ });
+ modeRad.addEventListener('click', () => {
+ angleMode = 'rad';
+ modeRad.classList.add('active'); modeDeg.classList.remove('active');
+ });
+
+ let dragging = false, dragOffX = 0, dragOffY = 0;
+
+ function startDrag(clientX, clientY) {
+ dragging = true;
+ const rect = panel.getBoundingClientRect();
+ panel.classList.add('dragged');
+ panel.style.left = rect.left + 'px';
+ panel.style.top = rect.top + 'px';
+ dragOffX = clientX - rect.left;
+ dragOffY = clientY - rect.top;
+ panel.style.transition = 'none';
+ }
+ function moveDrag(clientX, clientY) {
+ if (!dragging) return;
+ const pw = panel.offsetWidth, ph = panel.offsetHeight;
+ let nl = clientX - dragOffX;
+ let nt = clientY - dragOffY;
+ nl = Math.min(Math.max(nl, 4), window.innerWidth - pw - 4);
+ nt = Math.min(Math.max(nt, 4), window.innerHeight - ph - 4);
+ panel.style.left = nl + 'px';
+ panel.style.top = nt + 'px';
+ }
+ function endDrag() {
+ if (!dragging) return;
+ dragging = false;
+ panel.style.transition = '';
+ }
+
+ header.addEventListener('mousedown', e => { startDrag(e.clientX, e.clientY); e.preventDefault(); });
+ window.addEventListener('mousemove', e => moveDrag(e.clientX, e.clientY));
+ window.addEventListener('mouseup', endDrag);
+
+ header.addEventListener('touchstart', e => {
+ const t = e.touches[0];
+ startDrag(t.clientX, t.clientY);
+ }, {passive:true});
+ window.addEventListener('touchmove', e => {
+ if (!dragging) return;
+ const t = e.touches[0];
+ moveDrag(t.clientX, t.clientY);
+ }, {passive:false});
+ window.addEventListener('touchend', endDrag);
+})();
+</script>
+</body>
+</html>
